@@ -13,10 +13,7 @@ const env = envalid.cleanEnv(process.env, {
 // Asynchronous function to connect to MongoDB
 const connectDB = async () => {
   try {
-	await mongoose.connect(env.MONGO_URI, {
-	  useNewUrlParser: true,
-	  useUnifiedTopology: true,
-	});
+	await mongoose.connect(env.MONGO_URI);
 	console.log('MongoDB Connected...');
   } catch (err) {
 	console.error(`Error: ${err.message}`);

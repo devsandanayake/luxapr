@@ -1,26 +1,46 @@
 const UserModel = require('../models/user');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const process = require('process');
+const dotenv = require('dotenv');
+
+
+dotenv.config();
 
 // Create a new user in the database
-const createUser = async (req,res) =>{
-    try{
-        const {username, FirstName, LastName, email, password, contactNumber} = req.body;
-        const user = await UserModel.findOne({email : email});
-        if(user){
-            return res.status(400).json({message: 'User already exists'});
+const createUser = async (req, res, next) => {
+    try {
+        const { username, firstName, lastName, email, password, contactNumber } = req.body;
+
+        // Input validation (basic example, consider using a library like Joi)
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Email and password are required' });
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new UserModel({username, email, password: hashedPassword, contactNumber, FirstName, LastName});
+
+        const userExists = await UserModel.findOne({ email });
+        if (userExists) {
+            return res.status(409).json({ message: 'User already exists' }); // 409 Conflict
+        }
+
+        const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS);
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        const newUser = new UserModel({
+            username,
+            email,
+            password: hashedPassword,
+            contactNumber,
+            firstName,
+            lastName
+        });
+
         await newUser.save();
-        res.status(201).json({message: 'User created successfully'});
+        res.status(201).json({ message: 'User created successfully' });
+    } catch (err) {
+        console.error(err); // Consider more sophisticated logging for production
+        next(err);
     }
-    catch(err){
-        res.status(500).json({message: err.message});
-    }
-}
+};
 
 module.exports = {
     createUser
-
 };

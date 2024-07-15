@@ -6,11 +6,11 @@
       required: true,
       unique: true,
     },
-    FirstName: {
+    firstName: {
         type: String,
         required: true,
     },
-    LastName: {
+    lastName: {
         type: String,
         required: true,
     },
