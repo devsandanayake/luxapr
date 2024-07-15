@@ -1,7 +1,10 @@
 const express = require('express');
+const dotenv = require('dotenv'); // Import the dotenv module
+const env = require('./util/vakudtenEnv');
+dotenv.config();
 
 const app = express();
-const port = undefined || 8002;
+const port = env.PORT 
 
 // Define a basic route
 app.get('/', (req, res) => {
