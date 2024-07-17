@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const adminSchema = new mongoose.Schema({
+    userID:{
+        type:String,
+        required:true
+    },
     username: {
         type: String,
         required: true,
@@ -15,3 +19,5 @@ const adminSchema = new mongoose.Schema({
     }
 
 });
+
+module.exports = mongoose.model('adminAccount', adminSchema);
