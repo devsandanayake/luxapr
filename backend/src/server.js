@@ -3,6 +3,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const env = require('./util/vakudtenEnv');
 const connectDB = require('../config/db');
+const path = require('path');
+
 
 // Initialize dotenv configuration
 dotenv.config();
@@ -17,6 +19,10 @@ const port = env.PORT;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
+// Assuming the 'uploads' directory is directly in the project root
+app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
+app.use('/uploads/watermarked', express.static(path.join(__dirname, '../../uploads/watermarked')));
 
 // Routes
 const userRoutes = require('./routes/user');

@@ -3,44 +3,44 @@ const mongoose = require("mongoose");
 const adsSchema =  new mongoose.Schema({
     username:{
         type:String,
-        require:true
+ 
     },
     adCode:{
         type:String,
-        require:true,
+ 
         unique:true
     },
     title:{
-        type:String,
-        require:true
+        type:String
+ 
     },
     address:{
         type:String,
-        require:true
+ 
     },
     streetNumber:{
         type:String,
-        require:true
+ 
     },
     area:{
         type:String,
-        require:true
+ 
     },
     city:{
         type:String,
-        require:true
+ 
     },
     district:{
         type:String,
-        require:true
+ 
     },
     province:{
         type:String,
-        require:true
+ 
     },
     country:{
         type:String,
-        require:true
+ 
     },
     description:{
         type:String
@@ -62,15 +62,21 @@ const adsSchema =  new mongoose.Schema({
     },
     currency:{
         type:String,
-        require:true
+ 
     },
     typeOfPro:{
         type:String,
-        require:true
+ 
     },
     transactionType:{
         type:String,
-        require:true
+ 
+    },
+    images:{
+        type:[String]
+    },
+    originImages:{
+        type:[String]
     },
     status:{
         type:Number,
