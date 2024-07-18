@@ -5,6 +5,11 @@ const adsSchema =  new mongoose.Schema({
         type:String,
         require:true
     },
+    adCode:{
+        type:String,
+        require:true,
+        unique:true
+    },
     title:{
         type:String,
         require:true

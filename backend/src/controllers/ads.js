@@ -1,11 +1,30 @@
 const adsModel = require('../models/ads');
 
+
+// Generate a unique AD code
+async function generateUniqueADcode(prefix) {
+    let isUnique = false;
+    let adCode;
+    while (!isUnique) {
+       const randomNumber = Math.floor(1000 + Math.random() * 9000);
+        adCode = `${prefix}${randomNumber}`;
+        const existingAd = await adsModel.findOne({ adCode: adCode });
+        if (!existingAd) {
+            isUnique = true;
+        }
+    }
+    return adCode;
+}
+
 const createAd = async (req, res, next) => {
     try{
         const user = req.user;
 
+        const ADcode = await generateUniqueADcode(user);
+
         const adDetails = {
-            username: user ,
+            username: user,
+            adCode: ADcode,
             title: req.body.title,
             address: req.body.address,
             streetNumber: req.body.streetNumber,
