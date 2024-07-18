@@ -1,9 +1,8 @@
 const UserModel = require('../models/user');
 const bcrypt = require('bcryptjs');
 const process = require('process');
+const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-
-
 dotenv.config();
 
 // Create a new user in the database
@@ -15,7 +14,7 @@ const createUser = async (req, res, next) => {
         if (!email || !password) {
             return res.status(400).json({ message: 'Email and password are required' });
         }
-
+        
         const userExists = await UserModel.findOne({ email });
         if (userExists) {
             return res.status(409).json({ message: 'User already exists' }); // 409 Conflict
@@ -41,6 +40,45 @@ const createUser = async (req, res, next) => {
     }
 };
 
+
+const loginUser = async (req, res, next) => {
+    try {
+        const { username, password } = req.body;
+
+        // Find username
+        const user = await UserModel.findOne({ username });
+        if (!user) {
+            return next({ status: 404, message: "User not found" });
+        }
+
+        // Compare password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return next({ status: 401, message: 'Invalid credentials' });
+        }
+
+        const payload = {
+            username: user.username,
+            firstName: user.firstName
+        };
+
+        // Sign the token with a more readable expiresIn value
+        let token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '24h' });
+
+        // Send a more detailed response
+        res.json({
+            message: "Login successful",
+            token: `Bearer ${token}`
+        });
+    } catch (err) {
+        next(err)
+    }
+}
+
+
+ 
+
 module.exports = {
-    createUser
+    createUser,
+    loginUser,
 };

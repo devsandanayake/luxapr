@@ -20,7 +20,9 @@ app.use(cors());
 
 // Routes
 const userRoutes = require('./routes/user');
+const adRoutes = require('./routes/ads');
 app.use('/api/users', userRoutes);
+app.use('/api/ads', adRoutes);
 
 // Basic route
 app.get('/', (req, res) => {

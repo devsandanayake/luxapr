@@ -1,0 +1,76 @@
+const mongoose = require("mongoose");
+
+const adsSchema =  new mongoose.Schema({
+    username:{
+        type:String,
+        require:true
+    },
+    title:{
+        type:String,
+        require:true
+    },
+    address:{
+        type:String,
+        require:true
+    },
+    streetNumber:{
+        type:String,
+        require:true
+    },
+    area:{
+        type:String,
+        require:true
+    },
+    city:{
+        type:String,
+        require:true
+    },
+    district:{
+        type:String,
+        require:true
+    },
+    province:{
+        type:String,
+        require:true
+    },
+    country:{
+        type:String,
+        require:true
+    },
+    description:{
+        type:String
+    },
+    bedroomCount:{
+        type:Number
+    },
+    bathroomCount:{
+        type:Number
+    },
+    floor:{
+        type:Number
+    },
+    areaSize:{
+        type:Number
+    },
+    price:{
+        type:Number
+    },
+    currency:{
+        type:String,
+        require:true
+    },
+    typeOfPro:{
+        type:String,
+        require:true
+    },
+    transactionType:{
+        type:String,
+        require:true
+    },
+    status:{
+        type:Number,
+        default:0,
+    }
+});
+
+module.exports = mongoose.model("advertisements",adsSchema);
