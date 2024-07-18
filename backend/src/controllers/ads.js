@@ -46,12 +46,15 @@ const addWatermark = async (req, res, next) => {
     if (req.files && req.files.length > 0) {
         try {
             for (const file of req.files) {
+                // eslint-disable-next-line no-undef
                 const imagePath = path.join(__dirname, '../../../uploads', file.filename);
                 if (!fs.existsSync(imagePath)) {
                     console.error(`File not found: ${imagePath}`);
                     continue;
                 }
+                // eslint-disable-next-line no-undef
                 const watermarkPath = path.join(__dirname, '../../../watermark.png');
+                // eslint-disable-next-line no-undef
                 const outputPath = path.join(__dirname, '../../../uploads/watermarked', file.filename);
 
                 // Read the dimensions of the original image

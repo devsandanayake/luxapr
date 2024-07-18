@@ -21,7 +21,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // Assuming the 'uploads' directory is directly in the project root
+// eslint-disable-next-line no-undef
 app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
+// eslint-disable-next-line no-undef
 app.use('/uploads/watermarked', express.static(path.join(__dirname, '../../uploads/watermarked')));
 
 // Routes
