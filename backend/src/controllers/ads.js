@@ -57,7 +57,7 @@ const addWatermark = async (req, res, next) => {
                 // Read the dimensions of the original image
                 const metadata = await sharp(imagePath).metadata();
                 const width = Math.floor(metadata.width / 4); // Use Math.floor to round down
-                const height = Math.floor(metadata.height / 4); // Use Math.floor to round down
+                const height = Math.floor(metadata.height / 4); 
                 
                 // Resize the watermark image to fit within the original image's dimensions
                 const watermarkBuffer = await sharp(watermarkPath)
