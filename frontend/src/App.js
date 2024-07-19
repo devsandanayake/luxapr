@@ -7,6 +7,7 @@ import './index.css';
 
 import Home from './Home/Home';
 import Login from './Login/Login';
+import SignUp from './Login/SignUp';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
     </Routes>
   </BrowserRouter>
 

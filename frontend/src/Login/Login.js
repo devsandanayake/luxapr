@@ -31,7 +31,7 @@ export default function Login() {
                         <button className="sign mt-2">Sign in</button>
                     </form>
                     <p className="signup mt-2">Don't have an account? 
-                        &nbsp;<a rel="noopener noreferrer" href="#" className="">Sign up</a>
+                        &nbsp;<a rel="noopener noreferrer" href="/signup" className="">Sign up</a>
                     </p>
                 </div>
             </div>
