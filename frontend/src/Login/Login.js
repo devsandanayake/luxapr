@@ -18,7 +18,7 @@ export default function Login() {
                     <p className="title">Login</p>
                     <form className="form">
                         <div className="input-group">
-                            <label htmlFor="username">Username</label>
+                            <label htmlFor="username">E-mail</label>
                             <input type="text" name="username" id="username" placeholder="" />
                         </div>
                         <div className="input-group ">
