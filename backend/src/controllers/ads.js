@@ -3,6 +3,8 @@ const multer = require('multer');
 const path = require('path');
 const sharp = require('sharp');
 const fs = require('fs');
+const moment = require('moment-timezone');
+
 
 // Generate a unique AD code
 async function generateUniqueADcode(prefix) {
@@ -86,7 +88,7 @@ const addWatermark = async (req, res, next) => {
     next();
 };
 
-
+//user create ads
 const createAd = async (req, res, next) => {
     try{
         const user = req.user;
@@ -94,6 +96,9 @@ const createAd = async (req, res, next) => {
         const ADcode = await generateUniqueADcode(user);
         const imagePaths = req.files.map(file => file.watermarkedPath); // Path to watermarked images
         const originImagePaths = req.files.map(file => file.originalPath); // Original image paths
+
+        const now = moment.tz('Asia/Colombo');
+        const formattedDate = now.format('YYYY-MM-DD HH:mm:ss');
 
         const adDetails = {
             username: user,
@@ -117,7 +122,8 @@ const createAd = async (req, res, next) => {
             transactionType: req.body.transactionType,
             images: imagePaths,
             originImages: originImagePaths,
-            status: req.body.status
+            status: req.body.status,
+            publishedAt: formattedDate
         };
 
         const newAd = new adsModel(adDetails);
@@ -136,9 +142,21 @@ const createAd = async (req, res, next) => {
     }
 };
 
+//view all ads
+const viewAllAds = async (req, res, next) => {
+    try {
+        // Use '-publishAt' for descending order based on the publish date
+        const ads = await adsModel.find().sort('-publishedAt');
+        res.json(ads);
+    } catch (err) {
+        next(err);
+    }
+};
+
 
 module.exports = {
     createAd,
     addWatermark,
+    viewAllAds,
     upload
 };
