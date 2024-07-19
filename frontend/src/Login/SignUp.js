@@ -54,7 +54,6 @@ export default function SignUp() {
             >
                 <div className="form-container border border-white">
                     <p className="title">Create Account</p>
-                    {message && <p className="message">{message}</p>}
                     <form className="form" onSubmit={handleSubmit}>
                         <div className="input-group">
                             <label htmlFor="username">Username</label>
