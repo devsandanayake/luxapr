@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const env = require('./util/vakudtenEnv');
 const connectDB = require('../config/db');
 const path = require('path');
+const morgan = require('morgan');
 
 
 // Initialize dotenv configuration
@@ -15,10 +16,12 @@ connectDB()
 const app = express();
 const port = env.PORT;
 
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(morgan('dev'));
 
 // Assuming the 'uploads' directory is directly in the project root
 // eslint-disable-next-line no-undef

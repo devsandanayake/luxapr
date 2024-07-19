@@ -1,8 +1,12 @@
 const adsModel = require('../models/ads');
+const UserModel = require('../models/user');
 const multer = require('multer');
 const path = require('path');
 const sharp = require('sharp');
 const fs = require('fs');
+const moment = require('moment-timezone');
+const {sendEmail} = require('../Email/email');
+
 
 // Generate a unique AD code
 async function generateUniqueADcode(prefix) {
@@ -86,7 +90,7 @@ const addWatermark = async (req, res, next) => {
     next();
 };
 
-
+//user create ads
 const createAd = async (req, res, next) => {
     try{
         const user = req.user;
@@ -94,6 +98,9 @@ const createAd = async (req, res, next) => {
         const ADcode = await generateUniqueADcode(user);
         const imagePaths = req.files.map(file => file.watermarkedPath); // Path to watermarked images
         const originImagePaths = req.files.map(file => file.originalPath); // Original image paths
+
+        const now = moment.tz('Asia/Colombo');
+        const formattedDate = now.format('YYYY-MM-DD HH:mm:ss');
 
         const adDetails = {
             username: user,
@@ -117,7 +124,8 @@ const createAd = async (req, res, next) => {
             transactionType: req.body.transactionType,
             images: imagePaths,
             originImages: originImagePaths,
-            status: req.body.status
+            status: req.body.status,
+            publishedAt: formattedDate
         };
 
         const newAd = new adsModel(adDetails);
@@ -136,9 +144,61 @@ const createAd = async (req, res, next) => {
     }
 };
 
+//view all ads
+const viewAllAds = async (req, res, next) => {
+    try {
+        // Use '-publishAt' for descending order based on the publish date
+        const ads = await adsModel.find().sort('-publishedAt');
+        res.json(ads);
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+//ads approve or reject by admin
+const approved = async (req,res,next) => {
+     try{
+        const adCode = req.body.adCode;
+        const status = req.body.status;
+
+        const ad = await adsModel.findOneAndUpdate({ adCode: adCode }, { status: status });
+        if (!ad) {
+            return next({ status: 404, message: 'Ad not found' });
+        }
+
+        // Send a response back to the client
+        const username = ad.username;
+
+        const user = await UserModel.findOne({ username: username });
+        if (!user) {
+            return next({ status: 404, message: 'User not found' });
+        }
+
+        const email = user.email;
+
+        sendEmail(email,adCode);
+
+
+
+
+        res.json({
+            message: "Ad status updated successfully",
+            username: username,
+            email: email,
+        });
+
+     }catch(err){
+         next(err)
+     }
+
+}
+
 
 module.exports = {
     createAd,
     addWatermark,
+    viewAllAds,
+    approved,
     upload
 };

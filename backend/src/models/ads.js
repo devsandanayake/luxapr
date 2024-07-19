@@ -81,6 +81,10 @@ const adsSchema =  new mongoose.Schema({
     status:{
         type:Number,
         default:0,
+    },
+    publishedAt:{
+        type:String,
+        required:true,
     }
 });
 
