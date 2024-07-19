@@ -1,0 +1,45 @@
+.slider-image-container {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider-image {
+  width: 100%;
+  object-fit: cover; /* Ensures the image covers the container without stretching */
+  filter: brightness(0.2); /* Reduces the brightness to 80% */
+}
+
+.slider-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 3.5rem;
+    text-align: center;
+    z-index: 1;
+  }
+
+
+.browse-apartments-section {
+    height: 100vh;
+    background-color: #001f3f; /* Dark blue background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 1s ease-out, transform 1s ease-out;
+  }
+  
+  .browse-apartments-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .browse-apartments-section h1 {
+    color: gold;
+    font-size: 3rem;
+  }
