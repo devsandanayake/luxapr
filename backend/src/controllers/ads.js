@@ -1,9 +1,11 @@
 const adsModel = require('../models/ads');
+const UserModel = require('../models/user');
 const multer = require('multer');
 const path = require('path');
 const sharp = require('sharp');
 const fs = require('fs');
 const moment = require('moment-timezone');
+const {sendEmail} = require('../Email/email');
 
 
 // Generate a unique AD code
@@ -154,9 +156,49 @@ const viewAllAds = async (req, res, next) => {
 };
 
 
+//ads approve or reject by admin
+const approved = async (req,res,next) => {
+     try{
+        const adCode = req.body.adCode;
+        const status = req.body.status;
+
+        const ad = await adsModel.findOneAndUpdate({ adCode: adCode }, { status: status });
+        if (!ad) {
+            return next({ status: 404, message: 'Ad not found' });
+        }
+
+        // Send a response back to the client
+        const username = ad.username;
+
+        const user = await UserModel.findOne({ username: username });
+        if (!user) {
+            return next({ status: 404, message: 'User not found' });
+        }
+
+        const email = user.email;
+
+        sendEmail(email,adCode);
+
+
+
+
+        res.json({
+            message: "Ad status updated successfully",
+            username: username,
+            email: email,
+        });
+
+     }catch(err){
+         next(err)
+     }
+
+}
+
+
 module.exports = {
     createAd,
     addWatermark,
     viewAllAds,
+    approved,
     upload
 };
