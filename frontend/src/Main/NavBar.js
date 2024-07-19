@@ -54,12 +54,12 @@ export default function NavBar() {
 		</li>
 		<li>
 		  <a href="#" className="nav-link hover:text-gold">
-			Services
+			Contact US
 		  </a>
 		</li>
 		<li>
-		  <a href="#" className="nav-link hover:text-gold">
-			Contact
+		  <a href="/login" className="nav-link hover:text-gold">
+			Login
 		  </a>
 		</li>
 	  </ul>
