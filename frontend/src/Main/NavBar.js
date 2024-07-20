@@ -53,7 +53,7 @@ export default function NavBar() {
 		  </a>
 		</li>
 		<li>
-		  <a href="#" className="nav-link hover:text-gold">
+		  <a href="/contactus" className="nav-link hover:text-gold">
 			Contact US
 		  </a>
 		</li>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css';
 import background from '../Images/ap5.jpg';
@@ -9,6 +10,9 @@ export default function Login() {
         username: '',
         password: ''
     });
+
+    const navigate = useNavigate(); // Initialize useNavigate hook
+
 
     const [message, setMessage] = useState('');
 
@@ -22,13 +26,14 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
         try {
             const response = await axiosInstance.post('/api/users/signin', formData);
-
+    
             if (response.status === 200) {
                 setMessage('Login successful!');
-                // Optionally, you can save the token in localStorage or context
                 localStorage.setItem('token', response.data.token);
+                navigate('/contactus'); // Navigate to /contactus
             } else {
                 setMessage(response.data.message || 'Something went wrong. Please try again.');
             }
@@ -48,7 +53,7 @@ export default function Login() {
                     backgroundPosition: 'center',
                 }}
             >
-                <div className="form-container border border-white">
+                <div className="form-containerr border border-white">
                     <p className="title">Login</p>
                     {message && <p className="message">{message}</p>}
                     <form className="form" onSubmit={handleSubmit}>
@@ -77,7 +82,7 @@ export default function Login() {
                                 <a rel="noopener noreferrer" href="#">Forgot Password?</a>
                             </div>
                         </div>
-                        <button className="sign mt-2">Sign in</button>
+                        <button className="signn mt-2">Sign in</button>
                     </form>
                     <p className="signup mt-2">Don't have an account? 
                         &nbsp;<a rel="noopener noreferrer" href="/signup" className="">Sign up</a>

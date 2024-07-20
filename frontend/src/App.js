@@ -8,6 +8,8 @@ import './index.css';
 import Home from './Home/Home';
 import Login from './Login/Login';
 import SignUp from './Login/SignUp';
+import ContactUs from './ContactUs/ContactUs';
+import AddApartment from './Apartments/AddApartment';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/contactus" element={<ContactUs />} />
+      <Route path="/addapartment" element={<AddApartment />} />
     </Routes>
   </BrowserRouter>
 

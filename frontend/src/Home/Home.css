@@ -21,6 +21,10 @@
     font-size: 3.5rem;
     text-align: center;
     z-index: 1;
+    font-family: 'Georgia', serif; /* Change to a more premium font */
+    letter-spacing: 0.05rem; /* Add some letter spacing */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow */
+    -webkit-text-stroke: 0.5px #001f3f;
   }
 
 
