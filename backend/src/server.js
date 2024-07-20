@@ -29,9 +29,11 @@ app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
 // eslint-disable-next-line no-undef
 app.use('/uploads/watermarked', express.static(path.join(__dirname, '../../uploads/watermarked')));
 
-// Routes
+//IMPORT ROUTES
 const userRoutes = require('./routes/user');
 const adRoutes = require('./routes/ads');
+
+//API routes
 app.use('/api/users', userRoutes);
 app.use('/api/ads', adRoutes);
 

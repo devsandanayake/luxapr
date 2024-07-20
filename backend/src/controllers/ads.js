@@ -228,6 +228,45 @@ const viewAllAdsForAdmin = async (req, res, next) => {
     }
 };
 
+//edit ads
+const editAds = async (req, res, next) => {
+    try {
+        const adCode = req.params.adCode;
+        const ad = await adsModel.findOne({ adCode: adCode });
+        if (!ad) {
+            return next({ status: 404, message: 'Ad not found' });
+        }
+
+        const updatedAd = {
+            title: req.body.title,
+            address: req.body.address,
+            streetNumber: req.body.streetNumber,
+            area: req.body.area,
+            city: req.body.city,
+            district: req.body.district,
+            province: req.body.province,
+            country: req.body.country,
+            description: req.body.description,
+            bedroomCount: req.body.bedroomCount,
+            bathroomCount: req.body.bathroomCount,
+            floor: req.body.floor,
+            areaSize: req.body.areaSize,
+            price: req.body.price,
+            currency: req.body.currency,
+            typeOfPro: req.body.typeOfPro,
+            transactionType: req.body.transactionType,
+        };
+
+        const updated = await adsModel.findOneAndUpdate({ adCode: adCode }, updatedAd,{new:true});
+        res.json({
+            message: "Ad updated successfully",
+            ad: updated
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
 
 module.exports = {
     createAd,
@@ -236,5 +275,6 @@ module.exports = {
     approved,
     viewSpecificAd,
     viewAllAdsForAdmin,
+    editAds,
     upload
 };
