@@ -144,11 +144,11 @@ const createAd = async (req, res, next) => {
     }
 };
 
-//view all ads
+//view all approvel  ads
 const viewAllAds = async (req, res, next) => {
     try {
-        // Use '-publishAt' for descending order based on the publish date
-        const ads = await adsModel.find().sort('-publishedAt');
+        // Filter ads with status 1 and sort them by 'publishedAt' in descending order
+        const ads = await adsModel.find({ status: 1 }).sort('-publishedAt');
         res.json(ads);
     } catch (err) {
         next(err);
@@ -195,10 +195,26 @@ const approved = async (req,res,next) => {
 }
 
 
+//view sepciific ads
+const viewSpecificAd = async (req, res, next) => {
+    try {
+        const adCode = req.params.adCode;
+        const ad = await adsModel.findOne({ adCode: adCode, status: 1 });
+        if (!ad) {
+            return next({ status: 404, message: 'Ad not found or not available' });
+        }
+        res.json(ad);
+    } catch (err) {
+        next(err);
+    }
+};
+
+
 module.exports = {
     createAd,
     addWatermark,
     viewAllAds,
     approved,
+    viewSpecificAd,
     upload
 };
