@@ -7,7 +7,7 @@ const authMiddelware = require('../middlewares/authuser');
 router.post('/createAds', authMiddelware.authUser, upload.array('images') ,addWatermark, createAd);
 router.get('/viewAds', viewAllAds);
 //approvel ads
-router.patch('/approveAds', approved);
+router.patch('/approveAds',authMiddelware.authAdmin, approved);
 
 //view specific ad
 router.get('/viewSpecificAd/:adCode', viewSpecificAd);
