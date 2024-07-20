@@ -1,0 +1,27 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.full-screen {
+  background-color: #001f3f;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submitt {
+    display: block;;
+    background-color: gold;
+    padding: 0.8rem;
+    width: 180px;
+    text-align: center;
+    color: rgba(17, 24, 39, 1);
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+  }
