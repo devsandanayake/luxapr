@@ -25,7 +25,15 @@
     },
     contactNumber: {
         type: Number,
-    } 
+    } ,
+    role: {
+        type: String,
+        default: 'user',
+    },  
+    registerDate: {
+        type: String,
+        required: true,
+    },
 });
 
 module.exports =  mongoose.model('users', UserSchema);

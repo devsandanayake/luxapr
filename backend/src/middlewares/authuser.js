@@ -17,8 +17,22 @@ const authUser = (req, res, next) => {
     }
 };
 
+const authAdmin = (req, res, next) => { 
+    try {
+        const token = req.header('Authorization').replace('Bearer ', '');
+        const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+        if (decoded.role !== 'admin') {
+            return next({ status: 403, message: 'Forbidden' });
+        }
+        req.user = decoded.username;
+        next();
+    } catch (err) {
+        next(err)
+    }
+}
 
-module.exports = authUser;
+
+module.exports = { authUser, authAdmin };
 
 
 
