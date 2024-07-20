@@ -30,6 +30,7 @@
 
   .browse-apartments-section {
     height: 100vh;
+    font-family: 'Georgia', serif; /* Change to a more premium font */
     background-color: #001f3f; /* Dark blue background */
     display: flex;
     align-items: center;
