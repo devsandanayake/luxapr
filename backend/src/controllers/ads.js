@@ -144,11 +144,11 @@ const createAd = async (req, res, next) => {
     }
 };
 
-//view all ads
+//view all approvel  ads
 const viewAllAds = async (req, res, next) => {
     try {
-        // Use '-publishAt' for descending order based on the publish date
-        const ads = await adsModel.find().sort('-publishedAt');
+        // Filter ads with status 1 and sort them by 'publishedAt' in descending order
+        const ads = await adsModel.find({ status: 1 }).sort('-publishedAt');
         res.json(ads);
     } catch (err) {
         next(err);
