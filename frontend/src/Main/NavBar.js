@@ -43,7 +43,7 @@ export default function NavBar() {
 		className={`text-white ${isOpen ? 'block' : 'hidden'} lg:flex lg:space-x-6 lg:block`}
 	  >
 		<li>
-		  <a href="#" className="nav-link hover:text-gold">
+		  <a href="/" className="nav-link hover:text-gold">
 			Home
 		  </a>
 		</li>
