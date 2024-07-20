@@ -45,43 +45,51 @@ const fileFilter = (req, file, cb) => {
 
 //set up multer upload 
 const upload = multer({ storage: storage, fileFilter: fileFilter });
- 
 const addWatermark = async (req, res, next) => {
     if (req.files && req.files.length > 0) {
         try {
+            //eslint-disable-next-line
+            const uploadDir = path.resolve(__dirname, '../../../uploads');
+            //eslint-disable-next-line
+            const watermarkPath = path.resolve(__dirname, '../../../watermark.png');
+            //eslint-disable-next-line
+            const watermarkedDir = path.resolve(__dirname, '../../../uploads/watermarked');
+
             for (const file of req.files) {
-                // eslint-disable-next-line no-undef
-                const imagePath = path.join(__dirname, '../../../uploads', file.filename);
+                const imagePath = path.join(uploadDir, file.filename);
+
                 if (!fs.existsSync(imagePath)) {
                     console.error(`File not found: ${imagePath}`);
                     continue;
                 }
-                // eslint-disable-next-line no-undef
-                const watermarkPath = path.join(__dirname, '../../../watermark.png');
-                // eslint-disable-next-line no-undef
-                const outputPath = path.join(__dirname, '../../../uploads/watermarked', file.filename);
+
+                const outputPath = path.join(watermarkedDir, file.filename);
 
                 // Read the dimensions of the original image
                 const metadata = await sharp(imagePath).metadata();
-                const width = Math.floor(metadata.width / 4); // Use Math.floor to round down
-                const height = Math.floor(metadata.height / 4); 
-                
+                const width = Math.floor(metadata.width / 4);
+                const height = Math.floor(metadata.height / 4);
+
                 // Resize the watermark image to fit within the original image's dimensions
                 const watermarkBuffer = await sharp(watermarkPath)
                     .resize(width, height, {
-                        fit: 'inside', // This ensures the watermark fits within the original image dimensions
-                        withoutEnlargement: true // This ensures the watermark is not enlarged
+                        fit: 'inside',
+                        withoutEnlargement: true,
                     })
                     .toBuffer();
 
                 await sharp(imagePath)
-                    .composite([{ input: watermarkBuffer, gravity: 'center' }]) // Use the resized watermark
+                    .composite([{ input: watermarkBuffer, gravity: 'center' }])
                     .toFile(outputPath);
+                //eslint-disable-next-line
+                const relativeOriginalPath = path.relative(__dirname, imagePath);
+                //eslint-disable-next-line
+                const relativeWatermarkedPath = path.relative(__dirname, outputPath);
 
-                    file.originalPath = imagePath; // Add originalPath property
-                    file.watermarkedPath = outputPath; // Update path property to watermarkedPath
-                    file.originalFilename = file.filename; // Keep the original filename
-                    file.filename = 'watermarked_' + file.filename;
+                file.originalPath = relativeOriginalPath; // Store relative path
+                file.watermarkedPath = relativeWatermarkedPath; // Store relative path
+                file.originalFilename = file.filename; // Keep the original filename
+                file.filename = 'watermarked_' + file.filename;
             }
         } catch (error) {
             return next(error);
@@ -210,11 +218,23 @@ const viewSpecificAd = async (req, res, next) => {
 };
 
 
+//viwe all ads for admin
+const viewAllAdsForAdmin = async (req, res, next) => {
+    try {
+        const ads = await adsModel.find().sort('-publishedAt');
+        res.json(ads);
+    } catch (err) {
+        next(err);
+    }
+};
+
+
 module.exports = {
     createAd,
     addWatermark,
     viewAllAds,
     approved,
     viewSpecificAd,
+    viewAllAdsForAdmin,
     upload
 };

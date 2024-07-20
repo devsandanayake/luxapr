@@ -3,11 +3,15 @@ const bcrypt = require('bcryptjs');
 const process = require('process');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const moment = require('moment-timezone');
 dotenv.config();
 
 // Create a new user in the database
 const createUser = async (req, res, next) => {
     try {
+        const now = moment.tz('Asia/Colombo');
+        const formattedDate = now.format('YYYY-MM-DD HH:mm:ss');
+
         const { username, firstName, lastName, email, password, contactNumber } = req.body;
 
         // Input validation (basic example, consider using a library like Joi)
@@ -29,7 +33,8 @@ const createUser = async (req, res, next) => {
             password: hashedPassword,
             contactNumber,
             firstName,
-            lastName
+            lastName,
+            registerDate: formattedDate
         });
 
         await newUser.save();
@@ -59,7 +64,8 @@ const loginUser = async (req, res, next) => {
 
         const payload = {
             username: user.username,
-            firstName: user.firstName
+            firstName: user.firstName,
+            role: user.role
         };
 
         // Sign the token with a more readable expiresIn value
