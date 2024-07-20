@@ -195,10 +195,26 @@ const approved = async (req,res,next) => {
 }
 
 
+//view sepciific ads
+const viewSpecificAd = async (req, res, next) => {
+    try {
+        const adCode = req.params.adCode;
+        const ad = await adsModel.findOne({ adCode: adCode, status: 1 });
+        if (!ad) {
+            return next({ status: 404, message: 'Ad not found or not available' });
+        }
+        res.json(ad);
+    } catch (err) {
+        next(err);
+    }
+};
+
+
 module.exports = {
     createAd,
     addWatermark,
     viewAllAds,
     approved,
+    viewSpecificAd,
     upload
 };
