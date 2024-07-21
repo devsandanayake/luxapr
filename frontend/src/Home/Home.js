@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import Apartment1 from '../Images/ap1.jpg';
 import Apartment2 from '../Images/ap2.jpg';
@@ -87,7 +88,11 @@ export default function Home() {
       <div className='w-full flex justify-center items-center mt-3'>
   <div className="w-full ml-2 mr-2 p-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
     {apartments.map((apartment) => (
-      <div key={apartment._id} className="apartment-card flex flex-col sm:flex-row border-2 border-gold p-2 hover:transform hover:scale-105 transition-transform duration-300 ease-in-out">
+      <Link 
+        key={apartment._id} 
+        to={`/viewapartment?adCode=${apartment.adCode}`} 
+        className="apartment-card flex flex-col sm:flex-row border-2 border-gold p-2 hover:transform hover:scale-102 transition-transform duration-300 ease-in-out"
+      >
         {apartment.originImages && apartment.originImages.length > 0 ? (
           <img
             src={`http://localhost:8005/uploads/${apartment.originImages[0].split('\\').pop()}`}
@@ -103,7 +108,7 @@ export default function Home() {
           <p className='text-md'>{apartment.description}</p>
           <p className='text-md'>{apartment.price}</p>
         </div>
-      </div>
+      </Link>
     ))}
   </div>
 </div>
