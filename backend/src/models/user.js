@@ -1,4 +1,5 @@
  const mongoose = require('mongoose');
+const auctionService = require('./auctionService');
 
  const UserSchema = new mongoose.Schema({
     username: {
@@ -34,6 +35,10 @@
         type: String,
         required: true,
     },
+    auctionService: {
+        type: [auctionService.schema],
+        default: []
+    }
 });
 
 module.exports =  mongoose.model('users', UserSchema);
