@@ -85,6 +85,10 @@ const adsSchema =  new mongoose.Schema({
     publishedAt:{
         type:String,
         required:true,
+    },
+    auctionStatus:{
+        type:Boolean,
+        default:false
     }
 });
 
