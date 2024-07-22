@@ -15,17 +15,18 @@ import ViewApartment from './Apartments/ViewApartment';
 function App() {
   return (
     <BrowserRouter>
-    <NavBar />
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/contactus" element={<ContactUs />} />
-      <Route path="/addapartment" element={<AddApartment />} />
-      <Route path="/viewapartment" element={<ViewApartment />} />
-    </Routes>
-  </BrowserRouter>
-
+      <NavBar />
+      <div className="mt-16"> {/* Adjust the padding-top to match the navbar height */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/contactus" element={<ContactUs />} />
+          <Route path="/addapartment" element={<AddApartment />} />
+          <Route path="/viewapartment" element={<ViewApartment />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

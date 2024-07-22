@@ -9,7 +9,6 @@
 .slider-image {
   width: 100%;
   object-fit: cover; /* Ensures the image covers the container without stretching */
-  filter: brightness(0.2); /* Reduces the brightness to 80% */
 }
 
 .slider-title {
@@ -51,9 +50,17 @@
   
   .apartment-card {
     transition: transform 0.3s ease-in-out;
+    width: 450px;
   }
   
   .apartment-card:hover {
     transform: scale(1.02);
   }
   
+  .apartment-image {
+    width: 400px;
+    height: 200px;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+  }

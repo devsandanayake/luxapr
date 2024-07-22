@@ -9,19 +9,18 @@ export default function NavBar() {
 
   return (
 	<nav
-	  className="luxury-navbar p-4 flex items-center justify-between bg-dark-blue"
-	  style={{
+	className="luxury-navbar p-4 flex items-center justify-between bg-white fixed top-0 w-full z-50 opacity-80"
+	style={{
 		height: isOpen ? 'auto' : '60px',
-		borderBottom: '4px solid gold',
-	  }}
+	}}
 	>
-	  <div className="text-white text-xl font-bold">
+	  <div className="text-xl font-bold">
 		<a href="#">LXApartment</a>
 	  </div>
 	  <div className="block lg:hidden">
 		<button
 		  onClick={toggleMenu}
-		  className="menu-toggle text-white focus:outline-none"
+		  className="menu-toggle text-black focus:outline-none"
 		>
 		  <svg
 			className="w-6 h-6"
@@ -40,25 +39,25 @@ export default function NavBar() {
 		</button>
 	  </div>
 	  <ul
-		className={`text-white ${isOpen ? 'block' : 'hidden'} lg:flex lg:space-x-6 lg:block`}
+		className={`text-black ${isOpen ? 'block' : 'hidden'} lg:flex lg:space-x-8 lg:block`}
 	  >
 		<li>
-		  <a href="/" className="nav-link hover:text-gold">
+		  <a href="/" className="nav-link hover:font-bold">
 			Home
 		  </a>
 		</li>
 		<li>
-		  <a href="#" className="nav-link hover:text-gold">
+		  <a href="#" className="nav-link hover:font-bold">
 			About
 		  </a>
 		</li>
 		<li>
-		  <a href="/contactus" className="nav-link hover:text-gold">
+		  <a href="/contactus" className="nav-link hover:font-bold">
 			Contact US
 		  </a>
 		</li>
 		<li>
-		  <a href="/login" className="nav-link hover:text-gold">
+		  <a href="/login" className="nav-link hover:font-bold">
 			Login
 		  </a>
 		</li>

@@ -22,29 +22,29 @@ export default function Home() {
     autoplaySpeed: 3000,
   };
 
-  const sectionRef = useRef(null);
+  // const sectionRef = useRef(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const section = sectionRef.current;
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const section = sectionRef.current;
+  //     const scrollY = window.scrollY;
+  //     const windowHeight = window.innerHeight;
       
-      if (scrollY >= windowHeight) {
-        section.classList.add('visible');
-      } else {
-        section.classList.remove('visible');
-      }
+  //     if (scrollY >= windowHeight) {
+  //       section.classList.add('visible');
+  //     } else {
+  //       section.classList.remove('visible');
+  //     }
 
-      section.style.opacity = Math.min(scrollY / windowHeight, 1);
-    };
+  //     section.style.opacity = Math.min(scrollY / windowHeight, 1);
+  //   };
 
-    window.addEventListener('scroll', handleScroll);
+  //   window.addEventListener('scroll', handleScroll);
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
 
   const [apartments, setApartments] = useState([]);
 
@@ -81,37 +81,37 @@ export default function Home() {
       </Slider>
     </div>
 
-    <div ref={sectionRef} className="browse-apartments-section">
+    {/* <div ref={sectionRef} className="browse-apartments-section">
         <h1>Browse Apartments</h1>
-      </div>
+      </div> */}
 
-      <div className='w-full flex justify-center items-center mt-3'>
-  <div className="w-full ml-2 mr-2 p-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-    {apartments.map((apartment) => (
-      <Link 
-        key={apartment._id} 
-        to={`/viewapartment?adCode=${apartment.adCode}`} 
-        className="apartment-card flex flex-col sm:flex-row border-2 border-gold p-2 hover:transform hover:scale-102 transition-transform duration-300 ease-in-out"
-      >
-        {apartment.originImages && apartment.originImages.length > 0 ? (
-          <img
-            src={`http://localhost:8005/uploads/${apartment.originImages[0].split('\\').pop()}`}
-            alt={apartment.name}
-            className="apartment-image w-full sm:w-1/2 lg:w-6/12 object-cover"
-          />
-        ) : (
-          <img src={Apartment1} alt="Default Apartment" className="apartment-image w-full sm:w-1/2 lg:w-5/12 object-cover" />
-        )}
-        <div className="flex-1 ml-0 sm:ml-4 mt-2 sm:mt-0">
-          <h3 className='text-xl font-bold'>{apartment.title}</h3>
-          <p className='text-md'>{apartment.address}</p>
-          <p className='text-md'>{apartment.description}</p>
-          <p className='text-md'>{apartment.price}</p>
+      <div className='flex justify-center items-center mt-3'>
+        <div className="ml-2 mr-2 p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {apartments.map((apartment) => (
+            <Link 
+              key={apartment._id} 
+              to={`/viewapartment?adCode=${apartment.adCode}`} 
+              className="apartment-card p-2 shadow-2xl hover:transform hover:scale-102 transition-transform duration-300 ease-in-out"
+            >
+              {apartment.images && apartment.images.length > 0 ? (
+                <img
+                  src={`http://localhost:8005/uploads/${apartment.images[0].split('\\').pop()}`}
+                  alt={apartment.name}
+                  className="apartment-image object-cover"
+                />
+              ) : (
+                <img src={Apartment1} alt="Default Apartment" className="apartment-image w-full object-cover" />
+              )}
+              <div className="flex-1 mt-2">
+                <div className='text-xl text-center font-bold font-playfair'>{apartment.title}</div>
+                <p className='text-md'>{apartment.address}</p>
+                <p className='text-md'>{apartment.description}</p>
+                <p className='text-md'>{apartment.price}</p>
+              </div>
+            </Link>
+          ))}
         </div>
-      </Link>
-    ))}
-  </div>
-</div>
+      </div>
 
 
 
