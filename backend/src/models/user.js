@@ -1,5 +1,4 @@
  const mongoose = require('mongoose');
-const auctionService = require('./auctionService');
 
  const UserSchema = new mongoose.Schema({
     username: {
@@ -34,10 +33,6 @@ const auctionService = require('./auctionService');
     registerDate: {
         type: String,
         required: true,
-    },
-    auctionService: {
-        type: [auctionService.schema],
-        default: []
     }
 });
 
