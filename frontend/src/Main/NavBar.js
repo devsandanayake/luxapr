@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './NavBar.css';
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,55 +10,57 @@ export default function NavBar() {
 
   return (
 	<nav
-	className="luxury-navbar p-4 flex items-center justify-between bg-white fixed top-0 w-full z-50 opacity-80"
-	style={{
+	  className="luxury-navbar p-4 flex items-center justify-between bg-white fixed top-0 w-full z-50 opacity-90"
+	  style={{
 		height: isOpen ? 'auto' : '60px',
-	}}
+	  }}
 	>
-	  <div className="text-xl font-bold">
-		<a href="#">LXApartment</a>
-	  </div>
-	  <div className="block lg:hidden">
-		<button
-		  onClick={toggleMenu}
-		  className="menu-toggle text-black focus:outline-none"
-		>
-		  <svg
-			className="w-6 h-6"
-			fill="none"
-			stroke="currentColor"
-			viewBox="0 0 24 24"
-			xmlns="http://www.w3.org/2000/svg"
+	  <div className='flex flex-row w-full items-center flex-nowrap'>
+		<div className="text-xl font-bold">
+		  <a href="#">LXApartment</a>
+		</div>
+		<div className="block lg:hidden ml-auto">
+		  <button
+			onClick={toggleMenu}
+			className="menu-toggle text-black focus:outline-none"
 		  >
-			<path
-			  strokeLinecap="round"
-			  strokeLinejoin="round"
-			  strokeWidth="2"
-			  d="M4 6h16M4 12h16m-7 6h7"
-			></path>
-		  </svg>
-		</button>
+			<svg
+			  className="w-6 h-6"
+			  fill="none"
+			  stroke="currentColor"
+			  viewBox="0 0 24 24"
+			  xmlns="http://www.w3.org/2000/svg"
+			>
+			  <path
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="2"
+				d="M4 6h16M4 12h16m-7 6h7"
+			  ></path>
+			</svg>
+		  </button>
+		</div>
 	  </div>
 	  <ul
-		className={`text-black ${isOpen ? 'block' : 'hidden'} lg:flex lg:space-x-8 lg:block`}
+		className={`text-black ${isOpen ? 'block' : 'hidden'} lg:flex lg:space-x-8 lg:block flex-col lg:flex-row`}
 	  >
 		<li>
-		  <a href="/" className="nav-link hover:font-bold">
+		  <a href="/" className="nav-link font-archivo-thin">
 			Home
 		  </a>
 		</li>
 		<li>
-		  <a href="#" className="nav-link hover:font-bold">
+		  <a href="#" className="nav-link font-archivo-thin">
 			About
 		  </a>
 		</li>
 		<li>
-		  <a href="/contactus" className="nav-link hover:font-bold">
+		  <a href="/contactus" className="nav-link font-archivo-thin">
 			Contact US
 		  </a>
 		</li>
 		<li>
-		  <a href="/login" className="nav-link hover:font-bold">
+		  <a href="/login" className="nav-link font-archivo-thin">
 			Login
 		  </a>
 		</li>
