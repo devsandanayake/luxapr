@@ -7,6 +7,7 @@ import Apartment3 from '../Images/ap3.jpg';
 import axios from 'axios';
 import axiosInstance from '../axiosConfig';
 import './Home.css';
+ 
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -111,6 +112,7 @@ export default function Home() {
             </Link>
           ))}
         </div>
+   
       </div>
 
 

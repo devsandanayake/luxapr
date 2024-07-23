@@ -11,6 +11,7 @@ import SignUp from './Login/SignUp';
 import ContactUs from './ContactUs/ContactUs';
 import AddApartment from './Apartments/AddApartment';
 import ViewApartment from './Apartments/ViewApartment';
+import Footer from './Main/Footer';
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
           <Route path="/viewapartment" element={<ViewApartment />} />
         </Routes>
       </div>
+      <Footer />
+
     </BrowserRouter>
   );
 }

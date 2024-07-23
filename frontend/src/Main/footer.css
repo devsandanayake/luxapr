@@ -1,0 +1,94 @@
+ 
+.scroll-to-top-button {
+ 
+ 
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 50px;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  /* Add this CSS to your stylesheet */
+  .text-underline {
+    position: relative;
+    display: inline-block;
+   
+  }
+  
+  .text-underline:hover:after {
+    content: "";
+    position: absolute;
+    bottom: -3px; /* Adjust the value to change the underline position */
+    left: 0;
+    width: 50%;
+    height: 2px; /* Adjust the value to change the underline thickness */
+    background-color: teal; /* Adjust the color to your preference */
+  }
+  
+  .footerimg {
+    position: relative;
+    background-attachment: fixed;
+    /* Ensure the container has a relative position */
+    background-image: url("./6218064.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+   
+   
+  }
+  
+  .footerimg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(1px);
+     
+  }
+  
+  
+  
+  /* Apply the "text-underline" class to the relevant elements */
+  
+  .scroll-to-top-button {
+  
+  
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 50px;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  }
+  
+  
+  .icon-container {
+  display: inline-block;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .icon-container:hover {
+    /* Change this to the desired background color on hover */
+  transform: rotate(10deg); /* Rotate the icon on hover */
+  }
+  
+  .icon-container span {
+  transition: transform 0.3s ease;
+  }
+  
+  .icon-container:hover span {
+  transform: rotate(-10deg); /* Rotate the icon on hover */
+  }
+   
