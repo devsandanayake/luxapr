@@ -30,8 +30,8 @@ app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
 app.use('/uploads/watermarked', express.static(path.join(__dirname, '../../uploads/watermarked')));
 
 //IMPORT ROUTES
-const userRoutes = require('./routes/user');
-const adRoutes = require('./routes/ads');
+const userRoutes = require('./routes/userRoutes');
+const adRoutes = require('./routes/adsRoutes');
 
 //API routes
 app.use('/api/users', userRoutes);
