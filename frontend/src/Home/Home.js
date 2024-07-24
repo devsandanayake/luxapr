@@ -7,7 +7,8 @@ import Apartment3 from '../Images/ap3.jpg';
 import axios from 'axios';
 import axiosInstance from '../axiosConfig';
 import './Home.css';
- 
+import background from '../Images/bg2.jpg';
+import SriLanka from '../Images/SriLanka.jpg';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -19,33 +20,9 @@ export default function Home() {
     slidesToShow: 1,
     slidesToScroll: 1,
     adaptiveHeight: false,
-    autoplay: true, 
+    autoplay: true,
     autoplaySpeed: 3000,
   };
-
-  // const sectionRef = useRef(null);
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const section = sectionRef.current;
-  //     const scrollY = window.scrollY;
-  //     const windowHeight = window.innerHeight;
-      
-  //     if (scrollY >= windowHeight) {
-  //       section.classList.add('visible');
-  //     } else {
-  //       section.classList.remove('visible');
-  //     }
-
-  //     section.style.opacity = Math.min(scrollY / windowHeight, 1);
-  //   };
-
-  //   window.addEventListener('scroll', handleScroll);
-
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
 
   const [apartments, setApartments] = useState([]);
 
@@ -62,31 +39,57 @@ export default function Home() {
     fetchApartments();
   }, []);
 
-
   return (
     <>
-    <div className="slider-container" style={{ height: 'calc(100vh - 60px)', overflow: 'hidden' }}>
-      <div className="slider-title">
+      <div className="slider-container" style={{ height: 'calc(100vh - 60px)', overflow: 'hidden' }}>
+        <div className="slider-title">
           Discover and Own Your Dream Luxury Apartment
         </div>
-      <Slider {...settings}>
-        <div>
-          <img src={Apartment1} alt="Apartment 1" style={{ width: '100vw', height: '100vh', objectFit: 'cover',filter: 'brightness(0.4)'  }} />
-        </div>
-        <div>
-          <img src={Apartment2} alt="Apartment 2" style={{ width: '100vw', height: '100vh', objectFit: 'cover',filter: 'brightness(0.4)' }} />
-        </div>
-        <div>
-          <img src={Apartment3} alt="Apartment 3" style={{ width: '100vw', height: '100vh', objectFit: 'cover',filter: 'brightness(0.4)' }} />
-        </div>
-      </Slider>
-    </div>
+        <Slider {...settings}>
+          <div>
+            <img src={Apartment1} alt="Apartment 1" style={{ width: '100vw', height: '100vh', objectFit: 'cover', filter: 'brightness(0.4)' }} />
+          </div>
+          <div>
+            <img src={Apartment2} alt="Apartment 2" style={{ width: '100vw', height: '100vh', objectFit: 'cover', filter: 'brightness(0.4)' }} />
+          </div>
+          <div>
+            <img src={Apartment3} alt="Apartment 3" style={{ width: '100vw', height: '100vh', objectFit: 'cover', filter: 'brightness(0.4)' }} />
+          </div>
+        </Slider>
+        
+        
+        {/* Include the luxury living details here */}
+        <div className="luxury-living-container">
+          <div className="luxury-living-title">Welcome to Your Luxury Living Experience in Sri Lanka</div>
+          <div className="luxury-living-content flex">
+            <div className="luxury-living-text">
+              <p className="luxury-living-description">
 
-    {/* <div ref={sectionRef} className="browse-apartments-section">
-        <h1>Browse Apartments</h1>
-      </div> */}
+              Welcome to Your Luxury Living Experience in Sri Lanka
 
-      <div className='flex justify-center items-center mt-3'>
+Discover luxury living with our exclusive high-end apartments for sale and rent across Sri Lanka. Whether you prefer beachfront serenity, city vibrancy, or hillside tranquility, we offer diverse apartments to meet your desires.              </p>
+              <p className="luxury-living-description">
+              Our meticulously designed apartments provide the highest standards of comfort, style, and sophistication. Enjoy state-of-the-art amenities, breathtaking views, exquisite interiors, and premium finishes—each apartment is a testament to modern elegance and quality.              </p>
+              <p className="luxury-living-description">
+              Explore our collection and find your dream home in Sri Lanka's most coveted locations. Whether you're looking to invest, relocate, or simply indulge in a lavish lifestyle, we are here to make your real estate journey seamless and exceptional.
+              </p>
+              <p className="luxury-living-description font-bold">
+                Experience luxury like never before. Welcome home.
+              </p>
+            </div>
+            <div className="luxury-living-image">
+              <img src={SriLanka} alt="Sri Lanka" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className='background'>
+      </div>
+
+      
+
+      <div className='flex justify-center items-center'>
         <div className="ml-2 mr-2 p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {apartments.map((apartment) => (
             <Link 
@@ -112,12 +115,7 @@ export default function Home() {
             </Link>
           ))}
         </div>
-   
       </div>
-
-
-
-
     </>
   );
 }

@@ -11,56 +11,267 @@
   object-fit: cover; /* Ensures the image covers the container without stretching */
 }
 
-.slider-title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 3.5rem;
-    text-align: center;
-    z-index: 1;
-    font-family: 'Georgia', serif; /* Change to a more premium font */
-    letter-spacing: 0.05rem; /* Add some letter spacing */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow */
-    -webkit-text-stroke: 0.5px #001f3f;
-  }
-
-
-  .browse-apartments-section {
-    height: 100vh;
-    font-family: 'Georgia', serif; /* Change to a more premium font */
-    background-color: #001f3f; /* Dark blue background */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+@keyframes fadeIn {
+  from {
     opacity: 0;
-    transition: opacity 1s ease-out, transform 1s ease-out;
   }
-  
-  .browse-apartments-section.visible {
+  to {
     opacity: 1;
-    transform: translateY(0);
   }
-  
-  .browse-apartments-section h1 {
-    color: gold;
+}
+
+.slider-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 3.5rem;
+  text-align: center;
+  z-index: 1;
+  font-family: 'Georgia', serif; /* Consider changing to a more premium font */
+  letter-spacing: 0.05rem; /* Adds some letter spacing */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Adds a subtle text shadow */
+  -webkit-text-stroke: 0.5px #001f3f;
+  animation: fadeIn 3s ease-out; /* Apply the animation */
+}
+
+@keyframes slideUp {
+  from {
+    top: 110vh;
+  }
+  to {
+    top: 98vh;
+  }
+}
+
+.luxury-living-container {
+  position: absolute;
+  top: 98vh; /* Adjust as necessary */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  width: 80%; /* Adjust as necessary */
+  max-width: 1000px; /* Adjust as necessary */
+  animation: slideUp 4s ease-out forwards; /* Apply the animation */
+}
+
+.luxury-living-title {
+  font-size: 2.5rem;
+  font-family: 'Georgia', serif;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.luxury-living-description {
+  font-size: 1rem;
+  font-family: 'Archivo Thin', 'Georgia', serif;
+  margin-bottom: 0.5rem;
+  margin-top: 10px;
+  line-height: 1.8; /* Increased line spacing */
+}
+
+.luxury-living-link {
+  color: #001f3f;
+  text-decoration: none;
+  font-size: 1rem;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+}
+
+.luxury-living-image {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.luxury-living-img {
+  height: 300px;
+  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .luxury-living-title {
+    font-size: 2.5rem; /* Adjusted size */
+  }
+}
+
+@media (max-width: 992px) {
+  .luxury-living-title {
+    font-size: 2.2rem; /* Adjusted size */
+  }
+}
+
+@media (max-width: 768px) {
+  .luxury-living-title {
+    font-size: 2rem; /* Adjusted size */
+  }
+}
+
+@media (max-width: 576px) {
+  .luxury-living-title {
+    font-size: 1.8rem; /* Adjusted size */
+  }
+}
+
+@media (max-width: 768px) {
+  .luxury-living-container {
+    padding: 0.5rem;
+  }
+
+  .luxury-living-content {
+    display: block;
+  }
+
+  .luxury-living-img {
+    height: 200px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .luxury-living-img {
+    height: 150px;
+    width: 100%;
+  }
+}
+
+
+
+
+
+@media (max-width: 1200px) {
+  .slider-title {
     font-size: 3rem;
   }
-  
-  .apartment-card {
-    transition: transform 0.3s ease-in-out;
-    width: 450px;
+}
+
+@media (max-width: 992px) {
+  .slider-title {
+    font-size: 2.7rem;
   }
-  
-  .apartment-card:hover {
-    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+  .slider-title {
+    font-size: 2.5rem;
   }
-  
-  .apartment-image {
-    width: 400px;
-    height: 200px;
-    object-fit: cover;
-    margin-left: auto;
-    margin-right: auto;
+}
+
+@media (max-width: 576px) {
+  .slider-title {
+    font-size: 2.3rem;
   }
+}
+
+
+
+.browse-apartments-section {
+  height: 100vh;
+  font-family: 'Georgia', serif; /* Change to a more premium font */
+  background-color: #001f3f; /* Dark blue background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.browse-apartments-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.browse-apartments-section h1 {
+  color: gold;
+  font-size: 3rem;
+}
+
+.apartment-card {
+  transition: transform 0.3s ease-in-out;
+  width: 450px;
+}
+
+.apartment-card:hover {
+  transform: scale(1.02);
+}
+
+.apartment-image {
+  width: 400px;
+  height: 200px;
+  object-fit: cover;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.luxury-living-image img {
+  max-width: 60%; /* Ensures the image is not larger than its container */
+  height: auto; /* Maintains the aspect ratio */
+  
+}
+
+/* Adjustments for different screen sizes */
+@media (max-width: 1200px) {
+  .luxury-living-image img {
+    width: 60%; /* Reduces the image size on smaller screens */
+  }
+}
+
+@media (max-width: 992px) {
+  .luxury-living-image img {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .luxury-living-image img {
+    width: 40%;
+  }
+}
+
+@media (max-width: 576px) {
+  .luxury-living-image img {
+    width: 30%;
+  }
+}
+
+.background{
+  background-image: url('../Images/bg2.jpg');
+  background-size: cover;
+  height: 680px;
+  
+}
+
+@media (max-width: 1200px) {
+  .background {
+    height: 600px;
+  }
+}
+
+@media (max-width: 992px) {
+  .background {
+    height: 800px;
+  }
+}
+
+@media (max-width: 768px) {
+  .background {
+    height: 920px;
+  }
+}
+
+@media (max-width: 576px) {
+  .background {
+    height: 950px;
+  }
+}
+
+
+
+
