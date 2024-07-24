@@ -63,11 +63,35 @@ const editAds = async (req, res, next) => {
     }
 };
 
+const openForBidding = async (req, res, next) => {
+    try {
+        const adCode = req.body.adCode;
+        const ad = await adsService.openForBidding(adCode);
+        res.json({ message: "Ad is now open for bidding", ad });
+    } catch (err) {
+        next(err);
+    }
+}
+
+
+const updateAuctionDetails = async (req, res, next) => {
+    try {
+        const adCode = req.body.adCode;
+        const { startDate, endDate, startPrice, maxRate } = req.body;
+        const ad = await adsService.updateAuctionDetails(adCode, startDate, endDate, startPrice, maxRate);
+        res.json({ message: "Auction details updated successfully", ad });
+    } catch (err) {
+        next(err);
+    }
+}
+
 module.exports = {
     createAd,
     viewAllAds,
     approved,
     viewSpecificAd,
     viewAllAdsForAdmin,
-    editAds
+    editAds,
+    openForBidding,
+    updateAuctionDetails
 };

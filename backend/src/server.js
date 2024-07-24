@@ -32,10 +32,12 @@ app.use('/uploads/watermarked', express.static(path.join(__dirname, '../../uploa
 //IMPORT ROUTES
 const userRoutes = require('./routes/userRoutes');
 const adRoutes = require('./routes/adsRoutes');
+const auctionRegRoutes = require('./routes/auctionRegRoutes');
 
 //API routes
 app.use('/api/users', userRoutes);
 app.use('/api/ads', adRoutes);
+app.use('/api/auction', auctionRegRoutes);
 
 // Basic route
 app.get('/', (req, res) => {

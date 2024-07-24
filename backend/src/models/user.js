@@ -1,4 +1,4 @@
- const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
  const UserSchema = new mongoose.Schema({
     username: {
@@ -33,6 +33,9 @@
     registerDate: {
         type: String,
         required: true,
+    },
+    auctionID:{
+        type: [String],
     }
 });
 

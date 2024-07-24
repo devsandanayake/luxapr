@@ -14,33 +14,19 @@ const adsSchema =  new mongoose.Schema({
         type:String
  
     },
+    districts:{
+        type:String
+    },
+    areas:{
+        type:String
+    },
     address:{
-        type:String,
- 
-    },
-    streetNumber:{
-        type:String,
- 
-    },
-    area:{
-        type:String,
- 
-    },
-    city:{
-        type:String,
- 
-    },
-    district:{
-        type:String,
- 
-    },
-    province:{
-        type:String,
- 
-    },
-    country:{
-        type:String,
- 
+         street:{
+            type:String
+         },
+         postCode:{
+            type:String
+         }
     },
     description:{
         type:String
@@ -64,13 +50,8 @@ const adsSchema =  new mongoose.Schema({
         type:String,
  
     },
-    typeOfPro:{
-        type:String,
- 
-    },
     transactionType:{
         type:String,
- 
     },
     images:{
         type:[String]
@@ -87,8 +68,29 @@ const adsSchema =  new mongoose.Schema({
         required:true,
     },
     auctionStatus:{
-        type:Boolean,
-        default:false
+         status:{
+            type:Boolean,
+            default:false,
+         },
+         auctionID:{
+            type:String,
+         },  
+         startPrice:{
+            type:Number,
+         },
+         startDate:{
+            type:String,
+         },
+         endDate:{
+            type:String,
+         },
+         maxRate:{
+            type:Number,
+         },
+         currentRate:{
+            type:Number,
+         },
+
     }
 });
 

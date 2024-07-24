@@ -17,6 +17,7 @@ const generateUniqueADcode = async (prefix) => {
     return adCode;
 };
 
+
 const createAd = async (user, adData, files) => {
     const adCode = await generateUniqueADcode(user);
     const imagePaths = files.map(file => file.watermarkedPath);
@@ -68,11 +69,58 @@ const editAds = async (adCode, adData) => {
     return await AdsModel.findOneAndUpdate({ adCode }, adData, { new: true });
 };
 
+
+// open for bidding
+const openForBidding = async (adCode) => {
+    const ad = await AdsModel.findOne({ adCode });
+    if (!ad) {
+        throw new Error('Ad not found');
+    }
+    if (ad.status !== 1) {
+        throw new Error('Ad is not approved');
+    }
+
+
+    return await AdsModel.findOneAndUpdate({ adCode }, {
+        'auctionStatus.status': true,
+        'auctionStatus.auctionID': `AU${adCode}`
+
+    }, { new: true });
+}
+
+//update startdate and max value for auction
+const updateAuctionDetails = async (adCode, startDate,endDate, startPrice,maxRate ) => {
+    const ad = await AdsModel.findOne({ adCode });
+    if (!ad) {
+        throw new Error('Ad not found');
+    }
+    if (ad.status !== 1) {
+        throw new Error('Ad is not approved');
+    }
+    if (!ad.auctionStatus.status) {
+        throw new Error('Ad is not open for bidding');
+    }
+
+    return await AdsModel.findOneAndUpdate({ adCode }, {
+        'auctionStatus.startDate': startDate,
+        'auctionStatus.endDate': endDate,
+        'auctionStatus.maxRate': maxRate,
+        'auctionStatus.startPrice': startPrice,
+        'auctionStatus.currentRate': startPrice
+
+    }, { new: true });
+}
+
+
+
+
 module.exports = {
     createAd,
     viewAllAds,
     approved,
     viewSpecificAd,
     viewAllAdsForAdmin,
-    editAds
+    editAds,
+    openForBidding,
+    updateAuctionDetails
 };
