@@ -1,0 +1,29 @@
+# Use an official Node.js runtime as a parent image
+FROM node:20-alpine
+
+# Set the working directory
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application files
+COPY . .
+
+# Create a directory for file uploads and set appropriate permissions
+RUN mkdir -p /usr/src/uploads && chown -R node:node /usr/src/uploads
+
+# Create a directory for file uploads and set appropriate permissions
+RUN mkdir -p /usr/src/uploads/watermarked && chown -R node:node /usr/src/uploads/watermarked
+
+# Use a non-root user for security reasons
+USER node
+
+# Expose the port the app runs on
+EXPOSE 8081
+
+# Define the command to run the app
+CMD ["npm", "start"]

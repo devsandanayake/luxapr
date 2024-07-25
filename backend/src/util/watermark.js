@@ -6,7 +6,7 @@ const addWatermark = async (files) => {
      //eslint-disable-next-line
     const uploadDir = path.resolve(__dirname, '../../../uploads');
      //eslint-disable-next-line
-    const watermarkPath = path.resolve(__dirname, '../../../watermark.png');
+    const watermarkPath = path.resolve(__dirname, '../watermark.png');
      //eslint-disable-next-line
     const watermarkedDir = path.resolve(__dirname, '../../../uploads/watermarked');
 
