@@ -20,7 +20,7 @@ RUN mkdir -p /usr/src/uploads && chown -R node:node /usr/src/uploads
 RUN mkdir -p /usr/src/uploads/watermarked && chown -R node:node /usr/src/uploads/watermarked
 
 # Use a non-root user for security reasons
-USER node
+# USER node
 
 # Expose the port the app runs on
 EXPOSE 8081
