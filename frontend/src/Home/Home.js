@@ -8,7 +8,10 @@ import axios from 'axios';
 import axiosInstance from '../axiosConfig';
 import './Home.css';
 import background from '../Images/bg2.jpg';
-import SriLanka from '../Images/SriLanka.jpg';
+import SriLanka from '../Images/SriLanka.png';
+import { FaArrowRight } from "react-icons/fa";
+import ApartmentCard from '../ApartmentCard/ApartmentCard';
+
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -89,33 +92,69 @@ Discover luxury living with our exclusive high-end apartments for sale and rent 
 
       
 
-      <div className='flex justify-center items-center'>
-        <div className="ml-2 mr-2 p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {apartments.map((apartment) => (
-            <Link 
-              key={apartment._id} 
-              to={`/viewapartment?adCode=${apartment.adCode}`} 
-              className="apartment-card p-2 shadow-2xl hover:transform hover:scale-102 transition-transform duration-300 ease-in-out"
-            >
-              {apartment.images && apartment.images.length > 0 ? (
-                <img
-                  src={`http://localhost:8005/uploads/${apartment.images[0].split('\\').pop()}`}
-                  alt={apartment.name}
-                  className="apartment-image object-cover"
-                />
-              ) : (
-                <img src={Apartment1} alt="Default Apartment" className="apartment-image w-full object-cover" />
-              )}
-              <div className="flex-1 mt-2">
-                <div className='text-xl text-center font-bold font-playfair'>{apartment.title}</div>
-                <p className='text-md'>{apartment.address}</p>
-                <p className='text-md'>{apartment.description}</p>
-                <p className='text-md'>{apartment.price}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
+
+    <div className='text-3xl p-2' style={{ fontFamily: 'Georgia, serif' }}>
+      Find Your Luxury Apartments
+    </div>
+
+    <div class="booking-form-container">
+  <div class="booking-form">
+    <div class="booking-field">
+      <label for="location">Location</label>
+      <input type="text" id="location" name="location" placeholder="Enter location" />
+    </div>
+    <div class="booking-field">
+      <label for="Period">Period</label>
+      <input type="text" id="Period" name="Period" placeholder="Enter Period" />
+    </div>
+    <div class="booking-field">
+      <label for="checkin">Check In</label>
+      <input type="text" id="checkin" name="checkin" placeholder="dd-----yyyy" />
+    </div>
+    <div class="booking-field">
+      <label for="checkout">Check Out</label>
+      <input type="text" id="checkout" name="checkout" placeholder="dd-----yyyy" />
+    </div>
+    <div class="booking-field">
+      <label for="room">Room</label>
+      <select id="room" name="room">
+        <option value="1">1 Room</option>
+        <option value="2">2 Rooms</option>
+        <option value="3">3 Rooms</option>
+        <option value="4">4 Rooms</option>
+        <option value="5">5 Rooms</option>
+      </select>
+    </div>
+    <div class="booking-button">
+      <button type="button">CHECK NOW</button>
+    </div>
+  </div>
+</div>
+
+<div class="auction-description">
+  <p class="auction-text">
+    We also have an auction for the apartments where users can browse and place bids on their desired properties. Experience the excitement of finding your dream home at a great price!
+  </p>
+  <button type="button" class="auction-button">Go to Auction <FaArrowRight /></button>
+</div>
+
+
+  <div className='text-3xl p-2' style={{ fontFamily: 'Georgia, serif' }}>
+      Our Apartments
+  </div>
+
+
+
+  <div className="apartment-list">
+        {apartments.map(apartment => (
+          <ApartmentCard key={apartment.id} apartment={apartment} />
+        ))}
       </div>
+      
+  <div className='background'>
+      </div>
+
+
     </>
   );
 }
