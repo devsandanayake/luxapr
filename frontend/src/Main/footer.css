@@ -128,6 +128,41 @@
   color: #d4af37;
 }
 
+.scroll-to-top-button-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: transparent; /* Ensure the container background is transparent */
+}
+
+.scroll-to-top-button {
+  background-color: #d4af37;
+  color: #fff;
+  border-radius: 50%; /* Ensure it's a perfect circle */
+  width: 60px; /* Adjusted for better visibility */
+  height: 60px; /* Adjusted for better visibility */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow to blend with dark background */
+  border: none; /* Remove any default border */
+  outline: none; /* Remove any default outline */
+}
+
+.scroll-to-top-button:hover {
+  background-color: #b08a1e; /* Darken on hover for better visual feedback */
+}
+
+.scroll-to-top-button:focus {
+  outline: none; /* Ensure no outline appears on focus */
+}
+
+
+
+
 /* Responsive Styles */
 @media (max-width: 768px) {
   .footer-container {

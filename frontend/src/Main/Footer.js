@@ -1,11 +1,13 @@
 import React from 'react';
 import './footer.css'; // Import the CSS file for styling
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faPhone, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
+import ScrollToTop from "react-scroll-to-top";
 
 const Footer = () => {
     return (
         <footer className="footer">
+            <ScrollToTop smooth top={20} component={<div className="scroll-to-top-button">↑</div>} />
             <div className="footer-container">
                 <div className="footer-section about">
                     <h2 className='text-gold'>ABOUT US</h2>
@@ -30,10 +32,10 @@ const Footer = () => {
                 <div className="footer-section subscribe">
                     <h2 className='text-gold'>SERVICES</h2>
                     <div>
-                    <a href="#">Luxury Apartments</a>
+                        <a href="#">Luxury Apartments</a>
                     </div>
                     <div>
-                    <a href="#">Auction</a>
+                        <a href="#">Auction</a>
                     </div>
                 </div>
             </div>
