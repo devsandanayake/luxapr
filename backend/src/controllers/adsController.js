@@ -63,11 +63,12 @@ const editAds = async (req, res, next) => {
     }
 };
 
-const openForBidding = async (req, res, next) => {
+const openORcloseForBidding = async (req, res, next) => {
     try {
         const adCode = req.body.adCode;
-        const ad = await adsService.openForBidding(adCode);
-        res.json({ message: "Ad is now open for bidding", ad });
+        const value = req.body.value;
+        const ad = await adsService.openORcloseForBidding(adCode , value);
+        res.json({ message: "Ad status updated successfully", ad });
     } catch (err) {
         next(err);
     }
@@ -92,6 +93,6 @@ module.exports = {
     viewSpecificAd,
     viewAllAdsForAdmin,
     editAds,
-    openForBidding,
+    openORcloseForBidding,
     updateAuctionDetails
 };
