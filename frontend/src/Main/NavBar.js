@@ -25,7 +25,7 @@ export default function NavBar() {
 	>
 	  <div className='flex flex-row w-full items-center flex-nowrap'>
 		<div className="text-xl font-bold">
-		  <a href="#">Effective Solutions</a>
+		  <a href="#">LXApartment</a>
 		</div>
 		<div className="block lg:hidden ml-auto">
 		  <button
