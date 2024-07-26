@@ -1,0 +1,27 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./frontend  # Path to your frontend Dockerfile
+      dockerfile: Dockerfile
+    expose:
+      - "8080"             # Expose port 8080 to linked services  
+    ports:
+      - "8080:80"         # Map port 8080 on the host to port 8080 in the container
+     
+
+  backend:
+    build:
+      context: ./backend   # Path to your backend Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"         # Map port 8081 on the host to port 8081 in the container
+    volumes:
+      - uploads:/usr/src/uploads
+      - watermarked:/usr/src/uploads/watermarked
+    environment:
+      - PORT=8081
+
+volumes:
+  uploads: 
+  watermarked:
