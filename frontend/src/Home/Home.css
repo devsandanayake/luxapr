@@ -377,7 +377,7 @@
 }
 
 .auction-button:hover {
-  color: #b77100;
+  color: #b38742;
 }
 
 
@@ -421,12 +421,13 @@
 
 }
 
+
 /* All Apartment button */
 
 .all-apartments-button {
   display: inline-flex;
   align-items: center;
-  position: relative; /* Required for pseudo-elements */
+  position: relative; 
   padding: 10px 20px;
   border: 2px solid #d4a25a;
   color: #d4a25a;
@@ -435,36 +436,26 @@
   text-decoration: none;
   transition: color 0.3s;
   cursor: pointer;
-  font-weight: bold;
   letter-spacing: 1px;
-  overflow: hidden; /* Hide overflow for the pseudo-elements */
+  overflow: hidden; 
 }
 
-.all-apartments-button::before,
-.all-apartments-button::after {
+.all-apartments-button::before {
   content: '';
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 50%;
+  left: 0;
+  right: 0;
   background-color: #d4a25a;
-  z-index: -1; /* Place behind the text */
+  z-index: -1; 
+  transform: scaleX(0);
+  transform-origin: center;
   transition: transform 0.3s;
 }
 
-.all-apartments-button::before {
-  left: 0;
-  transform: translateX(-100%);
-}
-
-.all-apartments-button::after {
-  right: 0;
-  transform: translateX(100%);
-}
-
-.all-apartments-button:hover::before,
-.all-apartments-button:hover::after {
-  transform: translateX(0);
+.all-apartments-button:hover::before {
+  transform: scaleX(1);
 }
 
 .all-apartments-button:hover {

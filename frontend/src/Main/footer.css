@@ -1,94 +1,167 @@
- 
-.scroll-to-top-button {
- 
- 
-    color: rgb(0, 0, 0);
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 50px;
-    font-size: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-  
-  /* Add this CSS to your stylesheet */
-  .text-underline {
-    position: relative;
-    display: inline-block;
-   
-  }
-  
-  .text-underline:hover:after {
-    content: "";
-    position: absolute;
-    bottom: -3px; /* Adjust the value to change the underline position */
-    left: 0;
-    width: 50%;
-    height: 2px; /* Adjust the value to change the underline thickness */
-    background-color: teal; /* Adjust the color to your preference */
-  }
-  
-  .footerimg {
-    position: relative;
-    background-attachment: fixed;
-    /* Ensure the container has a relative position */
-    background-image: url("./6218064.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-   
-   
-  }
-  
-  .footerimg::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(1px);
-     
-  }
-  
-  
-  
-  /* Apply the "text-underline" class to the relevant elements */
-  
-  .scroll-to-top-button {
-  
-  
-  color: rgb(0, 0, 0);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 50px;
-  font-size: 40px;
+.footer {
+  background-color: #000;
+  color: #fff;
+  padding: 20px 0;
+  font-family: 'Arial', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 250px;
+  padding: 20px;
+}
+
+.footer-section h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.footer-section p, .footer-section a {
+  color: #bbb;
+  margin: 8px 0;
+  text-decoration: none;
+}
+
+.footer-section a:hover {
+  color: #fff;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
   display: flex;
   align-items: center;
-  justify-content: center;
+  margin-bottom: 3px;
+}
+
+.footer-section ul li i {
+  margin-right: 10px;
+  color: #d4a25a; /* Adjust the color to match your theme */
+}
+
+.footer-section ul li a {
+  color: #bbb; /* Adjust the color to match your theme */
+  text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+  text-decoration: underline;
+}
+
+.socials {
+  display: flex;
+  gap: 15px;
+}
+
+.socials a {
+  color: #bbb;
+  font-size: 20px;
+}
+
+.socials a:hover {
+  color: #fff;
+}
+
+.footer-section form {
+  display: flex;
+}
+
+.footer-section form input {
+  padding: 10px;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  flex: 1;
+}
+
+.footer-section form button {
+  padding: 10px;
+  border: none;
+  background-color: #d4af37;
+  color: #fff;
   cursor: pointer;
+  border-radius: 0 4px 4px 0;
+}
+
+.footer-section form button:hover {
+  background-color: #b08a1e;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid #333;
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.footer-links a {
+  color: #bbb;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #fff;
+}
+
+.text-gold {
+  color: #d4af37;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  
-  .icon-container {
-  display: inline-block;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  .footer-section {
+    min-width: 100%;
+    text-align: center;
+    padding: 10px;
   }
-  
-  .icon-container:hover {
-    /* Change this to the desired background color on hover */
-  transform: rotate(10deg); /* Rotate the icon on hover */
+
+  .footer-section form {
+    flex-direction: column;
   }
-  
-  .icon-container span {
-  transition: transform 0.3s ease;
+
+  .footer-section form input,
+  .footer-section form button {
+    width: 100%;
+    border-radius: 4px;
+    margin: 5px 0;
   }
-  
-  .icon-container:hover span {
-  transform: rotate(-10deg); /* Rotate the icon on hover */
+
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
   }
-   
+
+  .footer-links a {
+    margin: 5px 0;
+  }
+
+  .footer-section links{
+    align-items: center;
+  }
+}

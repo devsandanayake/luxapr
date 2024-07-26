@@ -157,7 +157,7 @@ Discover luxury living with our exclusive high-end apartments for sale and rent 
 
   </div>
 
-  <div className='flex items-center justify-center'>
+  <div className='flex items-center justify-center mb-20'>
     <button className='all-apartments-button'> All Apartments <FaArrowRight className="arrow" /></button>
   </div>
 

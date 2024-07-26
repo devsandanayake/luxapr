@@ -44,15 +44,7 @@ export default function Login() {
 
     return (
         <>
-            <div 
-                className='flex items-center justify-center' 
-                style={{ 
-                    height: 'calc(100vh - 60px)', 
-                    backgroundImage: `url(${background})`, 
-                    backgroundSize: 'cover', 
-                    backgroundPosition: 'center',
-                }}
-            >
+            
                 <div className="form-containerr border border-white">
                     <p className="title">Login</p>
                     {message && <p className="message">{message}</p>}
@@ -88,7 +80,7 @@ export default function Login() {
                         &nbsp;<a rel="noopener noreferrer" href="/signup" className="">Sign up</a>
                     </p>
                 </div>
-            </div>
+        
         </>
     );
 }

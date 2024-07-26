@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       colors: {
         'dark-blue': '#001f3f', // Custom dark blue color
-        'gold': '#ffdd57'       // Custom gold color
+        'gold': '#d4a25a'       // Custom gold color
       }
     },
   },

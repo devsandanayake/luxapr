@@ -27,7 +27,7 @@ function App() {
           <Route path="/viewapartment" element={<ViewApartment />} />
         </Routes>
       </div>
-
+      <Footer />
     </BrowserRouter>
   );
 }
