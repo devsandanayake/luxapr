@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
+import LoginPopup from '../Login/LoginPopup';
 import './NavBar.css';
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+
+
   const toggleMenu = () => {
 	setIsOpen(!isOpen);
+  };
+
+  const toggleLoginPopup = () => {
+    setIsLoginOpen(!isLoginOpen);
   };
 
   return (
@@ -59,12 +67,14 @@ export default function NavBar() {
 			Contact US
 		  </a>
 		</li>
-		<li>
-		  <a href="/login" className="nav-link font-archivo-thin">
-			Login
-		  </a>
-		</li>
-	  </ul>
-	</nav>
+    <li>
+                    <button onClick={toggleLoginPopup} className="nav-link font-archivo-thin login-button">
+                        Login
+                    </button>
+                </li>
+            </ul>
+            <LoginPopup isOpen={isLoginOpen} onClose={toggleLoginPopup} />
+
+        </nav>
   );
 }
