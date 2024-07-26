@@ -6,6 +6,9 @@
     transition: transform 0.3s;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+    position: relative;
+    background-color: #fff;
 }
 
 .image-container {
@@ -34,15 +37,9 @@
 
 .details {
     padding: 16px;
-    height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: height 0.3s, opacity 0.3s;
-}
-
-.details.expanded {
     height: auto;
     opacity: 1;
+    transition: opacity 0.3s;
 }
 
 .details h3 {
@@ -76,4 +73,44 @@
 .read-more .rating {
     font-size: 14px;
     color: #555;
+}
+
+/* Hover effect */
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Additional styles based on provided design */
+.details.expanded {
+    height: auto;
+    opacity: 1;
+}
+
+.card .details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 150px;
+}
+
+.read-more a {
+    display: inline-flex;
+    align-items: center;
+}
+
+.read-more a:after {
+    content: ' ➔';
+    font-size: 1.2em;
+    margin-left: 4px;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+}
+
+.rating:before {
+    content: '★';
+    color: #ffb400;
+    margin-right: 4px;
 }

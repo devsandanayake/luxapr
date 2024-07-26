@@ -42,6 +42,9 @@ export default function Home() {
     fetchApartments();
   }, []);
 
+  const displayedApartments = apartments.slice(0, 4);
+
+
   return (
     <>
       <div className="slider-container" style={{ height: 'calc(100vh - 60px)', overflow: 'hidden' }}>
@@ -139,20 +142,27 @@ Discover luxury living with our exclusive high-end apartments for sale and rent 
 </div>
 
 
-  <div className='text-3xl p-2' style={{ fontFamily: 'Georgia, serif' }}>
+  <div className='text-3xl p-2 mt-10' style={{ fontFamily: 'Georgia, serif' }}>
       Our Apartments
   </div>
 
 
 
-  <div className="apartment-list">
-        {apartments.map(apartment => (
-          <ApartmentCard key={apartment.id} apartment={apartment} />
-        ))}
-      </div>
+  <div className="apartment-list-container">
+    <div className="apartment-list flex flex-wrap gap-4 p-2">
+      {displayedApartments.map(apartment => (
+        <ApartmentCard key={apartment.id} apartment={apartment} />
+      ))}
+    </div>
+
+  </div>
+
+  <div className='flex items-center justify-center'>
+    <button className='all-apartments-button'> All Apartments <FaArrowRight className="arrow" /></button>
+  </div>
+
       
-  <div className='background'>
-      </div>
+
 
 
     </>

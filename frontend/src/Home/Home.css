@@ -205,66 +205,6 @@
 }
 
 
-
-/* Browse Apartments Section */
-
-
-.apartment-card {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #ffffff;
-  transition: transform 0.3s ease-in-out;
-}
-
-.apartment-card:hover {
-  transform: scale(1.05);
-}
-
-.apartment-card .apartment-image {
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-.price-tag {
-  background-color: #d4af37; /* Gold color */
-  padding: 8px;
-  font-size: 14px;
-  border-radius: 4px;
-}
-
-.apartment-card .text-xl {
-  margin-top: 8px;
-}
-
-.apartment-card p {
-  margin: 4px 0;
-}
-
-.apartment-card .text-sm {
-  font-size: 0.875rem;
-  color: #757575;
-}
-
-.apartment-card .text-yellow-500 {
-  color: #FFD700;
-}
-
-.apartment-card .flex {
-  display: flex;
-  justify-content: space-between;
-}
-
-.apartment-card .flex .inline-block {
-  display: inline-block;
-}
-
-.apartment-card .flex .fas {
-  margin-right: 4px;
-}
-
-
-
-
 /* Background */
 
 
@@ -410,10 +350,10 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 60%;
   margin-left: auto;
-  margin-right: 10px; /* For large screens */
+  margin-right: 10px; 
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center contents horizontally */
+  align-items: center; 
 }
 
 .auction-description p {
@@ -431,7 +371,7 @@
   cursor: pointer;
   text-decoration: underline;
   margin-left: 3px;
-  justify-content: center; /* Center text and icon inside button */
+  justify-content: center; 
   align-items: center;
   gap: 5px;
 }
@@ -440,23 +380,96 @@
   color: #b77100;
 }
 
-/* Media query for smaller screens */
+
 @media (max-width: 768px) {
   .auction-description {
     width: 100%;
     margin-left: auto;
-    margin-right: auto; /* Center on smaller screens */
+    margin-right: auto; 
   }
 
   .auction-description p {
-    font-size: 18px; /* Optional: Adjust font size for smaller screens */
+    font-size: 18px; 
   }
 
   .auction-button {
-    font-size: 18px; /* Optional: Adjust font size for smaller screens */
+    font-size: 18px; 
   }
 }
 
+
+/* apartment list */
+
+.apartment-list-container {
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+  .apartment-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 90%;
+    margin-bottom: 16px;
+  }
+
+}
+
+/* All Apartment button */
+
+.all-apartments-button {
+  display: inline-flex;
+  align-items: center;
+  position: relative; /* Required for pseudo-elements */
+  padding: 10px 20px;
+  border: 2px solid #d4a25a;
+  color: #d4a25a;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  transition: color 0.3s;
+  cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 1px;
+  overflow: hidden; /* Hide overflow for the pseudo-elements */
+}
+
+.all-apartments-button::before,
+.all-apartments-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background-color: #d4a25a;
+  z-index: -1; /* Place behind the text */
+  transition: transform 0.3s;
+}
+
+.all-apartments-button::before {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.all-apartments-button::after {
+  right: 0;
+  transform: translateX(100%);
+}
+
+.all-apartments-button:hover::before,
+.all-apartments-button:hover::after {
+  transform: translateX(0);
+}
+
+.all-apartments-button:hover {
+  color: #fff;
+}
 
 
 

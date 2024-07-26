@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ApartmentCard.css'; // Import the CSS file for styling'
+import './ApartmentCard.css'; // Import the CSS file for styling
 import background from '../Images/bg2.jpg'; 
 
 const ApartmentCard = ({ apartment }) => {
@@ -19,7 +19,7 @@ const ApartmentCard = ({ apartment }) => {
                     alt={apartment.name || "Room"} 
                     className="room-image" 
                 />
-                {/* <div className="price-tag">$219/Night</div> */}
+                <div className="price-tag">$219/Night</div>
             </div>
             <div className={`details ${isHovered ? 'expanded' : ''}`}>
                 <h3>{apartment.title || "Double Room"}</h3>
