@@ -1,8 +1,10 @@
-# Stage 1: Build the React application
-FROM node:20-alpine AS build
+# Use an official Node.js runtime as a parent image
+FROM node:20-alpine
+
 
 # Set the working directory
 WORKDIR /usr/src/react-app
+
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -13,5 +15,9 @@ RUN npm install
 # Copy the rest of the application files
 COPY . .
 
-# Build the React application
-RUN npm run build
+# Expose the port the app runs on
+EXPOSE 8080
+
+# Define the command to run the app
+CMD ["npm", "start"]
+
