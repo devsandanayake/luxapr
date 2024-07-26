@@ -1,5 +1,56 @@
 const auctionRegModel = require('../models/auctionRegModel');
 const AdsModel = require('../models/ads');
+const emailService = require('./emailService');
+const UserModel = require('../models/user');
+
+//alert the bidder if the bid is lower than the current rate
+
+const alertBidder = async (username, auctionID) => {
+    // Find the auction registration for the current user
+    const auctionReg = await auctionRegModel.findOne({ auctionID, username });
+
+    // If the auction registration doesn't exist, throw an error
+    if (!auctionReg) {
+        throw new Error('Auction registration not found');
+    }
+
+    // Find all other users in the auction excluding the current user
+    const otherUsers = await auctionRegModel.find({ auctionID, username: { $ne: username } });
+
+    // Get the current user's offer
+    const userOffer = auctionReg.userOffer;
+
+    // Filter the other users to find those who were outbid
+    const otherUsersOffer = otherUsers.filter(user => userOffer > user.userOffer);
+
+    // If no users were outbid, return
+    if (otherUsersOffer.length === 0) {
+        return;
+    }
+
+    // find the most hight bit
+ 
+    let highestUser = null;
+     
+    for(let i = 0 ; otherUsersOffer.length > i ; i++){
+        const user = otherUsersOffer[i];
+        if(!highestUser || user.userOffer > highestUser.userOffer){
+            highestUser = user;
+        }
+    }
+
+    // Send an email to the current user
+    const userDetails = await UserModel.findOne({username:highestUser.username});
+     
+    const email = userDetails.email;
+
+    return emailService.auctionAlert(email,auctionID,userOffer);
+        
+    
+};
+
+ 
+
 
 
 // Function to register an auction
@@ -69,20 +120,25 @@ const bidAuction = async (auctionID, username, adCode, bidAmountParam) => {
     ad.auctionStatus.currentRate = newCurrentRate;
 
     auctionReg.userOffer = newCurrentRate;
+
+    
     
 
     // Save the ad document
     await ad.save();
 
     // Save the updated auction registration and return the result
-    return await auctionReg.save();
+    await auctionReg.save();
+
+    return alertBidder(username, auctionID);
+
 };
 
 
-
+ 
 module.exports = {
     registerAuction,
-    bidAuction
+    bidAuction,
 };
 
 
