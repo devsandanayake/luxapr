@@ -71,7 +71,7 @@ const editAds = async (adCode, adData) => {
 
 
 // open for bidding
-const openForBidding = async (adCode) => {
+const openORcloseForBidding = async (adCode, value) => {
     const ad = await AdsModel.findOne({ adCode });
     if (!ad) {
         throw new Error('Ad not found');
@@ -80,13 +80,26 @@ const openForBidding = async (adCode) => {
         throw new Error('Ad is not approved');
     }
 
+    if (value == 1) {
+        await AdsModel.findOneAndUpdate(
+            { adCode },
+            {
+                'auctionStatus.status': true,
+                'auctionStatus.auctionID': `AU${adCode}`
+            },
+            { new: true }
+        );
+    } else {
+        await AdsModel.findOneAndUpdate(
+            { adCode },
+            {
+                'auctionStatus.status': false
+            },
+            { new: true }
+        );
+    }
+};
 
-    return await AdsModel.findOneAndUpdate({ adCode }, {
-        'auctionStatus.status': true,
-        'auctionStatus.auctionID': `AU${adCode}`
-
-    }, { new: true });
-}
 
 //update startdate and max value for auction
 const updateAuctionDetails = async (adCode, startDate,endDate, startPrice,maxRate ) => {
@@ -121,6 +134,6 @@ module.exports = {
     viewSpecificAd,
     viewAllAdsForAdmin,
     editAds,
-    openForBidding,
+    openORcloseForBidding,
     updateAuctionDetails
 };
