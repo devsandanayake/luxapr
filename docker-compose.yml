@@ -5,9 +5,9 @@ services:
       context: ./frontend  # Path to your frontend Dockerfile
       dockerfile: Dockerfile
     expose:
-      - "80"             # Expose port 8080 to linked services  
+      - "8080"             # Expose port 8080 to linked services  
     ports:
-      - "80:80"         # Map port 8080 on the host to port 8080 in the container
+      - "8080:80"         # Map port 8080 on the host to port 8080 in the container
      
 
   backend:
