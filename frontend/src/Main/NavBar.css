@@ -1,4 +1,5 @@
 .luxury-navbar {
+  padding: 0.5rem 1rem; /* Adjust padding to reduce height */
   transition: height 0.3s ease;
 }
 
@@ -7,7 +8,14 @@
 }
 
 .nav-link {
-  @apply block py-2 px-4 hover:bg-gray-200 rounded transition duration-300;
+  display: block;
+  padding: 0.5rem 1rem; /* Adjust padding to match navbar */
+  border-radius: 0.25rem;
+  transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: #e2e8f0;
 }
 
 @media (max-width: 1024px) {
@@ -16,15 +24,15 @@
     align-items: flex-start;
   }
 
-  .luxury-navbar ul {
+  .nav-links {
     width: 100%;
   }
 
-  .luxury-navbar ul li {
+  .nav-links li {
     width: 100%;
   }
 
-  .luxury-navbar ul li a {
+  .nav-links li a {
     width: 100%;
     text-align: left;
   }
@@ -35,15 +43,17 @@
     flex-wrap: nowrap;
   }
 
-  .luxury-navbar ul {
+  .nav-links {
     flex-wrap: nowrap;
+    display: flex;
+    align-items: center;
   }
 
-  .luxury-navbar ul li {
+  .nav-links li {
     white-space: nowrap;
   }
 
-  .luxury-navbar ul li a {
+  .nav-links li a {
     white-space: nowrap;
   }
 }

@@ -31,8 +31,7 @@ export default function SignUp() {
 
             if (response.status === 201) {
                 setMessage('Account created successfully!');
-                navigator.push('/login');
-             
+                window.location.href = '/login';  // Redirect to login page
             } else {
                 setMessage(response.data.message || 'Something went wrong. Please try again.');
             }
@@ -52,11 +51,11 @@ export default function SignUp() {
                     backgroundPosition: 'center',
                 }}
             >
-                <div className="form-container border border-white">
+                <div className="form_container">
                     <p className="title">Create Account</p>
                     <form className="form" onSubmit={handleSubmit}>
-                        <div className="input-group">
-                            <label htmlFor="username">Username</label>
+                        <div className="input_container">
+                            <label className="input_label" htmlFor="username">Username</label>
                             <input 
                                 type="text" 
                                 name="username" 
@@ -64,10 +63,11 @@ export default function SignUp() {
                                 value={formData.username} 
                                 onChange={handleChange} 
                                 required 
+                                className="input_field"
                             />
                         </div>
-                        <div className="input-group">
-                            <label htmlFor="firstName">First Name</label>
+                        <div className="input_container">
+                            <label className="input_label" htmlFor="firstName">First Name</label>
                             <input 
                                 type="text" 
                                 name="firstName" 
@@ -75,10 +75,11 @@ export default function SignUp() {
                                 value={formData.firstName} 
                                 onChange={handleChange} 
                                 required 
+                                className="input_field"
                             />
                         </div>
-                        <div className="input-group">
-                            <label htmlFor="lastName">Last Name</label>
+                        <div className="input_container">
+                            <label className="input_label" htmlFor="lastName">Last Name</label>
                             <input 
                                 type="text" 
                                 name="lastName" 
@@ -86,10 +87,11 @@ export default function SignUp() {
                                 value={formData.lastName} 
                                 onChange={handleChange} 
                                 required 
+                                className="input_field"
                             />
                         </div>
-                        <div className="input-group">
-                            <label htmlFor="email">Email</label>
+                        <div className="input_container">
+                            <label className="input_label" htmlFor="email">Email</label>
                             <input 
                                 type="email" 
                                 name="email" 
@@ -97,10 +99,11 @@ export default function SignUp() {
                                 value={formData.email} 
                                 onChange={handleChange} 
                                 required 
+                                className="input_field"
                             />
                         </div>
-                        <div className="input-group">
-                            <label htmlFor="password">Password</label>
+                        <div className="input_container">
+                            <label className="input_label" htmlFor="password">Password</label>
                             <input 
                                 type="password" 
                                 name="password" 
@@ -108,24 +111,28 @@ export default function SignUp() {
                                 value={formData.password} 
                                 onChange={handleChange} 
                                 required 
+                                className="input_field"
                             />
                         </div>
-                        <div className="input-group">
-                            <label htmlFor="contactNumber">Contact Number</label>
+                        <div className="input_container">
+                            <label className="input_label" htmlFor="contactNumber">Contact Number</label>
                             <input 
                                 type="text" 
                                 name="contactNumber" 
                                 id="contactNumber" 
                                 value={formData.contactNumber} 
                                 onChange={handleChange} 
-                            
+                                className="input_field"
                             />
                         </div>
-                        <button className="sign mt-2">Sign up</button>
+                        <button type="submit" className="sign-in_btn">Sign Up</button>
+                        {message && <p className="message">{message}</p>}
                     </form>
-                    <p className="signup mt-2">Already have an account? 
-                        &nbsp;<a rel="noopener noreferrer" href="/login" className="">Sign in</a>
-                    </p>
+                    <div className="footer_container">
+                        <p>
+                            Already have an account? <a href="/login">Sign in</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </>

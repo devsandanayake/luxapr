@@ -10,6 +10,8 @@ import ContactUs from './ContactUs/ContactUs';
 import AddApartment from './Apartments/AddApartment';
 import ViewApartment from './Apartments/ViewApartment';
 import Footer from './Main/Footer';
+import Login from './Login/Login';
+import Registration from './UserRegistration/SignUp';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/addapartment" element={<AddApartment />} />
           <Route path="/viewapartment" element={<ViewApartment />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registration" element={<Registration />} />
         </Routes>
       </div>
       <Footer />

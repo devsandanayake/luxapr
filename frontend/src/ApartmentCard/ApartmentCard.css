@@ -58,6 +58,15 @@
     margin-top: 8px;
 }
 
+.info span {
+    display: flex;
+    align-items: center;
+}
+
+.info span svg {
+    margin-right: 4px;
+}
+
 .read-more {
     display: flex;
     justify-content: space-between;

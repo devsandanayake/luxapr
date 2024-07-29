@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './ApartmentCard.css'; // Import the CSS file for styling
 import background from '../Images/bg2.jpg'; 
+import { IoBedOutline, IoWaterOutline } from "react-icons/io5"; // Import bathroom icon
 
 const ApartmentCard = ({ apartment }) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -19,19 +20,17 @@ const ApartmentCard = ({ apartment }) => {
                     alt={apartment.name || "Room"} 
                     className="room-image" 
                 />
-                <div className="price-tag">$219/Night</div>
+                <div className="price-tag">LKR. &nbsp;{apartment.price}/=</div>
             </div>
             <div className={`details ${isHovered ? 'expanded' : ''}`}>
-                <h3>{apartment.title || "Double Room"}</h3>
-                <p>{apartment.description || "facilisis tempor erat facilisis."}</p>
-                <p>{apartment.additionalInfo || "Proin imperdiet rutrum cursus"}</p>
+                <h3>{apartment.title}</h3>
+                <p>{apartment.districts}, &nbsp; {apartment.areas}</p>
                 <div className="info">
-                    <span>{apartment.beds ? `(${apartment.beds}) bed's` : "(3) bed's"}</span>
-                    <span>{apartment.guests ? `(${apartment.guests}) Guest's` : "(4) Guest's"}</span>
+                    <span><IoBedOutline />({apartment.bedroomCount}) Bed's</span>
+                    <span><IoWaterOutline />({apartment.bathroomCount}) Baths</span>
                 </div>
                 <div className="read-more">
                     <a href="#">READ MORE</a>
-                    <span className="rating">★ {apartment.rating || "4.9 2k"}</span>
                 </div>
             </div>
         </div>
