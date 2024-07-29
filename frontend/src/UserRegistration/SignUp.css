@@ -1,103 +1,100 @@
-/* SignUp.css */
-
-.form_container {
-  width: 25%;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  padding: 20px;
-  background-color: #ffffff;
-  box-shadow: 0px 106px 42px rgba(0, 0, 0, 0.01),
-    0px 59px 36px rgba(0, 0, 0, 0.05), 0px 26px 26px rgba(0, 0, 0, 0.09),
-    0px 7px 15px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
-  border-radius: 11px;
-  font-family: "Inter", sans-serif;
-}
-
-.title {
+/* Basic Reset */
+* {
   margin: 0;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #212121;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.subtitle {
-  font-size: 0.725rem;
-  max-width: 80%;
-  text-align: center;
-  line-height: 1.1rem;
-  color: #8B8E98;
-}
-
-.input_container {
-  width: 100%;
-  height: fit-content;
-  position: relative;
+/* Container for the entire signup component */
+.signup-container {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f2f5;
+
 }
 
-.input_label {
-  font-size: 0.75rem;
-  color: #8B8E98;
-  font-weight: 600;
-}
-
-.input_field {
-  width: auto;
-  height: 40px;
-  padding: 0 0 0 40px;
-  border-radius: 7px;
-  outline: none;
-  border: 1px solid #e5e5e5;
-  filter: drop-shadow(0px 1px 0px #efefef)
-    drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
-  transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
-}
-
-.input_field:focus {
-  border: 1px solid transparent;
-  box-shadow: 0px 0px 0px 2px #242424;
-  background-color: transparent;
-}
-
-.sign-in_btn {
+/* Card style for the signup form */
+.signup-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
-  height: 40px;
-  border: 0;
-  background: #d4a25a;
-  border-radius: 7px;
-  outline: none;
-  color: #ffffff;
+  max-width: 400px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Logo styling */
+.signup-logo {
+  width: 100px;
+  margin: 0 auto 1rem auto;
+  display: block;
+}
+
+/* Signup title */
+.signup-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Form group styling */
+.form-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+/* Input fields styling */
+.form-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Button styling */
+.signup-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #d4a25a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
   cursor: pointer;
 }
 
-.message {
-  font-size: 0.75rem;
-  color: #d9534f;
-  text-align: center;
-}
-
-.footer_container {
+.signup-footer {
   display: flex;
+  margin-top: 45px;
+  align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  gap: 10px; /* Optional: Adds space between the text and the link */
 }
 
-.footer_container p {
-  font-size: 14px;
-  color: #001f3f;
-}
-
-.footer_container a {
+.signup-footer a {
   color: #d4a25a;
   text-decoration: none;
 }
 
-.footer_container a:hover {
+.signup-footer a:hover {
   text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .signup-card {
+    padding: 1.5rem;
+  }
+
+  .signup-title {
+    font-size: 1.25rem;
+  }
+
+  .form-input, .signup-button {
+    font-size: 0.875rem;
+  }
 }

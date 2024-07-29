@@ -70,7 +70,7 @@ export default function Login() {
 
           <div className="signup flex items-center justify-center">
             <p>Don't have an account?</p>
-            <a href="/signup">Signup</a>
+            <a href="/registration">Signup</a>
           </div>
         </form>
       </div>
