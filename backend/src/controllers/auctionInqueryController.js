@@ -23,7 +23,18 @@ const replyToInquery = async (req, res, next) => {
 }
 
 
+const viewAllInqueries = async (req, res, next) => {
+    try {
+        const inqueries = await auctionInqueryService.viewAllInqueries();
+        res.json(inqueries);
+    } catch (err) {
+        next(err);
+    }
+};
+
+
 module.exports = {
     addInquery,
-    replyToInquery
+    replyToInquery,
+    viewAllInqueries
 };
