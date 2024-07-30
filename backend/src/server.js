@@ -33,11 +33,13 @@ app.use('/uploads/watermarked', express.static(path.join(__dirname, '../../uploa
 const userRoutes = require('./routes/userRoutes');
 const adRoutes = require('./routes/adsRoutes');
 const auctionRegRoutes = require('./routes/auctionRegRoutes');
+const auctionInqueryRoutes = require('./routes/auctionInqueryRoutes');
 
 //API routes
 app.use('/api/users', userRoutes);
 app.use('/api/ads', adRoutes);
 app.use('/api/auction', auctionRegRoutes);
+app.use('/api/auction-inquery', auctionInqueryRoutes);
 
 // Basic route
 app.get('/', (req, res) => {

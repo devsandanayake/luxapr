@@ -135,7 +135,6 @@ const bidAuction = async (auctionID, username, adCode, bidAmountParam) => {
 };
 
 
- 
 module.exports = {
     registerAuction,
     bidAuction,
