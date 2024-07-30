@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './ApartmentCard.css'; // Import the CSS file for styling
 import background from '../Images/bg2.jpg'; 
-import { IoBedOutline, IoWaterOutline } from "react-icons/io5"; // Import bathroom icon
+import { IoBedOutline} from "react-icons/io5";
+import { FaShower } from "react-icons/fa";
+
 
 const ApartmentCard = ({ apartment }) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -27,11 +30,11 @@ const ApartmentCard = ({ apartment }) => {
                 <p>{apartment.districts}, &nbsp; {apartment.areas}</p>
                 <div className="info">
                     <span><IoBedOutline />({apartment.bedroomCount}) Bed's</span>
-                    <span><IoWaterOutline />({apartment.bathroomCount}) Baths</span>
+                    <span><FaShower />({apartment.bathroomCount}) Baths</span>
                 </div>
                 <div className="read-more">
-                    <a href="#">READ MORE</a>
-                </div>
+  <Link to={`/viewapartment?adcode=${apartment.adCode}`}>READ MORE</Link>
+</div>
             </div>
         </div>
     );

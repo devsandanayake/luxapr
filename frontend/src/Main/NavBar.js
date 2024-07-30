@@ -11,7 +11,7 @@ export default function NavBar() {
 
   return (
     <nav
-      className="luxury-navbar flex items-center justify-between bg-white shadow-lg fixed top-0 w-full z-50"
+      className="luxury-navbar flex items-center justify-between bg-white shadow-lg fixed top-0 w-full z-50 opacity-85"
     >
       <div className='flex items-center w-full'>
         <img src={Logo} alt="Luxury Living Logo" className="h-12" />

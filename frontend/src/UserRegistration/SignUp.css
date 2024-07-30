@@ -17,33 +17,27 @@
 /* Card style for the signup form */
 .signup-card {
   background: white;
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
-/* Logo styling */
-.signup-logo {
-  width: 100px;
-  margin: 0 auto 1rem auto;
-  display: block;
-}
 
 /* Signup title */
 .signup-title {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1 rem;
   font-size: 1.5rem;
   color: #333;
 }
 
 /* Form group styling */
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   text-align: left;
 }
 
@@ -69,10 +63,10 @@
 
 .signup-footer {
   display: flex;
-  margin-top: 45px;
+  margin-top: 5px;
   align-items: center;
   justify-content: center;
-  gap: 10px; /* Optional: Adds space between the text and the link */
+  gap: 10px; 
 }
 
 .signup-footer a {
