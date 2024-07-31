@@ -81,7 +81,7 @@ const openORcloseForBidding = async (adCode, value) => {
     }
 
     if (value == 1) {
-        await AdsModel.findOneAndUpdate(
+       return  await AdsModel.findOneAndUpdate(
             { adCode },
             {
                 'auctionStatus.status': true,
@@ -90,7 +90,7 @@ const openORcloseForBidding = async (adCode, value) => {
             { new: true }
         );
     } else {
-        await AdsModel.findOneAndUpdate(
+      return  await AdsModel.findOneAndUpdate(
             { adCode },
             {
                 'auctionStatus.status': false
