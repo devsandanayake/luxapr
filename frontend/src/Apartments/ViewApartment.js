@@ -7,6 +7,7 @@ import { FaShower } from "react-icons/fa";
 import { BsTextarea, BsCurrencyDollar } from "react-icons/bs";
 import ApartmentCard from '../ApartmentCard/ApartmentCard';
 import { FaArrowRight } from "react-icons/fa";
+import { Pannellum } from 'pannellum-react';
 import './ViewApartment.css';
 
 export default function ViewApartment() {
@@ -17,6 +18,7 @@ export default function ViewApartment() {
     const [apartmentDetails, setApartmentDetails] = useState({});
     const [OtherApartments, setOtherApartments] = useState([]);
     const [selectedImage, setSelectedImage] = useState('');
+    const [isPannellumReady, setIsPannellumReady] = useState(false);
 
     useEffect(() => {
         axiosInstance.get(`/api/ads/viewSpecificAd/${adcode}`)
@@ -41,9 +43,22 @@ export default function ViewApartment() {
             });
     }, [adcode]);
 
+    useEffect(() => {
+        setIsPannellumReady(true);
+    }, []);
+
     const handleImageClick = (image) => {
         setSelectedImage(image);
     };
+
+    const isEquirectangular = (image) => {
+        // Logic to detect if an image is an equirectangular panorama
+        // For now, we assume that images with a particular naming pattern or metadata are 360-degree images
+        return image.endsWith('.png'); // Adjust this logic as needed
+    };
+
+    const displayedApartments = OtherApartments.slice(0, 4);
+
 
     return (
         <>
@@ -55,12 +70,24 @@ export default function ViewApartment() {
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8'>
                     <div className="image-gallery w-full lg:w-full border border-gold p-3 ml-2 rounded-xl">
                         <div className="main-image-container">
-                            {selectedImage && (
-                                <img
-                                    src={`http://124.43.179.118:8081/uploads/${selectedImage.split('\\').pop()}`}
-                                    alt="Selected"
-                                    className="large-image"
-                                />
+                            {selectedImage && isPannellumReady && (
+                                isEquirectangular(selectedImage) ? (
+                                    <Pannellum
+                                        width="100%"
+                                        height="400px"
+                                        image={`http://124.43.179.118:8081/uploads/${selectedImage.split('\\').pop()}`}
+                                        pitch={10}
+                                        yaw={180}
+                                        hfov={110}
+                                        autoLoad
+                                    />
+                                ) : (
+                                    <img
+                                        src={`http://124.43.179.118:8081/uploads/${selectedImage.split('\\').pop()}`}
+                                        alt="Selected"
+                                        className="large-image"
+                                    />
+                                )
                             )}
                         </div>
                         <div className="thumbnail-images-container">
@@ -82,18 +109,16 @@ export default function ViewApartment() {
                                 <div className='text-2xl font-bold ml-3'>
                                     Description
                                 </div>
-                                <div className='text-lg ml-10 mt-3 h-44'>
+                                <div className='text-lg ml-10 mt-3'>
                                     {apartmentDetails.description}
                                 </div>
                             </>
                         )}
 
-                            
                         <div className='text-2xl font-bold ml-3'>
                             Overview
                         </div>
-                            
-                            
+
                         {apartmentDetails.address && (
                             <>
                                 <div className='flex items-center text-xl text-gold ml-20 mt-3 gap-4'>
@@ -144,25 +169,23 @@ export default function ViewApartment() {
                                 Book Now
                             </button>
                         </div>
-
                     </div>
                 </div>
 
                 <div className='text-3xl p-2 mt-14' style={{ fontFamily: 'Georgia, serif' }}>
                     Other Apartments
-                    </div>
+                </div>
                 <div className="apartment-list-container">
-    <div className="apartment-list flex flex-wrap gap-4 p-2">
-      {OtherApartments.map(apartment => (
-        <ApartmentCard key={apartment.id} apartment={apartment} />
-      ))}
-    </div>
-  </div>
+                    <div className="apartment-list flex flex-wrap gap-4 p-2">
+                        {displayedApartments.map(apartment => (
+                            <ApartmentCard key={apartment.id} apartment={apartment} />
+                        ))}
+                    </div>
+                </div>
 
-  <div className='flex items-center justify-center mb-20'>
-    <button className='all-apartments-button'> All Apartments <FaArrowRight className="arrow" /></button>
-  </div>
-
+                <div className='flex items-center justify-center mb-20'>
+                    <button className='all-apartments-button'> All Apartments <FaArrowRight className="arrow" /></button>
+                </div>
             </div>
         </>
     );

@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-items: center;
 }
 
 .main-image-container {
@@ -44,3 +45,27 @@
 .bookbtn.hover {
     transform: translateX(0);
 }
+
+
+/* apartment list */
+
+.apartment-list-container {
+    display: flex;
+    justify-content: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-top: 30px;
+  }
+  
+  @media (max-width: 768px) {
+    .apartment-list {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .card {
+      width: 90%;
+      margin-bottom: 16px;
+    }
+  
+  }
