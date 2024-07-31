@@ -53,6 +53,11 @@ const viewAllInqueries = async () => {
     return await auctionInqueryModel.find();
 };
 
+//view inqueries of a AuctionID
+const viewInqueries = async (auctionID) => {
+    return await auctionInqueryModel.find({ auctionID });
+};
+
 //reply to users for their inquire msg
 const replyToInquery = async (inqueryID, message) => {
     const inquery = await auctionInqueryModel.findOne({ inqueryID });
@@ -75,5 +80,6 @@ const replyToInquery = async (inqueryID, message) => {
 module.exports = {
     addInquery,
     viewAllInqueries,
-    replyToInquery
+    replyToInquery,
+    viewInqueries
 };
