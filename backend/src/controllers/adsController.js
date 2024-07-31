@@ -67,8 +67,8 @@ const openORcloseForBidding = async (req, res, next) => {
     try {
         const adCode = req.body.adCode;
         const value = req.body.value;
-        const ad = await adsService.openORcloseForBidding(adCode , value);
-        res.json({ message: "Ad status updated successfully", ad });
+        const ads = await adsService.openORcloseForBidding(adCode , value);
+        res.json({ message: "Ad status updated successfully", ad:ads.auctionStatus.status });
     } catch (err) {
         next(err);
     }
