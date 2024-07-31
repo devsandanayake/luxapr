@@ -7,7 +7,6 @@ import { FaShower } from "react-icons/fa";
 import { BsTextarea, BsCurrencyDollar } from "react-icons/bs";
 import ApartmentCard from '../ApartmentCard/ApartmentCard';
 import { FaArrowRight } from "react-icons/fa";
-import { Pannellum } from 'pannellum-react';
 import './ViewApartment.css';
 
 export default function ViewApartment() {
@@ -71,23 +70,13 @@ export default function ViewApartment() {
                     <div className="image-gallery w-full lg:w-full border border-gold p-3 ml-2 rounded-xl">
                         <div className="main-image-container">
                             {selectedImage && isPannellumReady && (
-                                isEquirectangular(selectedImage) ? (
-                                    <Pannellum
-                                        width="100%"
-                                        height="400px"
-                                        image={`http://124.43.179.118:8081/uploads/${selectedImage.split('\\').pop()}`}
-                                        pitch={10}
-                                        yaw={180}
-                                        hfov={110}
-                                        autoLoad
-                                    />
-                                ) : (
+                          
                                     <img
                                         src={`http://124.43.179.118:8081/uploads/${selectedImage.split('\\').pop()}`}
                                         alt="Selected"
                                         className="large-image"
                                     />
-                                )
+                                
                             )}
                         </div>
                         <div className="thumbnail-images-container">
