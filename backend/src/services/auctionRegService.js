@@ -93,6 +93,11 @@ const bidAuction = async (auctionID, username, adCode, bidAmountParam) => {
     if (!ad) {
         throw new Error('Ad not found');
     }
+     
+    if(ad.auctionStatus.maxRate < ad.auctionStatus.currentRate){
+        throw new Error('Auction is closed');
+    }
+
 
     // Find the auction registration by auctionID and username
     const auctionReg = await auctionRegModel.findOne({ auctionID, username });

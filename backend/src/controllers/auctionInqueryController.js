@@ -33,8 +33,20 @@ const viewAllInqueries = async (req, res, next) => {
 };
 
 
+const viewInqueries = async (req, res, next) => {
+    try {
+        const { auctionID } = req.params;
+        const inqueries = await auctionInqueryService.viewInqueries(auctionID);
+        res.json(inqueries);
+    } catch (err) {
+        next(err);
+    }
+}
+
+
 module.exports = {
     addInquery,
     replyToInquery,
-    viewAllInqueries
+    viewAllInqueries,
+    viewInqueries
 };
