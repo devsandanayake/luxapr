@@ -73,7 +73,14 @@ const loginUser = async ({ username, password }) => {
     }
 };
 
+
+//view all users for admin
+const viewAllUsers = async () => {
+    return await UserModel.find().sort('-registerDate');
+};
+
 module.exports = {
     createUser,
     loginUser,
+    viewAllUsers
 };

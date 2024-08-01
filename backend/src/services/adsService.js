@@ -20,18 +20,17 @@ const generateUniqueADcode = async (prefix) => {
 
 const createAd = async (user, adData, files) => {
     const adCode = await generateUniqueADcode(user);
-    const imagePaths = files.map(file => file.watermarkedPath);
-    const originImagePaths = files.map(file => file.originalPath);
+    const imagePaths = files.map(file => file.path);
+    // const originImagePaths = files.map(file => file.path);
     const now = moment.tz('Asia/Colombo');
     const formattedDate = now.format('YYYY-MM-DD HH:mm:ss');
-
     const adDetails = {
         ...adData,
         username: user,
         adCode,
         images: imagePaths,
-        originImages: originImagePaths,
-        publishedAt: formattedDate
+        // originImages: originImagePaths,
+        publishedAt: formattedDate,
     };
 
     const newAd = new AdsModel(adDetails);

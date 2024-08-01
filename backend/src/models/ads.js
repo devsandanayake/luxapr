@@ -56,9 +56,6 @@ const adsSchema =  new mongoose.Schema({
     images:{
         type:[String]
     },
-    originImages:{
-        type:[String]
-    },
     status:{
         type:Number,
         default:0,
