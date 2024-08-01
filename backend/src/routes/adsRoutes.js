@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const adsController = require('../controllers/adsController');
-const { upload } = require('../middlewares/uploadMiddleware');
+const { upload  } = require('../middlewares/uploadMiddleware');
 const authMiddleware = require('../middlewares/authuser');
 
 // User routes
-router.post('/createAds', authMiddleware.authUser, upload.array('images'), adsController.createAd);
+router.post('/createAds', authMiddleware.authUser, upload.fields([
+    { name: 'images', maxCount: 10 },
+    { name: 'images360', maxCount: 10 }
+]),  adsController.createAd);
 router.get('/viewAds', adsController.viewAllAds);
 router.patch('/edit/:adCode', authMiddleware.editPostuserSideauth, adsController.editAds);
 router.get('/viewSpecificAd/:adCode', adsController.viewSpecificAd);
