@@ -38,7 +38,18 @@ const loginUser = async (req, res, next) => {
     }
 };
 
+//view user details
+const viewAllUsers = async (req,res,next)=>{
+    try{
+        const response = await userService.viewAllUsers();
+        res.json(response);
+    }catch(err){
+        next(err);
+    }
+}
+
 module.exports = {
     createUser,
     loginUser,
+    viewAllUsers
 };
