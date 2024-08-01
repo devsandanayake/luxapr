@@ -1,0 +1,160 @@
+.backgroundd {
+    background-image: url('../Images/Contact.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: calc(100vh - 60px);
+    width: 100%;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    z-index: -1;
+}
+
+
+
+.content {
+    z-index: 1;
+    background-color: white;
+    padding: 20px;
+}
+
+.ContactUs-title {
+    font-size: 3.5em;
+    font-family: 'Georgia', serif;
+    color: white;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ContactUs-details {
+    max-width: 600px;
+    text-align: center;
+}
+
+.ContactUs-details p {
+    font-size: 1.2em;
+}
+
+
+.desc{
+    font-size: 1.5em;
+    font-family: 'Georgia', serif;
+    color: white;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.Apartment-add {
+    position: absolute;  
+    top: 420px;
+    left: 48%;
+    transform: translateX(-50%);
+    background-color: #d4a25a;  
+    background-size: cover;  
+    background-position: center;  
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    width: 50%;  
+    max-width: 1000px;  
+    text-align: center;
+    opacity: 0; /* Initially hidden */
+    animation: fadeInUp 1s ease-out forwards; /* Apply the animation */
+} 
+
+.add-apartment {
+    background: linear-gradient(135deg, #001f3f, #003366); /* Gradient background */
+    color: white;
+    padding: 10px 20px; 
+    font-size: 1.2em;
+    border: none;
+    border-radius: 0.5rem; /* Rounded corners */
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+}
+
+.add-apartment:hover {
+    background-color: #003366; /* Slightly different color on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+.add-apartment:focus {
+    outline: none; /* Remove default focus outline */
+}
+
+
+
+.content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.ContactUs-details {
+    margin-top: 100px;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: grid;
+    place-items: center; /* Center items both horizontally and vertically */
+}
+
+.contentbox {
+    width: 40%;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.contenttitle {
+    font-size: 1.5rem;
+    font-family: 'Georgia', serif;
+}
+
+.contentdetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the content details horizontally */
+}
+
+.contact-item {
+    margin-top: 20px;
+    display: grid;
+    gap: 30px;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the left horizontally */
+    grid-template-columns: auto 1fr; /* Creates two columns: one for the icon and one for the details */
+    font-size: 1.2rem;
+}
+
+.contact-item div {
+    text-align: left; /* Ensure text inside the details div is left-aligned */
+}
+
+
+.contact-info{
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+
