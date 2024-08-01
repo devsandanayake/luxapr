@@ -1,4 +1,5 @@
 const UserModel = require('../models/user');
+const AdsModel = require('../models/ads');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
@@ -79,8 +80,33 @@ const viewAllUsers = async () => {
     return await UserModel.find().sort('-registerDate');
 };
 
+const viewAdsUser = async (username) => {
+    
+    try{
+        const user = await UserModel.findOne({ username: username });
+         if (!user) {
+            return { error: true, status: 404, message: 'User not found' };
+         }
+         const ads = await AdsModel.find({ username: username });
+
+         if (!ads) {
+            return { error: true, status: 404, message: 'Ads not found' };
+         }
+
+         return { error: false, ads };
+
+
+    }
+    catch (err) {
+        console.error(err); // Consider more sophisticated logging for production
+        throw new Error('Error viewing ads');
+    }
+
+}
+
 module.exports = {
     createUser,
     loginUser,
-    viewAllUsers
+    viewAllUsers,
+    viewAdsUser
 };
