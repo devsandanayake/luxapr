@@ -50,6 +50,19 @@ const viewSpecificAd = async (req, res, next) => {
     }
 };
 
+const viewSpecificAdForAdmin = async (req, res, next) => {
+    try {
+        const adCode = req.params.adCode;
+        const ad = await adsService.viewSpecificAdForAdmin(adCode);
+        if (!ad) {
+            return next({ status: 404, message: 'Ad not found or not available' });
+        }
+        res.json(ad);
+    } catch (err) {
+        next(err);
+    }
+};
+
 const viewAllAdsForAdmin = async (req, res, next) => {
     try {
         const ads = await adsService.viewAllAdsForAdmin();
@@ -100,5 +113,6 @@ module.exports = {
     viewAllAdsForAdmin,
     editAds,
     openORcloseForBidding,
-    updateAuctionDetails
+    updateAuctionDetails,
+    viewSpecificAdForAdmin
 };

@@ -18,5 +18,6 @@ router.get('/viewAllAdsForAdmin', authMiddleware.authAdmin, adsController.viewAl
 router.patch('/approveAds', authMiddleware.authAdmin, adsController.approved);
 router.patch('/openForBidding', authMiddleware.authAdmin, adsController.openORcloseForBidding);
 router.patch('/updateBid', authMiddleware.authAdmin, adsController.updateAuctionDetails);
+router.get('/viewSpecificAdForAdmin/:adCode', authMiddleware.authAdmin, adsController.viewSpecificAdForAdmin);
 
 module.exports = router;

@@ -60,6 +60,10 @@ const viewSpecificAd = async (adCode) => {
     return await AdsModel.findOne({ adCode, status: 1 });
 };
 
+const viewSpecificAdForAdmin = async (adCode) => {
+    return await AdsModel.findOne({adCode});
+};
+
 const viewAllAdsForAdmin = async () => {
     return await AdsModel.find().sort('-publishedAt');
 };
@@ -137,5 +141,6 @@ module.exports = {
     viewAllAdsForAdmin,
     editAds,
     openORcloseForBidding,
-    updateAuctionDetails
+    updateAuctionDetails,
+    viewSpecificAdForAdmin
 };
