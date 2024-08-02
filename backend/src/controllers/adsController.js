@@ -1,14 +1,20 @@
 const adsService = require('../services/adsService');
-const { addWatermark } = require('../util/watermark');
+// const { addWatermark } = require('../util/watermark');
 
 const createAd = async (req, res, next) => {
     try {
         const user = req.user;
-        await addWatermark(req.files);
-        const newAd = await adsService.createAd(user, req.body, req.files);
-        res.status(201).json({ message: "Ad created successfully", ad: newAd });
-    } catch (err) {
-        next(err);
+        const images = req.files['images'] || [];
+        const images360 = req.files['images360'] || [];
+
+        // Combine all files into a single array if needed
+        const allFiles = [...images, ...images360];
+
+        // Create the ad with the user, request body, and files
+        const newAd = await adsService.createAd(user, req.body, allFiles);
+        res.status(201).json({ message: 'Ad created successfully', ad: newAd });
+    } catch (error) {
+        next(error);
     }
 };
 
@@ -35,6 +41,19 @@ const viewSpecificAd = async (req, res, next) => {
     try {
         const adCode = req.params.adCode;
         const ad = await adsService.viewSpecificAd(adCode);
+        if (!ad) {
+            return next({ status: 404, message: 'Ad not found or not available' });
+        }
+        res.json(ad);
+    } catch (err) {
+        next(err);
+    }
+};
+
+const viewSpecificAdForAdmin = async (req, res, next) => {
+    try {
+        const adCode = req.params.adCode;
+        const ad = await adsService.viewSpecificAdForAdmin(adCode);
         if (!ad) {
             return next({ status: 404, message: 'Ad not found or not available' });
         }
@@ -94,5 +113,6 @@ module.exports = {
     viewAllAdsForAdmin,
     editAds,
     openORcloseForBidding,
-    updateAuctionDetails
+    updateAuctionDetails,
+    viewSpecificAdForAdmin
 };

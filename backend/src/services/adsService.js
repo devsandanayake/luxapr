@@ -20,18 +20,17 @@ const generateUniqueADcode = async (prefix) => {
 
 const createAd = async (user, adData, files) => {
     const adCode = await generateUniqueADcode(user);
-    const imagePaths = files.map(file => file.watermarkedPath);
-    const originImagePaths = files.map(file => file.originalPath);
+    const imagePaths = files.map(file => file.path);
+    // const originImagePaths = files.map(file => file.path);
     const now = moment.tz('Asia/Colombo');
     const formattedDate = now.format('YYYY-MM-DD HH:mm:ss');
-
     const adDetails = {
         ...adData,
         username: user,
         adCode,
         images: imagePaths,
-        originImages: originImagePaths,
-        publishedAt: formattedDate
+        // originImages: originImagePaths,
+        publishedAt: formattedDate,
     };
 
     const newAd = new AdsModel(adDetails);
@@ -61,6 +60,10 @@ const viewSpecificAd = async (adCode) => {
     return await AdsModel.findOne({ adCode, status: 1 });
 };
 
+const viewSpecificAdForAdmin = async (adCode) => {
+    return await AdsModel.findOne({adCode});
+};
+
 const viewAllAdsForAdmin = async () => {
     return await AdsModel.find().sort('-publishedAt');
 };
@@ -78,6 +81,9 @@ const openORcloseForBidding = async (adCode, value) => {
     }
     if (ad.status !== 1) {
         throw new Error('Ad is not approved');
+    }
+    if(ad.transactionType !== 1){
+        throw new Error('Ad is not an auction');
     }
 
     if (value == 1) {
@@ -135,5 +141,6 @@ module.exports = {
     viewAllAdsForAdmin,
     editAds,
     openORcloseForBidding,
-    updateAuctionDetails
+    updateAuctionDetails,
+    viewSpecificAdForAdmin
 };
