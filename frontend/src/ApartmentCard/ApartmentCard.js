@@ -17,8 +17,8 @@ const ApartmentCard = ({ apartment }) => {
         >
             <div className="image-container">
                 <img 
-                    src={apartment.originImages && apartment.originImages.length > 0 
-                        ? `http://124.43.179.118:8081/uploads/${apartment.originImages[0].split('\\').pop()}` 
+                    src={apartment.images && apartment.images.length > 0 
+                        ? `http://124.43.179.118:8081/uploads/${apartment.images[0].split('\\').pop()}` 
                         : background}  
                     alt={apartment.name || "Room"} 
                     className="room-image" 

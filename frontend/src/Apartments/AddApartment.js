@@ -2,17 +2,15 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './AddApartment.css';
 
-
 export default function AddApartment() {
   const [formData, setFormData] = useState({
     title: '',
-    address: '',
-    streetNumber: '',
-    area: '',
-    city: '',
-    district: '',
-    province: '',
-    country: '',
+    districts: '',
+    areas: '',
+    address: {
+      street: '',
+      postCode: '',
+    },
     description: '',
     bedroomCount: '',
     bathroomCount: '',
@@ -20,17 +18,31 @@ export default function AddApartment() {
     areaSize: '',
     price: '',
     currency: '',
-    typeOfPro: '',
     transactionType: '',
   });
   const [images, setImages] = useState([]);
 
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    if (name.includes('.')) {
+      const [parentKey, childKey] = name.split('.');
+      setFormData({
+        ...formData,
+        [parentKey]: {
+          ...formData[parentKey],
+          [childKey]: value,
+        },
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
+
 
   const handleImageChange = (e) => {
     setImages(Array.from(e.target.files));
@@ -41,17 +53,21 @@ export default function AddApartment() {
     e.preventDefault();
     const data = new FormData();
     for (let key in formData) {
-      data.append(key, formData[key]);
+      if (typeof formData[key] === 'object') {
+        for (let subKey in formData[key]) {
+          data.append(`${key}.${subKey}`, formData[key][subKey]);
+        }
+      } else {
+        data.append(key, formData[key]);
+      }
     }
     for (let i = 0; i < images.length; i++) {
       data.append('images', images[i]);
     }
 
-    // Retrieve the token from local storage
     let token = localStorage.getItem('token');
     console.log('Retrieved token:', token);
 
-    // Remove the "Bearer" prefix if present
     if (token && token.startsWith('Bearer ')) {
       token = token.slice(7);
     }
@@ -81,167 +97,191 @@ export default function AddApartment() {
 
   return (
     <div className="full-screen">
-      <div className=' w-9/12'>
-        <h2 className='text-2xl mt-4 text-center text-white' style={{ fontFamily: 'Georgia, serif' }}>Add Apartment</h2>
+      <div className='w-9/12'>
+        <h2 className='text-3xl mt-4 text-center' style={{ fontFamily: 'Georgia, serif' }}>Add Apartment</h2>
         <form className='mt-3 ml-3 w-full mb-5' onSubmit={handleSubmit}>
-          <div>
+
+          <div className='mt-2'>
+            <label className='text-lg' htmlFor="title">Title</label>
             <div>
-              <label className='text-lg text-white font-bold' htmlFor="title">Title</label>
-            </div>
-            <div>
-              <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
-            </div>
-          </div>
-        
-          <div className = 'mt-2'>
-            <div>
-              <label className='text-lg text-white font-bold' htmlFor="address">Address</label>
-            </div>
-            <div>
-              <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
+              <input
+                type="text"
+                name="title"
+                onChange={handleChange}
+                className="input"
+                required
+              />
             </div>
           </div>
-        
-          <div className = 'mt-2'>
-            <div>
-              <label className='text-lg text-white font-bold' htmlFor="streetNumber">Street Number</label>
+
+          <div className='mt-2'>
+              <label className='text-lg' htmlFor="transactionType">Select Type</label>
+              <div>
+                  <select
+                      name="transactionType"
+                      onChange={handleChange}
+                      className="input"
+                      required
+                  >
+                      <option value="">Select Type</option>
+                      <option value="short-term">Short term</option>
+                      <option value="long-term">Long term</option>
+                      <option value="auction">Auction</option>
+                  </select>
+              </div>
+          </div>
+
+          <div className='flex justify-between'>
+            <div className='mt-2'>
+              <label className='text-lg' htmlFor="address.postCode">Address Line 1</label>
+              <div>
+                <input
+                  type="text"
+                  name="address.postCode"
+                  onChange={handleChange}
+                  className="addressinput"
+                  required
+                />
+              </div>
             </div>
-            <div>
-              <input type="text" name="streetNumber" placeholder="Street Number" value={formData.streetNumber} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
+
+            <div className='mt-2'>
+              <label className='text-lg' htmlFor="address.street">Address Line 2</label>
+              <div>
+                <input
+                  type="text"
+                  name="address.street"
+                  onChange={handleChange}
+                  className="addressinput"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className='mt-2'>
+              <label className='text-lg' htmlFor="areas">City</label>
+              <div>
+                <input
+                  type="text"
+                  name="areas"
+                  onChange={handleChange}
+                  className="addressinput"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className='mt-2'>
+              <label className='text-lg' htmlFor="districts">District</label>
+              <div>
+                <input
+                  type="text"
+                  name="districts"
+                  onChange={handleChange}
+                  className="addressinput"
+                  required
+                />
+              </div>
             </div>
           </div>
-        
-          <div className = 'mt-2'>
+
+          <div className='mt-2'>
+            <label className='text-lg' htmlFor="description">Description</label>
             <div>
-              <label className='text-lg text-white font-bold' htmlFor="area">Area</label>
-            </div>
-            <div>
-              <input type="text" name="area" placeholder="Area" value={formData.area} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
-            </div>
-          </div>
-        
-          <div className = 'mt-2'>
-            <div>
-              <label className='text-lg text-white font-bold' htmlFor="city">City</label>
-            </div>
-            <div>
-              <input type="text" name="city" placeholder="City" value={formData.city} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
+              <textarea
+                name="description"
+                onChange={handleChange}
+                className="input"
+                required
+              ></textarea>
             </div>
           </div>
-        
-          <div className = 'mt-2'>
+
+          <div className='mt-2'>
+            <label className='text-lg' htmlFor="bedroomCount">Bedroom Count</label>
             <div>
-              <label className='text-lg text-white font-bold' htmlFor="district">District</label>
-            </div>
-            <div>
-              <input type="text" name="district" placeholder="District" value={formData.district} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
-            </div>
-          </div>
-        
-          <div className = 'mt-2'>
-            <div>
-              <label className='text-lg text-white font-bold' htmlFor="province">Province</label>
-            </div>
-            <div>
-              <input type="text" name="province" placeholder="Province" value={formData.province} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
+              <input
+                type="number"
+                name="bedroomCount"
+                onChange={handleChange}
+                className="input"
+                required
+              />
             </div>
           </div>
-        
-          <div className = 'mt-2'>
+
+          <div className='mt-2'>
+            <label className='text-lg' htmlFor="bathroomCount">Bathroom Count</label>
             <div>
-              <label className='text-lg text-white font-bold' htmlFor="country">Country</label>
-            </div>
-            <div>
-              <input type="text" name="country" placeholder="Country" value={formData.country} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
-            </div>
-          </div>
-        
-          <div className = 'mt-2'>
-            <div>
-              <label className='text-lg text-white font-bold' htmlFor="description">Description</label>
-            </div>
-            <div>
-              <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required></textarea>
+              <input
+                type="number"
+                name="bathroomCount"
+                onChange={handleChange}
+                className="input"
+                required
+              />
             </div>
           </div>
-        
-          <div className = 'mt-2'>
+
+          <div className='mt-2'>
+            <label className='text-lg' htmlFor="floor">Floor</label>
             <div>
-              <label className='text-lg text-white font-bold' htmlFor="bedroomCount">Number of Bedrooms</label>
-            </div>
-            <div>
-              <input type="number" name="bedroomCount" placeholder="Number of Bedrooms" value={formData.bedroomCount} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
-            </div>
-          </div>
-        
-          <div className = 'mt-2'>
-            <div>
-              <label className='text-lg text-white font-bold' htmlFor="bathroomCount">Number of Bathrooms</label>
-            </div>
-            <div>
-              <input type="number" name="bathroomCount" placeholder="Number of Bathrooms" value={formData.bathroomCount} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
+              <input
+                type="number"
+                name="floor"
+                onChange={handleChange}
+                className="input"
+                required
+              />
             </div>
           </div>
-        
-          <div className = 'mt-2'>
+
+          <div className='mt-2'>
+            <label className='text-lg' htmlFor="areaSize">Area Size</label>
             <div>
-              <label className='text-lg text-white font-bold' htmlFor="floor">Floor</label>
-            </div>
-            <div>
-              <input type="number" name="floor" placeholder="Floor" value={formData.floor} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
-            </div>
-          </div>
-        
-          <div className = 'mt-2'>
-            <div>
-              <label className='text-lg text-white font-bold' htmlFor="areaSize">Area Size</label>
-            </div>
-            <div>
-              <input type="number" name="areaSize" placeholder="Area Size" value={formData.areaSize} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
+              <input
+                type="number"
+                name="areaSize"
+                onChange={handleChange}
+                className="input"
+                required
+              />
             </div>
           </div>
-        
-          <div className = 'mt-2'>
+
+          <div className='mt-2'>
+            <label className='text-lg' htmlFor="price">Price</label>
             <div>
-              <label className='text-lg text-white font-bold' htmlFor="price">Price</label>
-            </div>
-            <div>
-              <input type="number" name="price" placeholder="Price" value={formData.price} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
-            </div>
-          </div>
-        
-          <div className = 'mt-2'>
-            <div>
-              <label className='text-lg text-white font-bold' htmlFor="currency">Currency</label>
-            </div>
-            <div>
-              <input type="text" name="currency" placeholder="Currency" value={formData.currency} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
+              <input
+                type="number"
+                name="price"
+                onChange={handleChange}
+                className="input"
+                required
+              />
             </div>
           </div>
-        
-          <div className = 'mt-2'>
+
+          <div className='mt-2'>
+            <label className='text-lg' htmlFor="currency">Currency</label>
             <div>
-              <label className='text-lg text-white font-bold' htmlFor="typeOfPro">Type of Property</label>
-            </div>
-            <div>
-              <input type="text" name="typeOfPro" placeholder="Type of Property" value={formData.typeOfPro} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
-            </div>
-          </div>
-        
-          <div className = 'mt-2'>
-            <div>
-              <label className='text-lg text-white font-bold' htmlFor="transactionType">Transaction Type</label>
-            </div>
-            <div>
-              <input type="text" name="transactionType" placeholder="Transaction Type" value={formData.transactionType} onChange={handleChange} className='w-full p-2 rounded-md mt-1' required />
+              <input
+                type="text"
+                name="currency"
+                onChange={handleChange}
+                className="input"
+                required
+              />
             </div>
           </div>
-        
+
+
+
           <div className='mt-2'>
             <div>
-              <label className='text-lg text-white font-bold' htmlFor="images">Images</label>
+              <label className='text-lg' htmlFor="images">Images</label>
             </div>
-            <div className="relative border-2 border-dashed border-white p-4 rounded-md mt-1 flex flex-col items-center cursor-pointer hover:bg-gray-800">
+            <div className="relative border-2 border-dashed p-4 rounded-md mt-1 flex flex-col items-center cursor-pointer hover:bg-gold hover:text-white">
               <input
                 type="file"
                 name="images"
@@ -250,9 +290,9 @@ export default function AddApartment() {
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 required
               />
-              <p className="text-white">Drag & Drop files here or click to upload</p>
+              <p>Drag & Drop files here or click to upload</p>
               {images.length > 0 && (
-                <div className="text-white mt-2">
+                <div className="mt-2">
                   {images.length} file(s) selected
                   <ul>
                     {images.map((file, index) => (
@@ -263,7 +303,7 @@ export default function AddApartment() {
               )}
             </div>
           </div>
-        
+
           <button type="submit" className='submitt'>Add Apartment</button>
         </form>
       </div>

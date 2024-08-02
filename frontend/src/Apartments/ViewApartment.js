@@ -23,8 +23,8 @@ export default function ViewApartment() {
         axiosInstance.get(`/api/ads/viewSpecificAd/${adcode}`)
             .then((response) => {
                 setApartmentDetails(response.data);
-                if (response.data.originImages && response.data.originImages.length > 0) {
-                    setSelectedImage(response.data.originImages[0]);
+                if (response.data.images && response.data.images.length > 0) {
+                    setSelectedImage(response.data.images[0]);
                 }
             })
             .catch((error) => {
@@ -80,7 +80,7 @@ export default function ViewApartment() {
                             )}
                         </div>
                         <div className="thumbnail-images-container">
-                            {apartmentDetails.originImages && apartmentDetails.originImages.map((image, index) => (
+                            {apartmentDetails.images && apartmentDetails.images.map((image, index) => (
                                 <img
                                     key={index}
                                     src={`http://124.43.179.118:8081/uploads/${image.split('\\').pop()}`}

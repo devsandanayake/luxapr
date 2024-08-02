@@ -1,3 +1,5 @@
+/* Background */
+
 .backgroundd {
     background-image: url('../Images/Contact.jpg');
     background-size: cover;
@@ -11,14 +13,7 @@
     z-index: -1;
 }
 
-
-
-.content {
-    z-index: 1;
-    background-color: white;
-    padding: 20px;
-}
-
+/* Title */
 .ContactUs-title {
     font-size: 3.5em;
     font-family: 'Georgia', serif;
@@ -27,15 +22,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.ContactUs-details {
-    max-width: 600px;
-    text-align: center;
-}
-
-.ContactUs-details p {
-    font-size: 1.2em;
 }
 
 
@@ -73,31 +59,33 @@
     width: 50%;  
     max-width: 1000px;  
     text-align: center;
-    opacity: 0; /* Initially hidden */
-    animation: fadeInUp 1s ease-out forwards; /* Apply the animation */
+    opacity: 0;  
+    animation: fadeInUp 1s ease-out forwards;  
 } 
 
 .add-apartment {
-    background: linear-gradient(135deg, #001f3f, #003366); /* Gradient background */
+    background: linear-gradient(135deg, #001f3f, #003366);  
     color: white;
     padding: 10px 20px; 
     font-size: 1.2em;
     border: none;
-    border-radius: 0.5rem; /* Rounded corners */
+    border-radius: 0.5rem;  
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  
+    transition: transform 0.3s ease, background-color 0.3s ease;  
 }
 
 .add-apartment:hover {
-    background-color: #003366; /* Slightly different color on hover */
-    transform: scale(1.05); /* Slight zoom effect */
+    background-color: #003366;  
+    transform: scale(1.05);  
 }
 
 .add-apartment:focus {
-    outline: none; /* Remove default focus outline */
+    outline: none; 
 }
 
+
+/* Content */
 
 
 .content {
@@ -106,15 +94,23 @@
     justify-content: center;
     align-items: center;
     background-color: white;
+    z-index: 1;
+    padding: 20px;
 }
 
 .ContactUs-details {
     margin-top: 100px;
+    max-width: 600px;
+    text-align: center;
     padding: 1rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: grid;
-    place-items: center; /* Center items both horizontally and vertically */
+    place-items: center;  
+}
+
+.ContactUs-details p {
+    font-size: 1.2em;
 }
 
 .contentbox {
@@ -133,7 +129,7 @@
 .contentdetails {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center the content details horizontally */
+    align-items: center;  
 }
 
 .contact-item {
@@ -141,13 +137,13 @@
     display: grid;
     gap: 30px;
     align-items: center;
-    justify-content: flex-start; /* Align items to the left horizontally */
-    grid-template-columns: auto 1fr; /* Creates two columns: one for the icon and one for the details */
+    justify-content: flex-start; 
+    grid-template-columns: auto 1fr;  
     font-size: 1.2rem;
 }
 
 .contact-item div {
-    text-align: left; /* Ensure text inside the details div is left-aligned */
+    text-align: left;  
 }
 
 
@@ -155,6 +151,62 @@
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+    width: 70%;
+}
+
+
+@media (max-width: 480px) {
+    .Apartment-add {
+        left: 10px;
+        right: 10px;
+        width: auto;
+        transform: translateX(-50%);
+        padding: 1rem 0.5rem;  /* Adjusts padding for smaller screens */
+    }
+
+    .add-apartment {
+        width: 50%;  /* Makes the button full width */
+        font-size: 0.8em;  /* Adjusts font size for smaller screens */
+    }
+
+    .desc {
+        font-size: 1.2em;  /* Adjusts font size for smaller screens */
+    }
+
+    .contenttitle {
+        font-size: 1.2rem;
+    }
+
+    .contact-item{
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .Apartment-add {
+        left: 10px;
+        right: 10px;
+        width: auto;
+        transform: translateX(-50%);
+        padding: 1rem 0.5rem;  /* Adjusts padding for smaller screens */
+    }
+
+    .add-apartment {
+        width: 50%;  /* Makes the button full width */
+        font-size: 0.8em;  /* Adjusts font size for smaller screens */
+    }
+
+    .desc {
+        font-size: 1.2em;  /* Adjusts font size for smaller screens */
+    }
+
+    .contenttitle {
+        font-size: 1.2rem;
+    }
+
+    .contact-item{
+        font-size: 0.8rem;
+    }
 }
 
 
