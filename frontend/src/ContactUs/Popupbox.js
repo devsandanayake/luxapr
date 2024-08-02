@@ -14,12 +14,17 @@ const Popupbox = ({ onClose }) => {
                 <div className="popup-title">Add your apartment for...</div>
 
                 <div>
-                    <button className="popup-button">Short-Term Rent</button>
+                    <button className="popup-button">Short-Term Rent Only</button>
                 </div>
 
                 <div>
-                    <button className="popup-button">Long-Term Rent</button>
+                    <button className="popup-button">Long-Term Rent Only</button>
                 </div>
+
+                <div>
+                    <button className="popup-button">Short Term & Long-Term Rent </button>
+                </div>
+
 
                 <div>
                     <button className="popup-button">Auction</button>
