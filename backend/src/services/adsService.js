@@ -78,6 +78,9 @@ const openORcloseForBidding = async (adCode, value) => {
     if (ad.status !== 1) {
         throw new Error('Ad is not approved');
     }
+    if(ad.transactionType !== 1){
+        throw new Error('Ad is not an auction');
+    }
 
     if (value == 1) {
        return  await AdsModel.findOneAndUpdate(

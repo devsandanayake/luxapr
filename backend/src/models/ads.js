@@ -51,7 +51,7 @@ const adsSchema =  new mongoose.Schema({
  
     },
     transactionType:{
-        type:String,
+        type:Number,
     },
     images:{
         type:[String]
