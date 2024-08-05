@@ -57,6 +57,29 @@ html, body {
     border-radius: 0.375rem;
   }
 
+  /* Add a specific class for the address input container */
+  .addressinput-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .addressinput-item {
+    flex: 1 1 45%; /* Adjust the width as needed */
+    margin-bottom: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .addressinput-container {
+      display: block;
+    }
+  
+    .addressinput-item {
+      width: 100%;
+    }
+  }
+
   .suggestions-list {
     border: 1px solid #ccc;
     border-radius: 4px;

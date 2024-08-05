@@ -158,6 +158,7 @@ export default function AddApartment() {
         },
       });
       console.log('Ad created successfully', response.data);
+      
     } catch (error) {
       console.error('There was an error creating the ad!', error);
       if (error.response) {
@@ -189,63 +190,63 @@ export default function AddApartment() {
       </div>
 
           
-          <div className='flex justify-between'>
-            <div className='mt-2'>
-              <label className='text-lg' htmlFor="address.postCode">Address Line 1</label>
-              <div className="relative">
-                <FaMapMarkerAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
-                <input
-                  type="text"
-                  name="address.postCode"
-                  onChange={handleChange}
-                  className="addressinput pl-10"
-                  required
-                />
-              </div>
-            </div>
-          
-            <div className='mt-2'>
-              <label className='text-lg' htmlFor="address.street">Address Line 2</label>
-              <div className="relative">
-                <FaMapMarkerAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
-                <input
-                  type="text"
-                  name="address.street"
-                  onChange={handleChange}
-                  className="addressinput pl-10"
-                  required
-                />
-              </div>
-            </div>
-          
-            <div className='mt-2'>
-              <label className='text-lg' htmlFor="areas">City</label>
-              <div className="relative">
-                <FaCity className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
-                <input
-                  type="text"
-                  name="areas"
-                  onChange={handleChange}
-                  className="addressinput pl-10"
-                  required
-                />
-              </div>
-            </div>
-          
-            <div className='mt-2'>
-              <label className='text-lg' htmlFor="districts">District</label>
-              <div className="relative">
-                <FaBuilding className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
-                <input
-                  type="text"
-                  name="districts"
-                  onChange={handleChange}
-                  className="addressinput pl-10"
-                  required
-                />
-              </div>
-            </div>
+           <div className='addressinput-container'>
+        <div className='addressinput-item mt-2'>
+          <label className='text-lg' htmlFor="address.postCode">Address Line 1</label>
+          <div className="relative">
+            <FaMapMarkerAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
+            <input
+              type="text"
+              name="address.postCode"
+              onChange={handleChange}
+              className="addressinput pl-10"
+              required
+            />
           </div>
+        </div>
+      
+        <div className='addressinput-item mt-2'>
+          <label className='text-lg' htmlFor="address.street">Address Line 2</label>
+          <div className="relative">
+            <FaMapMarkerAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
+            <input
+              type="text"
+              name="address.street"
+              onChange={handleChange}
+              className="addressinput pl-10"
+              required
+            />
+          </div>
+        </div>
+      
+        <div className='addressinput-item mt-2'>
+          <label className='text-lg' htmlFor="areas">City</label>
+          <div className="relative">
+            <FaCity className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
+            <input
+              type="text"
+              name="areas"
+              onChange={handleChange}
+              className="addressinput pl-10"
+              required
+            />
+          </div>
+        </div>
+      
+        <div className='addressinput-item mt-2'>
+          <label className='text-lg' htmlFor="districts">District</label>
+          <div className="relative">
+            <FaBuilding className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
+            <input
+              type="text"
+              name="districts"
+              onChange={handleChange}
+              className="addressinput pl-10"
+              required
+            />
+          </div>
+        </div>
+      </div>
           
           <div className='mt-2'>
             <label className='text-lg' htmlFor="description">Description</label>
@@ -334,13 +335,15 @@ export default function AddApartment() {
             <label className='text-lg' htmlFor="currency">Currency</label>
             <div className="relative">
               <FaMoneyBillWave className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
-              <input
-                type="text"
+              <select
                 name="currency"
                 onChange={handleChange}
                 className="input pl-10"
                 required
-              />
+              >
+                <option value="LKR">LKR</option>
+                <option value="USD">USD</option>
+              </select>
             </div>
           </div>
 
