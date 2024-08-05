@@ -76,13 +76,15 @@ export default function AddApartment() {
   };
 
   const handleImageChange = (e) => {
-    setImages(Array.from(e.target.files));
-    console.log('Selected images:', e.target.files);
+    const selectedFiles = Array.from(e.target.files);
+    setImages((prevImages) => [...prevImages, ...selectedFiles]);
+    e.target.value = null; // Clear the input value to allow re-selecting the same file if needed
   };
 
   const handleImage360Change = (e) => {
-    setImages360(Array.from(e.target.files));
-    console.log('Selected 360 images:', e.target.files);
+    const selectedFiles = Array.from(e.target.files);
+    setImages360((prevImages360) => [...prevImages360, ...selectedFiles]);
+    e.target.value = null; // Clear the input value to allow re-selecting the same file if needed
   };
 
   const handleSubmit = async (e) => {
