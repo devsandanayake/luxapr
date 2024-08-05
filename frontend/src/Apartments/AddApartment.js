@@ -36,6 +36,8 @@ export default function AddApartment() {
   const [images360, setImages360] = useState([]);
   const [image360Urls, setImage360Urls] = useState([]);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // New state variable for loading
+
 
 
   const handleChange = (e) => {
@@ -124,6 +126,7 @@ export default function AddApartment() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const data = new FormData();
     for (let key in formData) {
       if (typeof formData[key] === 'object') {
@@ -170,11 +173,22 @@ export default function AddApartment() {
         console.error('Response status:', error.response.status);
         console.error('Response headers:', error.response.headers);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="full-screen">
+      {isLoading && (
+        <div className="loader-overlay">
+          <div className="loader">
+            <span className="bar"></span>
+            <span className="bar"></span>
+            <span className="bar"></span>
+          </div>
+        </div>
+      )}
       <div className='w-9/12'>
         <h2 className='text-4xl mt-4 text-center' style={{ fontFamily: 'Georgia, serif' }}>Add Your Apartment For {titlebyvalue()}</h2>
         <form className='mt-10 ml-3 w-full mb-5' onSubmit={handleSubmit}>
