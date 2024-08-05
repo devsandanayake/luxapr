@@ -3,6 +3,7 @@ import axiosInstance from '../axiosConfig';
 import './AddApartment.css';
 import { useParams, useLocation } from 'react-router-dom';
 import { FaHome, FaMapMarkerAlt, FaCity, FaBuilding, FaBed, FaBath, FaLayerGroup, FaRulerCombined, FaDollarSign, FaMoneyBillWave } from 'react-icons/fa';
+import PopupWindow from './PopupWindow';
 
 
 export default function AddApartment() {
@@ -34,6 +35,8 @@ export default function AddApartment() {
   const [imageUrls, setImageUrls] = useState([]);
   const [images360, setImages360] = useState([]);
   const [image360Urls, setImage360Urls] = useState([]);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -158,6 +161,7 @@ export default function AddApartment() {
         },
       });
       console.log('Ad created successfully', response.data);
+      setIsPopupVisible(true);
       
     } catch (error) {
       console.error('There was an error creating the ad!', error);
@@ -177,6 +181,7 @@ export default function AddApartment() {
 
         <div className='mt-2'>
         <label className='text-lg' htmlFor="title">Title</label>
+
         <div className="relative">
           <FaHome className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
           <input
@@ -358,7 +363,6 @@ export default function AddApartment() {
                 multiple
                 onChange={handleImageChange}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                required
               />
               <p>Drag & Drop files here or click to upload</p>
               {images.length > 0 && (
@@ -398,7 +402,6 @@ export default function AddApartment() {
                 multiple
                 onChange={handleImage360Change}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                required
               />
               <p>Drag & Drop files here or click to upload</p>
               {images360.length > 0 && (
@@ -429,6 +432,7 @@ export default function AddApartment() {
 
           <button type="submit" className='submitt'>Add Apartment</button>
         </form>
+        {isPopupVisible && <PopupWindow/>}
       </div>
     </div>
   );
