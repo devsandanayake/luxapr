@@ -35,6 +35,17 @@
     font-size: 16px;
 }
 
+.term-tag{
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
 .details {
     padding: 16px;
     height: auto;
@@ -44,7 +55,8 @@
 
 .details h3 {
     margin: 0 0 8px 0;
-    font-size: 1.5em;
+    font-size: 1em;
+    height: 72px;
 }
 
 .details p {
