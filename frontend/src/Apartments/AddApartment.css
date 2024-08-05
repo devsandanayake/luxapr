@@ -29,20 +29,32 @@ html, body {
     display: block;
     width: 100%;
     padding: 0.8rem;
+    padding-left: 2.5rem;
     margin-top: 10px;
     margin-bottom: 10px;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border : 1px solid #979797;
+    border-radius: 0.375rem;
+  }
+
+  .Descinput {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border : 1px solid #979797;
+    border-radius: 0.375rem;
   }
 
   .addressinput{
     display: block;
     width: 100%;
     padding: 0.8rem;
+    padding-left: 2.5rem;
     margin-top: 10px;
     margin-bottom: 10px;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border : 1px solid #979797;
+    border-radius: 0.375rem;
   }
 
   .suggestions-list {
