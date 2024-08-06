@@ -13,6 +13,12 @@ const createLRentalTransaction = async (username , adCode , rentalStartDate , re
     return await newLRentalTransaction.save();
 }
 
+
+//get user long rental transactions
+const getUserLRentalTransactions = async (username) => {
+    return await LRentalTransactionModel.find({username: username});
+}
+
 // Function to get all long rental transactions
 const getAllLRentalTransactions = async () => {
     return await LRentalTransactionModel.find();
@@ -22,5 +28,6 @@ const getAllLRentalTransactions = async () => {
 
 module.exports = {
     createLRentalTransaction,
-    getAllLRentalTransactions
+    getAllLRentalTransactions,
+    getUserLRentalTransactions
 }

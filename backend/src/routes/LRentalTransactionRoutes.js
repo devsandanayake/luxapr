@@ -6,6 +6,7 @@ const router = express.Router();
 
 // User routes
 router.post('/createLRentalTransaction', authMiddleware.authUser, LRentalTransactionController.createLRentalTransaction);
+router.get('/getUserLRentalTransactions', authMiddleware.authUser, LRentalTransactionController.getUserLRentalTransactions);
 
 
 
