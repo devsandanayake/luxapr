@@ -1,27 +1,44 @@
-import React from 'react'
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import axiosInstance from '../axiosConfig';
 
 export default function UserProfile() {
+  const [userProfile, setUserProfile] = useState(null);
+  const [error, setError] = useState(null);
+  
   const token = localStorage.getItem('token');
+  const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : {};
+  const userName = decodedToken.firstName || '';
 
- 
-  React.useEffect(()=>{
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8081/api/users/viewUserProfile`, {
+        const response = await axiosInstance.get('/api/users/viewUserProfile', {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            'Authorization': `${token}`,
+          },
         });
-        console.log(response.data);
+        setUserProfile(response.data);
       } catch (err) {
-        console.error(err);
+        console.error('Error fetching user profile:', err);
+        setError(err);
       }
-    }
+    };
+    
     fetchData();
-  })
+  }, [token]);
+
+  if (error) {
+    return <div>Error loading profile: {error.message}</div>;
+  }
+
+  if (!userProfile) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div>UserProfile</div>
-  )
+    <div>
+      UserProfile {userName}
+      <pre>{JSON.stringify(userProfile, null, 2)}</pre>
+    </div>
+  );
 }
