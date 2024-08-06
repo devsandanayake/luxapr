@@ -57,9 +57,20 @@ const viewAdsUser = async (req,res,next)=>{
     }
 }
 
+const viewUserProfile = async (req,res,next)=>{
+    try{
+        const username = req.user
+        const response = await userService.viewUserProfile(username);
+        res.json(response);
+    }catch(err){
+        next(err);
+    }
+}
+
 module.exports = {
     createUser,
     loginUser,
     viewAllUsers,
-    viewAdsUser
+    viewAdsUser,
+    viewUserProfile
 };

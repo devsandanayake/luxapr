@@ -4,7 +4,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './Main/NavBar';
 import './index.css';
-
+import UserProfile from './Main/UserProfile';
 import Home from './Home/Home';
 import ContactUs from './ContactUs/ContactUs';
 import AddApartment from './Apartments/AddApartment';
@@ -25,6 +25,7 @@ function App() {
           <Route path="/viewapartment" element={<ViewApartment />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
+          <Route path="/user/profile" element={<UserProfile />} />
         </Routes>
       </div>
       <Footer />
