@@ -57,6 +57,19 @@ export default function ViewApartment() {
 
     const displayedApartments = OtherApartments.slice(0, 4);
 
+
+    const priceTag = (() => {
+        if (apartmentDetails.transactionType === 1) {
+            return "Per Day";
+        } else if (apartmentDetails.transactionType === 2) {
+            return "Per Month";
+        } else if (apartmentDetails.transactionType === 3) {
+            return "Per Day";
+        } else {
+            return "";
+        }
+    })();
+
     return (
         <>
             <div className='fullScreen'>
@@ -156,7 +169,7 @@ export default function ViewApartment() {
                             <>
                                 <div className='flex items-center text-xl text-gold ml-20 mt-3 gap-4'>
                                     <BsCurrencyDollar />
-                                    <span className='text-black'>{apartmentDetails.price} {apartmentDetails.currency}</span>
+                                    <span className='text-black'>{apartmentDetails.price} {apartmentDetails.currency} {priceTag}</span>
                                 </div>
                             </>
                         )}
