@@ -7,8 +7,9 @@ const createLRentalTransaction = async (req, res) =>{
     const rentalStartDate = req.body.rentalStartDate;
     const rentalEndDate = req.body.rentalEndDate;
     const userMessage = req.body.userMessage;
+    const phoneNumber = req.body.phoneNumber;
     try{
-        const newLRentalTransaction = await LRentalTransactionService.createLRentalTransaction(username , adCode , rentalStartDate , rentalEndDate , userMessage);
+        const newLRentalTransaction = await LRentalTransactionService.createLRentalTransaction(username , adCode , rentalStartDate , rentalEndDate , userMessage, phoneNumber);
         res.status(201).json(newLRentalTransaction);
 
     }

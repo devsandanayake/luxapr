@@ -25,7 +25,10 @@ const LRentalTransactionSchema = new mongoose.Schema({
     },
     userMessage:{
         type: String
-    }
+    },
+    phoneNumber:{
+        type: String
+    },
     
 });
 

@@ -1,13 +1,14 @@
 const LRentalTransactionModel = require('../models/LRentTransactionModel');
 
 // Function to create a long rental transaction
-const createLRentalTransaction = async (username , adCode , rentalStartDate , rentalEndDate , userMessage) => {
+const createLRentalTransaction = async (username , adCode , rentalStartDate , rentalEndDate , userMessage , phoneNumber) => {
     const newLRentalTransaction = new LRentalTransactionModel({
         username,
         adCode,
         rentalStartDate,
         rentalEndDate,
-        userMessage
+        userMessage,
+        phoneNumber
     });
     return await newLRentalTransaction.save();
 }
