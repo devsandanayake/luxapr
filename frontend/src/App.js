@@ -4,7 +4,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './Main/NavBar';
 import './index.css';
-import UserProfile from './Main/UserProfile';
+import UserProfile from './UserProfile/UserProfile';
 import Home from './Home/Home';
 import ContactUs from './ContactUs/ContactUs';
 import AddApartment from './Apartments/AddApartment';

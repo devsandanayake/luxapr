@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './SignUp.css'; // Adjusted to match Login.css naming conventions
 import Logo from '../Images/Logo.png'; // Assuming you have the logo image available
 import axiosInstance from '../axiosConfig'; // Import the axios instance
+import Popup from './Popup'; 
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ export default function SignUp() {
   });
 
   const [message, setMessage] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,7 +32,11 @@ export default function SignUp() {
 
       if (response.status === 201) {
         setMessage('Account created successfully!');
-        window.location.href = '/login';  // Redirect to login page
+        setShowPopup(true);
+        setTimeout(() => {
+          setShowPopup(false);
+          window.location.href = '/login';  // Redirect to login page after 3 seconds
+        }, 3000);
       } else {
         setMessage(response.data.message || 'Something went wrong. Please try again.');
       }
@@ -122,6 +128,7 @@ export default function SignUp() {
           <p>Already have an account? <a href="/login">Sign in</a></p>
         </div>
       </div>
+      {showPopup && <Popup message={message} />}
     </div>
   );
 }

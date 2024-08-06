@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './NavBar.css';
 import Logo from '../Images/Logo.png';
+import { useNavigate } from 'react-router-dom';
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,10 +14,11 @@ export default function NavBar() {
     setIsOpen(!isOpen);
   };
 
+  const navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.removeItem('token');
-    window.location.reload(); // Reload the page to update the navbar
-  };
+    navigate('/login');};
 
   return (
     <nav className="luxury-navbar fixed top-0 w-full z-50 bg-white shadow-lg opacity-85">
