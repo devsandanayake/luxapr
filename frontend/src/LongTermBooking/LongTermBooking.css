@@ -1,16 +1,16 @@
 html, body {
-  height: 100%;
-  margin: 0;
-}
+    height: 100%;
+    margin: 0;
+  }
+  
+  .full-screen {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.full-screen {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.submitt {
+  .submitt {
     display: block;;
     background-color: #d4a25a;
     padding: 0.8rem;
@@ -36,52 +36,8 @@ html, body {
     border-radius: 0.375rem;
   }
 
-  .Descinput {
-    display: block;
-    width: 100%;
-    padding: 0.8rem;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border : 1px solid #979797;
-    border-radius: 0.375rem;
-  }
-
-  .addressinput{
-    display: block;
-    width: 100%;
-    padding: 0.8rem;
-    padding-left: 2.5rem;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border : 1px solid #979797;
-    border-radius: 0.375rem;
-  }
-
-  /* Add a specific class for the address input container */
-  .addressinput-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  
-  .addressinput-item {
-    flex: 1 1 45%; /* Adjust the width as needed */
-    margin-bottom: 1rem;
-  }
-  
-  @media (max-width: 768px) {
-    .addressinput-container {
-      display: block;
-    }
-  
-    .addressinput-item {
-      width: 100%;
-    }
-  }
-
-    /* From Uiverse.io by aryamitra06 */
-  .loader {
+   /* From Uiverse.io by aryamitra06 */
+   .loader {
     display: flex;
     align-items: center;
   }

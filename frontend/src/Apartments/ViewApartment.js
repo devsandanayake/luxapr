@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosConfig';
 import { MdLocationOn } from "react-icons/md";
 import { IoBedOutline } from "react-icons/io5";
@@ -19,6 +19,8 @@ export default function ViewApartment() {
     const [OtherApartments, setOtherApartments] = useState([]);
     const [selectedImage, setSelectedImage] = useState('');
     const [isPannellumReady, setIsPannellumReady] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         axiosInstance.get(`/api/ads/viewSpecificAd/${adcode}`)
@@ -69,6 +71,14 @@ export default function ViewApartment() {
             return "";
         }
     })();
+
+    const handlebookNow = () => {
+        if (apartmentDetails.transactionType === 2) {
+            navigate(`/longtermbooking?adcode=${adcode}`);
+        } else {
+            navigate(`/short?adcode=${adcode}`);
+        }
+    };
 
     return (
         <>
@@ -175,7 +185,9 @@ export default function ViewApartment() {
                         )}
 
                         <div className='flex items-center justify-center'>
-                            <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 w-2/5'>
+                            <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 w-2/5'
+                            onClick={handlebookNow}
+                            >
                                 Book Now
                             </button>
                         </div>

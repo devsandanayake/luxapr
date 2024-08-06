@@ -12,6 +12,7 @@ import ViewApartment from './Apartments/ViewApartment';
 import Footer from './Main/Footer';
 import Login from './Login/Login';
 import Registration from './UserRegistration/SignUp';
+import LongTermBooking from './LongTermBooking/LongTermBooking';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/user/profile" element={<UserProfile />} />
+          <Route path="/longtermbooking" element={<LongTermBooking />} />
         </Routes>
       </div>
       <Footer />
