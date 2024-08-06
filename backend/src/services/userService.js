@@ -104,9 +104,25 @@ const viewAdsUser = async (username) => {
 
 }
 
+//login user profile view
+const viewUserProfile = async (username) => {
+    try{
+        const user = await UserModel.findOne({ username:username });
+        if (!user) {
+            return { error: true, status: 404, message: 'User not found' };
+        }
+        return { error: false, user };
+    }
+    catch (err) {
+        console.error(err); // Consider more sophisticated logging for production
+        throw new Error('Error viewing user profile');
+    }
+}
+
 module.exports = {
     createUser,
     loginUser,
     viewAllUsers,
-    viewAdsUser
+    viewAdsUser,
+    viewUserProfile
 };

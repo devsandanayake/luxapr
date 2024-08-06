@@ -28,7 +28,7 @@ export default function Login() {
       if (response.status === 200) {
         setMessage('Login successful!');
         localStorage.setItem('token', response.data.token);
-        navigate('/contactus');
+        window.location.href = '/';
       } else {
         setMessage(response.data.message || 'Something went wrong. Please try again.');
       }

@@ -4,9 +4,18 @@ import Logo from '../Images/Logo.png';
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
+  const token = localStorage.getItem('token');
+
+  const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : {};
+  const userName = decodedToken.firstName || '';
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    window.location.reload(); // Reload the page to update the navbar
   };
 
   return (
@@ -28,9 +37,20 @@ export default function NavBar() {
           <li>
             <a href="/contactus" className="nav-link font-archivo-thin">Contact Us</a>
           </li>
-          <li>
-            <a href="/login" className="nav-link font-archivo-thin">Login</a>
-          </li>
+          {token ? (
+            <>
+              <li>
+                <a href='/user/profile' className="nav-link font-archivo-thin bg-slate-300">Welcome, {userName}</a>
+              </li>
+              <li>
+                <button onClick={handleLogout} className="nav-link font-archivo-thin">Logout</button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <a href="/login" className="nav-link font-archivo-thin">Login</a>
+            </li>
+          )}
         </ul>
       </div>
     </nav>
