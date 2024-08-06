@@ -51,24 +51,24 @@ export default function UserProfile() {
         </button>
         <div className={`w-full md:w-1/4 ${isNavOpen ? 'block' : 'hidden'} md:block`}>
         
-          <div className="nav flex-column nav-pills">
+        <div className="nav flex-column nav-pills">
             <a href="#account-general" data-toggle="tab" className="nav-link active">
-              <FaUser className="mr-2" /> General
+              <p className="flex items-center"><FaUser className="mr-2" /> General</p>
             </a>
             <a href="#account-security" data-toggle="tab" className="nav-link">
-              <FaLock className="mr-2" /> Security
+              <p className="flex items-center"><FaLock className="mr-2" /> Security</p>
             </a>
             <a href="#account-notifications" data-toggle="tab" className="nav-link">
-              <FaBell className="mr-2" /> Notifications
+              <p className="flex items-center"><FaBell className="mr-2" /> Notifications</p>
             </a>
             <a href="#account-billing" data-toggle="tab" className="nav-link">
-              <FaCreditCard className="mr-2" /> Billing
+              <p className="flex items-center"><FaCreditCard className="mr-2" /> Billing</p>
             </a>
             <a href="#account-connections" data-toggle="tab" className="nav-link">
-              <FaGavel className="mr-2" /> Auction Registration
+              <p className="flex items-center"><FaGavel className="mr-2" /> Auction Registration</p>
             </a>
             <a href="#account-connections" data-toggle="tab" className="nav-link">
-              <FaQuestionCircle className="mr-2" /> Inquiries
+              <p className="flex items-center"><FaQuestionCircle className="mr-2" /> Inquiries</p>
             </a>
           </div>
         </div>
@@ -76,7 +76,7 @@ export default function UserProfile() {
           <div className="tab-content">
             <div id="account-general" className="tab-pane fade show active">
               <div className="flex items-center mb-4">
-                <img className="h-20 w-20 rounded-full mr-4" src={userProfile.avatar || "https://via.placeholder.com/150"} alt="User Avatar" />
+                <img className="h-20 w-20 rounded-full mr-4" src={userProfile.avatar || "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png"} alt="User Avatar" />
                 <div>
                   <p className="btn btn-default">{userProfile.username}</p>
                   <p className="text-gray-600">Joined: {new Date(userProfile.registerDate).toDateString()}</p>
