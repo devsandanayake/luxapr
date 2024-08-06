@@ -29,8 +29,21 @@ const getAllLRentalTransactions = async (req, res) =>{
     }
 }
 
+//get user long rental transactions
+const getUserLRentalTransactions = async (req, res) =>{
+    const username = req.user;
+    try{
+        const userLRentalTransactions = await LRentalTransactionService.getUserLRentalTransactions(username);
+        res.status(200).json(userLRentalTransactions);
+    }
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+}
+
 
 module.exports = {
     createLRentalTransaction,
-    getAllLRentalTransactions
+    getAllLRentalTransactions,
+    getUserLRentalTransactions
 }
