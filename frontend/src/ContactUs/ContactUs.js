@@ -12,18 +12,14 @@ export default function ContactUs() {
     };
     const navigate = useNavigate();
 
-    const AddApartment = () => {
-        if (isLoggedIn()) {
-            navigate('/addapartment');
-        } else {
-            navigate('/login');
-        }
-    };
-
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     const handleOpenPopup = () => {
-        setIsPopupOpen(true);
+        if (isLoggedIn()) {
+            setIsPopupOpen(true);
+        } else {
+            navigate('/login');
+        }
     };
 
     const handleClosePopup = () => {
