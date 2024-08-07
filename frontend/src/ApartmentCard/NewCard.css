@@ -1,6 +1,7 @@
 .newcard {
     width: 100%;
     max-width: 1200px;
+    max-height: 200px;
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;

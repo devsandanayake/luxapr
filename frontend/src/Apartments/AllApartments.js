@@ -28,9 +28,9 @@ export default function AllApartments() {
 
     <div className="containerr mx-auto">
                 <div className="sidebar">
-                    <h2 className="sidebar-title">Booking Now</h2>
-                    <div className="booking-option">Check In</div>
-                    <div className="booking-option">Check Out</div>
+                    <h2 className="sidebar-title">Filter Now</h2>
+                    <div className="booking-option">Location</div>
+                    <div className="booking-option">Type</div>
                     <div className="booking-option">Room</div>
                     <button className="check-button">CHECK ➔</button>
                 </div>
