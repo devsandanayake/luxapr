@@ -28,6 +28,10 @@ const getadCodeLRentalTransactions = async (adCode) => {
     return await LRentalTransactionModel.find({adCode: adCode});
 }
 
+//update long rental transaction status
+const updateLRentalTransactionStatus = async (adCode, adminKeyStatus) =>{
+    return await LRentalTransactionModel.findOneAndUpdate({adCode: adCode}, {adminKeyStatus: adminKeyStatus},{new: true});
+}
 
 
 
@@ -36,5 +40,6 @@ module.exports = {
     createLRentalTransaction,
     getAllLRentalTransactions,
     getUserLRentalTransactions,
-    getadCodeLRentalTransactions
+    getadCodeLRentalTransactions,
+    updateLRentalTransactionStatus
 }

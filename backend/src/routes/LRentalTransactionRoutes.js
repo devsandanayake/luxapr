@@ -12,6 +12,7 @@ router.get('/getAllLRentalTransactions', authMiddleware.authAdmin, LRentalTransa
 
 // Admin routes
 router.get('/getadCodeLRentalTransactions', authMiddleware.authAdmin, LRentalTransactionController.getadCodeLRentalTransactions);
+router.patch('/updateLRentalTransactionStatus', authMiddleware.authAdmin, LRentalTransactionController.updateLRentalTransactionStatus);
 
 
 
