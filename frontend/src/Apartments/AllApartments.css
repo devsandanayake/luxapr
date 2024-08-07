@@ -1,0 +1,90 @@
+.AllApartments-title {
+  font-size: 2.5rem;
+  margin-top: 1rem;
+  font-family: 'georgia', serif;
+  text-align: center;
+}
+
+/* Container */
+.containerr {
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 25%;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.booking-option {
+    background: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.check-button {
+    background: #d4a553;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    width: 100%;
+}
+
+/* Main Content */
+.main-content {
+    width: 75%;
+    padding: 20px;
+}
+
+/* Content */
+.content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.apartment-card {
+    background: white;
+    color: black;
+    width: 100%;
+    display: flex;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.apartment-image {
+    width: 30%;
+    object-fit: cover;
+}
+
+.apartment-details {
+    padding: 20px;
+    width: 70%;
+}
+
+.apartment-info {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.apartment-price {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
