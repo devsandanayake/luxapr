@@ -41,9 +41,21 @@ const getUserLRentalTransactions = async (req, res) =>{
     }
 }
 
+const getadCodeLRentalTransactions = async (req, res) =>{
+    const adCode = req.query.adCode;
+    try{
+        const adCodeLRentalTransactions = await LRentalTransactionService.getadCodeLRentalTransactions(adCode);
+        res.status(200).json(adCodeLRentalTransactions);
+    }
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+}
+
 
 module.exports = {
     createLRentalTransaction,
     getAllLRentalTransactions,
-    getUserLRentalTransactions
+    getUserLRentalTransactions,
+    getadCodeLRentalTransactions
 }

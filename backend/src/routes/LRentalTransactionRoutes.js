@@ -10,6 +10,10 @@ router.get('/getUserLRentalTransactions', authMiddleware.authUser, LRentalTransa
 router.get('/getAllLRentalTransactions', authMiddleware.authAdmin, LRentalTransactionController.getAllLRentalTransactions);
 
 
+// Admin routes
+router.get('/getadCodeLRentalTransactions', authMiddleware.authAdmin, LRentalTransactionController.getadCodeLRentalTransactions);
+
+
 
 
 

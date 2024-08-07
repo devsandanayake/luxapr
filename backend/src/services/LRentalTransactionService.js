@@ -24,10 +24,17 @@ const getAllLRentalTransactions = async () => {
     return await LRentalTransactionModel.find();
 }
 
+const getadCodeLRentalTransactions = async (adCode) => {
+    return await LRentalTransactionModel.find({adCode: adCode});
+}
+
+
+
 
 
 module.exports = {
     createLRentalTransaction,
     getAllLRentalTransactions,
-    getUserLRentalTransactions
+    getUserLRentalTransactions,
+    getadCodeLRentalTransactions
 }
