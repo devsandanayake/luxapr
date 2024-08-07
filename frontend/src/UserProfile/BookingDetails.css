@@ -1,0 +1,17 @@
+.room-image {
+    max-height: 12rem; /* Tailwind CSS equivalent of max-h-48 */
+    position: relative; /* Ensure the parent container is positioned */
+  }
+  
+  .status-tag {
+    position: absolute;
+    top: 16px;
+    right: 16px; /* Change from left to right */
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 16px;
+    z-index: 10;
+  }
+  
