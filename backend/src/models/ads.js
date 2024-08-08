@@ -87,6 +87,9 @@ const adsSchema =  new mongoose.Schema({
          currentRate:{
             type:Number,
          },
+         BidValue:{
+            type:Number,
+         },
 
     }
 });
