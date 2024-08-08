@@ -323,7 +323,7 @@ export default function AddApartment() {
           </div>
           
           <div className='mt-2'>
-            <label className='text-lg' htmlFor="areaSize">Area Size</label>
+            <label className='text-lg' htmlFor="areaSize">Area Size (sqft)</label>
             <div className="relative">
               <FaRulerCombined className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
               <input

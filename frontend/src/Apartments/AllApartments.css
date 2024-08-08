@@ -31,10 +31,10 @@
 
 .booking-option {
     background: #f9f9f9;
-    padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
     cursor: pointer;
+    
 }
 
 .check-button {
