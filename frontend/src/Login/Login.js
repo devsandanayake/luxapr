@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './Login.css';
 import Logo from '../Images/Logo.png'; // Import the logo
 import axiosInstance from '../axiosConfig'; 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 export default function Login() {
   const [formData, setFormData] = useState({
     username: '',
@@ -10,6 +11,8 @@ export default function Login() {
   });
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,8 +31,14 @@ export default function Login() {
       if (response.status === 200) {
         setMessage('Login successful!');
         localStorage.setItem('token', response.data.token);
-        window.location.href = '/';
-      } else {
+        
+        const adcode = location.state?.adcode;
+        if (adcode) {
+            navigate(`${from}?adcode=${adcode}`, { replace: true });
+        } else {
+            navigate(from, { replace: true });
+        }
+    } else {
         setMessage(response.data.message || 'Something went wrong. Please try again.');
       }
     } catch (error) {
@@ -66,7 +75,6 @@ export default function Login() {
           </div>
           <button type="submit" className="login-button">Login</button>
           {message && <p className="login-message">{message}</p>}
-
 
           <div className="signup flex items-center justify-center">
             <p>Don't have an account?</p>

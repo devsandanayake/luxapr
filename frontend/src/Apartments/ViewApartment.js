@@ -76,15 +76,15 @@ export default function ViewApartment() {
         }
     })();
 
-    const handlebookNow = () => {
+       const handlebookNow = () => {
         if (isLoggedIn()) {
             if (apartmentDetails.transactionType === 2) {
                 navigate(`/longtermbooking?adcode=${adcode}`);
             } else {
                 navigate(`/short?adcode=${adcode}`);
             }
-        } else {
-            navigate('/login');
+              } else {
+            navigate('/login', { state: { from: location, adcode } });
         }
     };
     
@@ -210,15 +210,16 @@ export default function ViewApartment() {
                             </>
                         )}
 
-                        {apartmentDetails.transactionType === 1 || apartmentDetails.transactionType === 2 || apartmentDetails.transactionType === 3 && (
-                        <div className='flex items-center justify-center'>
-                            <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 w-2/5'
-                            onClick={handlebookNow}
-                            >
-                                Book Now
-                            </button>
-                        </div>
-                        )}
+{(apartmentDetails.transactionType === 1 || apartmentDetails.transactionType === 2 || apartmentDetails.transactionType === 3) && (
+    <div className='flex items-center justify-center'>
+        <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 w-2/5'
+        onClick={handlebookNow}
+        >
+            Book Now
+        </button>
+    </div>
+)}
+
 
                         {apartmentDetails.transactionType === 4 && (
                             <>
