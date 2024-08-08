@@ -52,6 +52,10 @@ const approved = async (adCode, status) => {
         throw new Error('User not found');
     }
 
+    if (ad.transactionType === 4){
+        await AdsModel.findOneAndUpdate ({adCode}, { 'auctionStatus.auctionID': `AU${adCode}` });
+    }
+
     await sendEmail(user.email, adCode);
     return ad;
 };
@@ -91,7 +95,6 @@ const openORcloseForBidding = async (adCode, value) => {
             { adCode },
             {
                 'auctionStatus.status': true,
-                'auctionStatus.auctionID': `AU${adCode}`
             },
             { new: true }
         );
