@@ -108,7 +108,7 @@ const openORcloseForBidding = async (adCode, value) => {
 
 
 //update startdate and max value for auction
-const updateAuctionDetails = async (adCode, startDate,endDate, startPrice,maxRate ) => {
+const updateAuctionDetails = async (adCode, startDate,endDate, startPrice,maxRate ,BidValue) => {
     const ad = await AdsModel.findOne({ adCode });
     if (!ad) {
         throw new Error('Ad not found');
@@ -125,7 +125,8 @@ const updateAuctionDetails = async (adCode, startDate,endDate, startPrice,maxRat
         'auctionStatus.endDate': endDate,
         'auctionStatus.maxRate': maxRate,
         'auctionStatus.startPrice': startPrice,
-        'auctionStatus.currentRate': startPrice
+        'auctionStatus.currentRate': startPrice,
+        'auctionStatus.BidValue': BidValue
 
     }, { new: true });
 }

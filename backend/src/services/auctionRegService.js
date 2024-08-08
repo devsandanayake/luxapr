@@ -77,9 +77,17 @@ const registerAuction = async (auctionID, username, adCode) => {
         adCode,
         registrationDate: new Date(),
     });
+    
+    //update user model add AutionID
+    const user = await UserModel.findOne({username : username});
 
+    user.auctionID = auctionID;
+    await user.save();
+    
     // Save the new auction registration and return the result
     return newAuctionReg.save();
+
+
 };
 
 
