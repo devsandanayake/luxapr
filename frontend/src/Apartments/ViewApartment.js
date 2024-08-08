@@ -11,6 +11,11 @@ import { Pannellum } from "pannellum-react";
 import './ViewApartment.css';
 
 export default function ViewApartment() {
+
+    const isLoggedIn = () => {
+        return localStorage.getItem('token') !== null;
+    };
+    
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const adcode = searchParams.get('adcode');
@@ -59,7 +64,6 @@ export default function ViewApartment() {
 
     const displayedApartments = OtherApartments.slice(0, 4);
 
-
     const priceTag = (() => {
         if (apartmentDetails.transactionType === 1) {
             return "Per Day";
@@ -73,12 +77,34 @@ export default function ViewApartment() {
     })();
 
     const handlebookNow = () => {
-        if (apartmentDetails.transactionType === 2) {
-            navigate(`/longtermbooking?adcode=${adcode}`);
+        if (isLoggedIn()) {
+            if (apartmentDetails.transactionType === 2) {
+                navigate(`/longtermbooking?adcode=${adcode}`);
+            } else {
+                navigate(`/short?adcode=${adcode}`);
+            }
         } else {
-            navigate(`/short?adcode=${adcode}`);
+            navigate('/login');
         }
     };
+    
+    const handleRegister = () => {
+        if (isLoggedIn()) {
+            navigate(`/auctionregister?auctionID=${apartmentDetails.auctionStatus.auctionID}`);
+        } else {
+            navigate('/login');
+        }
+    };
+
+    const handleInquiry = () => {
+        if (isLoggedIn()) {
+            navigate(`/auctioninquiry?auctionID=${apartmentDetails.auctionStatus.auctionID}`);
+        } else {
+            navigate('/login');
+        }
+    };
+
+       
 
     return (
         <>
@@ -184,6 +210,7 @@ export default function ViewApartment() {
                             </>
                         )}
 
+                        {apartmentDetails.transactionType !== 4 && (
                         <div className='flex items-center justify-center'>
                             <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 w-2/5'
                             onClick={handlebookNow}
@@ -191,6 +218,29 @@ export default function ViewApartment() {
                                 Book Now
                             </button>
                         </div>
+                        )}
+
+                        {apartmentDetails.transactionType === 4 && (
+                            <>
+                            <div className='flex flex-row items-center justify-center gap-6'>
+                            <div className='flex items-center justify-center'>
+                                <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 '
+                                onClick={handleInquiry}
+                                >
+                                    Send Inquiry
+                                </button>
+                            </div>
+
+                            <div className='flex items-center justify-center'>
+                                <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 '
+                                onClick={handleRegister}
+                                >
+                                    Register
+                                </button>
+                            </div>
+                            </div>
+                            </>
+                        )}
                     </div>
                 </div>
 
@@ -206,7 +256,9 @@ export default function ViewApartment() {
                 </div>
 
                 <div className='flex items-center justify-center mb-20'>
+                    <a href='/allapartments'>
                     <button className='all-apartments-button'> All Apartments <FaArrowRight className="arrow" /></button>
+                    </a>
                 </div>
             </div>
         </>

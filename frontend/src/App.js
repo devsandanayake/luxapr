@@ -14,6 +14,8 @@ import Login from './Login/Login';
 import Registration from './UserRegistration/SignUp';
 import LongTermBooking from './LongTermBooking/LongTermBooking';
 import AllApartments from './Apartments/AllApartments';
+import AuctionRegistration from './AuctionRegistration/AuctionRegistration';
+import AuctionInquiry from './AuctionInquiry/AuctionInquiry';
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
           <Route path="/user/profile" element={<UserProfile />} />
           <Route path="/longtermbooking" element={<LongTermBooking />} />
           <Route path="/allapartments" element={<AllApartments />} />
+          <Route path="/auctionregistration" element={<AuctionRegistration />} />
+          <Route path="/auctioninquiry" element={<AuctionInquiry />} />
         </Routes>
       </div>
       <Footer />
