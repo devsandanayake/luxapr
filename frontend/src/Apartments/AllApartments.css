@@ -11,6 +11,7 @@
     position: relative;
     z-index: 1;
     display: flex;
+    flex-direction: row; /* Default to row */
 }
 
 /* Sidebar */
@@ -34,7 +35,6 @@
     margin-bottom: 10px;
     border: 1px solid #ddd;
     cursor: pointer;
-    
 }
 
 .check-button {
@@ -88,4 +88,41 @@
     display: flex;
     justify-content: space-between;
     font-weight: bold;
+}
+
+/* Media Query for Small Screens */
+@media (max-width: 768px) {
+    .containerr {
+        flex-direction: column; /* Stack elements vertically */
+    }
+
+    .sidebar {
+        width: 100%; /* Full width for sidebar */
+        margin-bottom: 20px; /* Add space below sidebar */
+    }
+
+    .main-content {
+        width: 100%; /* Full width for main content */
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column; /* Stack cards vertically */
+        align-items: center; /* Center align cards */
+        justify-content: center; /* Center align cards */
+    }
+
+    .apartment-card {
+        flex-direction: column; /* Stack card elements vertically */
+        width: 90%; /* Adjust width to fit within the container */
+        margin-bottom: 20px; /* Add space between cards */
+    }
+
+    .apartment-image {
+        width: 100%; /* Full width for image */
+    }
+
+    .apartment-details {
+        width: 100%; /* Full width for details */
+    }
 }

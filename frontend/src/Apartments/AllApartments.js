@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
 import './AllApartments.css';
 import NewCard from '../ApartmentCard/NewCard';
+import SmallCard from '../ApartmentCard/ApartmentCard';
 
 export default function AllApartments() {
     const [apartments, setApartments] = useState([]);
@@ -10,6 +11,7 @@ export default function AllApartments() {
     const [selectedType, setSelectedType] = useState('');
     const [selectedRoomCount, setSelectedRoomCount] = useState(''); // New state for room count
     const [showFiltered, setShowFiltered] = useState(false);
+    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768); // State for screen size
 
     useEffect(() => {
         const fetchApartments = async () => {
@@ -23,6 +25,16 @@ export default function AllApartments() {
         };
 
         fetchApartments();
+
+        const handleResize = () => {
+            setIsSmallScreen(window.innerWidth <= 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
     }, []);
 
     const filterApartments = () => {
@@ -109,11 +121,19 @@ export default function AllApartments() {
                         <div className="content-body">
                             {showFiltered ? (
                                 filteredApartments.map((apartment) => (
-                                    <NewCard key={apartment.adCode} apartment={apartment} />
+                                    isSmallScreen ? (
+                                        <SmallCard key={apartment.adCode} apartment={apartment} />
+                                    ) : (
+                                        <NewCard key={apartment.adCode} apartment={apartment} />
+                                    )
                                 ))
                             ) : (
                                 apartments.map((apartment) => (
-                                    <NewCard key={apartment.adCode} apartment={apartment} />
+                                    isSmallScreen ? (
+                                        <SmallCard key={apartment.adCode} apartment={apartment} />
+                                    ) : (
+                                        <NewCard key={apartment.adCode} apartment={apartment} />
+                                    )
                                 ))
                             )}
                         </div>
