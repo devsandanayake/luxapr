@@ -82,7 +82,7 @@ const openORcloseForBidding = async (adCode, value) => {
     if (ad.status !== 1) {
         throw new Error('Ad is not approved');
     }
-    if(ad.transactionType !== 1){
+    if(ad.transactionType !== 4){
         throw new Error('Ad is not an auction');
     }
 
