@@ -135,9 +135,10 @@ export default function AllApartments() {
             </div>
 
             <div className="containerr mx-auto">
+
+                <div className='con-sidebar'>
                 <div className="sidebar">
-                    <h2 className="sidebar-title">Search</h2>
-                    <div className="booking-option">
+                     <div className="booking-option">
                          <input
                             type="text"
                             id="location"
@@ -161,7 +162,13 @@ export default function AllApartments() {
                     </div>
                     <button className="check-button" onClick={() => filterApartments()}>CHECK ➔</button>
 
-                    <h2 className="sidebar-title mt-5">Filter By</h2>
+
+                </div>
+
+
+                <div className="sidebar2">
+
+                    <h2 className="sidebar-title mt-2">Filters</h2>
                     <div className="sort-options">
                         <select value={sortCriteria} onChange={(e) => { setSortCriteria(e.target.value); setSortOrder(''); }}>
                             <option value="">Select</option>
@@ -178,7 +185,32 @@ export default function AllApartments() {
                             </select>
                         )}
                     </div>
-                    
+
+                </div>
+
+
+
+                <div className="sidebar3">
+                    <div className='other-contents'>
+                        <h2 className="sidebar-title mt-2">Other Contents</h2>
+                        <div className='side-links'>
+                            Auction
+                        </div>
+
+                        <a href='/'>
+                        <div className='side-links'>
+                            Home
+                        </div>
+                        </a>
+
+                        <a href='/contactus'>
+                        <div className='side-links'>
+                            Contact Us
+                        </div>
+                        </a>
+                    </div>
+
+                </div>
                 </div>
                 
                 <div className="main-content">

@@ -28,6 +28,9 @@ export default function ViewApartment() {
     const navigate = useNavigate();
 
     useEffect(() => {
+
+        window.scrollTo(0, 0);
+
         axiosInstance.get(`/api/ads/viewSpecificAd/${adcode}`)
             .then((response) => {
                 setApartmentDetails(response.data);
