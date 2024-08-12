@@ -29,6 +29,12 @@ const LRentalTransactionSchema = new mongoose.Schema({
     phoneNumber:{
         type: String
     },
+    monthlyRate:{
+        type: Number
+    },
+    advancePayment:{
+        type: Number
+    },
     
 });
 

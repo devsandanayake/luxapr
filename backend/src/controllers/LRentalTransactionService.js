@@ -55,8 +55,12 @@ const getadCodeLRentalTransactions = async (req, res) =>{
 const updateLRentalTransactionStatus = async (req, res) =>{
     const adCode = req.query.adCode;
     const adminKeyStatus = req.body.adminKeyStatus;
+    const monthlyRate = req.body.monthlyRate;
+    const advancePayment = req.body.advancePayment;
+    const username = req.body.username;
+
     try{
-        const updatedLRentalTransaction = await LRentalTransactionService.updateLRentalTransactionStatus(adCode, adminKeyStatus);
+        const updatedLRentalTransaction = await LRentalTransactionService.updateLRentalTransactionStatus(adCode, adminKeyStatus, monthlyRate, advancePayment, username);
         res.status(200).json(updatedLRentalTransaction);
     }
     catch(err){
