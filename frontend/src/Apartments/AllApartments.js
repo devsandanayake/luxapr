@@ -138,6 +138,8 @@ export default function AllApartments() {
 
                 <div className='con-sidebar'>
                 <div className="sidebar">
+                <h2 className="sidebar-title mt-2">Check Now</h2>
+
                      <div className="booking-option">
                          <input
                             type="text"
