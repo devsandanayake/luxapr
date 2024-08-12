@@ -29,7 +29,7 @@ const getAllLRentalTransactions = async () => {
 const getadCodeLRentalTransactions = async (adCode) => {
     return await LRentalTransactionModel.find({adCode: adCode});
 }
-const updateLRentalTransactionStatus = async (adCode, adminKeyStatus, monthlyRate, advancePayment, username) => {
+const updateLRentalTransactionStatus = async (adCode, adminKeyStatus, monthlyRate, advancePayment, username , id) => {
     // Find the user by username
     const user = await UserModel.findOne({ username: username });
 
@@ -43,7 +43,7 @@ const updateLRentalTransactionStatus = async (adCode, adminKeyStatus, monthlyRat
 
     // Update the rental transaction
     const updatedTransaction = await LRentalTransactionModel.findOneAndUpdate(
-        { adCode: adCode },
+        { _id: id },
         { adminKeyStatus: adminKeyStatus, monthlyRate: monthlyRate, advancePayment: advancePayment },
         { new: true }
     );
