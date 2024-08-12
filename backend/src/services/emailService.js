@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
-
+const { PDF_Creator } = require('./PdfCreator');
+const fs = require('fs');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -47,27 +48,22 @@ The Auction Team`
     }
 }
 
-
-//inquery add sucess ful msg
 async function inquiryEmail(email) {
     const mailOptions = {
         from: 'devthashi@gmail.com',
         to: email,
         subject: 'Inquiry Alert',
-        text:'Your inquiry has been successfully submitted.'
+        text: 'Your inquiry has been successfully submitted.'
     };
 
     try {
         const info = await transporter.sendMail(mailOptions);
         console.log(info);
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
     }
-
 }
 
-//inquery rply
 async function replyEmail(email, message) {
     const mailOptions = {
         from: 'devthashi@gmail.com',
@@ -79,12 +75,41 @@ async function replyEmail(email, message) {
     try {
         const info = await transporter.sendMail(mailOptions);
         console.log(info);
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
     }
-
 }
 
+async function longTermRentEmail(email, adCode , monthlyRate , advancePayment ,StartDate , EndDate) {
+    const pdfPath = await PDF_Creator(adCode, monthlyRate , advancePayment ,StartDate , EndDate);
+    const mailOptions = {
+        from: 'no-reply@email.com',
+        to: email,
+        subject: 'Long Term Rent',
+        text: 'Your long term rent request has been approved. Please find the attached pdf for the house details.',
+        attachments: [{
+            filename: 'longTermRentPDF.pdf',
+            path: pdfPath,
+            contentType: 'application/pdf'
+        }]
+    };
 
-module.exports = { sendEmail, auctionAlert, inquiryEmail, replyEmail };
+    try {
+        const info = await transporter.sendMail(mailOptions);
+        console.log(info);
+
+        fs.unlink(pdfPath, (err) => {
+            if (err) {
+                console.error(err);
+            }
+            else {
+                console.log('PDF deleted successfully');
+            }
+        }
+        );
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+module.exports = { sendEmail, auctionAlert, inquiryEmail, replyEmail, longTermRentEmail };

@@ -19,6 +19,9 @@ RUN mkdir -p /usr/src/uploads && chown -R node:node /usr/src/uploads
 # Create a directory for file uploads and set appropriate permissions
 RUN mkdir -p /usr/src/uploads/watermarked && chown -R node:node /usr/src/uploads/watermarked
 
+# Create a directory for PDFs and set appropriate permissions
+RUN mkdir -p /usr/src/app/src/services && chown -R node:node /usr/src/app/src/services
+
 # Use a non-root user for security reasons
 USER node
 
