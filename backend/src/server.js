@@ -7,6 +7,7 @@ const path = require('path');
 const morgan = require('morgan');
 
 
+
 // Initialize dotenv configuration
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan('dev'));
 
+
 // Assuming the 'uploads' directory is directly in the project root
 // eslint-disable-next-line no-undef
 app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
@@ -35,6 +37,7 @@ const adRoutes = require('./routes/adsRoutes');
 const auctionRegRoutes = require('./routes/auctionRegRoutes');
 const auctionInqueryRoutes = require('./routes/auctionInqueryRoutes');
 const LRentalTransactionRoutes = require('./routes/LRentalTransactionRoutes');
+const LRentInqueryRoutes = require('./routes/LRentInqueryRoutes');
 
 //API routes
 app.use('/api/users', userRoutes);
@@ -42,6 +45,7 @@ app.use('/api/ads', adRoutes);
 app.use('/api/auction', auctionRegRoutes);
 app.use('/api/auction-inquery', auctionInqueryRoutes);
 app.use('/api/longrental', LRentalTransactionRoutes);
+app.use('/api/longrental-inquery', LRentInqueryRoutes);
 
 // Basic route
 app.get('/', (req, res) => {
