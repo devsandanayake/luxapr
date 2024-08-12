@@ -90,7 +90,7 @@ export default function ViewApartment() {
     
     const handleRegister = () => {
         if (isLoggedIn()) {
-            navigate(`/auctionregister?auctionID=${apartmentDetails.auctionStatus.auctionID}`);
+            navigate(`/auctionregistration?auctionID=${apartmentDetails.auctionStatus.auctionID}`);
         } else {
             navigate('/login');
         }

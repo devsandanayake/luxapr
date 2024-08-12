@@ -52,7 +52,7 @@
 
 .detailsss {
     padding: 16px;
-    width: 50%;
+    width: 65%;
     height: auto;
     opacity: 1;
     transition: opacity 0.3s;
@@ -61,13 +61,14 @@
     justify-content: space-between;
 }
 
-.details h3 {
+.detailsss h3 {
     margin: 0 0 8px 0;
     font-size: 1em;
     height: 72px;
+    width: 100%;
 }
 
-.details p {
+.detailsss p {
     margin: 8px 0;
     color: #555;
 }
