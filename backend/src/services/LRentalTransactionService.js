@@ -53,11 +53,14 @@ const updateLRentalTransactionStatus = async (adCode, adminKeyStatus, monthlyRat
         throw new Error('Rental transaction not found or update failed');
     }
 
-     
+    const StartDate = updatedTransaction.rentalStartDate;
+    const EndDate = updatedTransaction.rentalEndDate;
+
+
 
     // Send the long term rent email
     if(adminKeyStatus == "Approved"){
-        await longTermRentEmail(email, adCode);
+        await longTermRentEmail(email, adCode , monthlyRate , advancePayment ,StartDate , EndDate);
     }
    
     return updatedTransaction;
