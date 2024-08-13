@@ -56,6 +56,21 @@ const adsSchema =  new mongoose.Schema({
     images:{
         type:[String]
     },
+    floorLevel:{
+        type:Number
+    },
+    parkSpace:{
+        type:String
+    },    
+    keyFeatures:{
+        type:[String]
+    },
+    ExclusiveAmenities:{
+        type:[String]
+    },
+    CommunityPerks:{
+        type:[String]
+    },
     status:{
         type:Number,
         default:0,
