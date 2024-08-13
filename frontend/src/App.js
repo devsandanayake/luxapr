@@ -16,6 +16,7 @@ import LongTermBooking from './LongTermBooking/LongTermBooking';
 import AllApartments from './Apartments/AllApartments';
 import AuctionRegistration from './AuctionRegistration/AuctionRegistration';
 import AuctionInquiry from './AuctionInquiry/AuctionInquiry';
+import VisitInquiry from './VisitInquiry/VisitInquiry';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/allapartments" element={<AllApartments />} />
           <Route path="/auctionregistration" element={<AuctionRegistration />} />
           <Route path="/auctioninquiry" element={<AuctionInquiry />} />
+          <Route path="/visitinquiry" element={<VisitInquiry />} />
         </Routes>
       </div>
       <Footer />

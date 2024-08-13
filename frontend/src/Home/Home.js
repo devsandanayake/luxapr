@@ -42,8 +42,9 @@ export default function Home() {
     fetchApartments();
   }, []);
 
-  const displayedApartments = apartments.slice(0, 4);
-
+  const displayedApartments = apartments
+      .filter(apartment => apartment.transactionType !== 4)
+      .slice(0, 4);
 
   return (
     <>

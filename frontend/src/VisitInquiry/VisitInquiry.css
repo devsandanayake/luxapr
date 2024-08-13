@@ -1,0 +1,112 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.full-screen {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submitt {
+    display: block;
+    background-color: #d4a25a;
+    padding: 0.8rem;
+    width: 180px;
+    text-align: center;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.input {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    padding-left: 2.5rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #979797;
+    border-radius: 0.375rem;
+}
+
+.DTinput {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    padding-left: 2.5rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #979797;
+    border-radius: 0.375rem;
+}
+
+.date-time-row {
+    display: flex;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .date-time-row {
+        flex-direction: column;
+    }
+
+    .DTinput {
+        width: 100%;
+    }
+}
+
+/* From Uiverse.io by aryamitra06 */
+.loader {
+    display: flex;
+    align-items: center;
+}
+
+.bar {
+    display: inline-block;
+    width: 3px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, .5);
+    border-radius: 10px;
+    animation: scale-up4 1s linear infinite;
+}
+
+.bar:nth-child(2) {
+    height: 35px;
+    margin: 0 5px;
+    animation-delay: .25s;
+}
+
+.bar:nth-child(3) {
+    animation-delay: .5s;
+}
+
+@keyframes scale-up4 {
+    20% {
+        background-color: #ffff;
+        transform: scaleY(1.5);
+    }
+
+    40% {
+        transform: scaleY(1);
+    }
+}
+
+.loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}

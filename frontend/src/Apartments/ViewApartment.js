@@ -107,13 +107,21 @@ export default function ViewApartment() {
         }
     };
 
+    const bookVisit = () => {
+        if (isLoggedIn()) {
+            navigate(`/visitinquiry?adcode=${apartmentDetails.adCode}`);
+        } else {
+            navigate('/login');
+        }
+    };
+
        
 
     return (
         <>
             <div className='fullScreen'>
                 <div>
-                    <h1 className='title text-3xl text-gold' style={{ fontFamily: 'Georgia, serif' }}>{apartmentDetails.title}</h1>
+                    <h1 className='title text-3xl text-gold' style={{ fontFamily: 'Georgia, serif' }}> Discover Your Perfect Home</h1>
                 </div>
 
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8'>
@@ -153,29 +161,34 @@ export default function ViewApartment() {
                     </div>
 
                     <div className="lg:ml-4">
-                        {apartmentDetails.description && (
-                            <>
-                                <div className='text-2xl font-bold ml-3'>
+                                <div className='text-xl font-medium mt-3 text-justify'>
+                                    Experience unparalleled luxury and comfort in our exclusive long-term rental apartments. Designed for those who appreciate the finer things in life, {apartmentDetails.title} offers a sophisticated living experience in {apartmentDetails.areas}.
+                                </div>
+
+
+                            {apartmentDetails.description && (
+                                <>
+                                <div className='text-2xl mt-8 font-semibold'>
                                     Description
                                 </div>
-                                <div className='text-lg ml-10 mt-3'>
-                                    {apartmentDetails.description}
-                                </div>
+                                <div className='text-lg mt-2 text-justify'>
+                                {apartmentDetails.description}
+                            </div>
                             </>
-                        )}
 
-                        <div className='text-2xl font-bold ml-3'>
-                            Overview
-                        </div>
+                            )}
 
-                        {apartmentDetails.address && (
+
+                        {apartmentDetails.areas && (
                             <>
-                                <div className='flex items-center text-xl text-gold ml-20 mt-3 gap-4'>
+                                <div className='flex items-center text-xl text-gold ml-20 mt-10 gap-4'>
                                     <MdLocationOn />
-                                    <span className='text-black'>{apartmentDetails.address.street}, {apartmentDetails.address.postCode}</span>
+                                    <span className='text-black'>{apartmentDetails.areas}</span>
                                 </div>
                             </>
                         )}
+
+ 
 
                         {apartmentDetails.bedroomCount && (
                             <>
@@ -199,7 +212,7 @@ export default function ViewApartment() {
                             <>
                                 <div className='flex items-center text-xl text-gold ml-20 mt-3 gap-4'>
                                     <BsTextarea />
-                                    <span className='text-black'>{apartmentDetails.areaSize} sq ft</span>
+                                    <span className='text-black'>{apartmentDetails.areaSize} sqft area</span>
                                 </div>
                             </>
                         )}
@@ -213,22 +226,56 @@ export default function ViewApartment() {
                             </>
                         )}
 
-{(apartmentDetails.transactionType === 1 || apartmentDetails.transactionType === 2 || apartmentDetails.transactionType === 3) && (
-    <div className='flex items-center justify-center'>
-        <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 w-2/5'
-        onClick={handlebookNow}
-        >
-            Book Now
-        </button>
-    </div>
-)}
+                    </div>
+                </div>
+
+                        <div>
+
+                        {apartmentDetails.additionalInformation && (
+                    <div className='text-2xl mt-2 font-semibold'>
+                    Additional Information
+                    </div>
+                    )}
+  
+
+                        {(apartmentDetails.transactionType === 1 ) && (
+                            <div className='flex items-center justify-center'>
+                                <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 w-40'
+                                onClick={handlebookNow}
+                                >
+                                    Book Now
+                                </button>
+                            </div>
+                        )}
+
+                        {(apartmentDetails.transactionType === 2 || apartmentDetails.transactionType === 3) && (
+                            <>
+                                <div className='flex flex-row items-center justify-center gap-6'>
+                                    <div className='flex items-center justify-center'>
+                                        <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 w-40'
+                                            onClick={bookVisit}
+                                        >
+                                            Book a Visit
+                                        </button>
+                                    </div>
+                        
+                                    <div className='flex items-center justify-center'>
+                                        <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 w-40'
+                                            onClick={handleRegister}
+                                        >
+                                            Book Now
+                                        </button>
+                                    </div>
+                                </div>
+                            </>
+                        )}
 
 
                         {apartmentDetails.transactionType === 4 && (
                             <>
                             <div className='flex flex-row items-center justify-center gap-6'>
                             <div className='flex items-center justify-center'>
-                                <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 '
+                                <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 w-40 '
                                 onClick={handleInquiry}
                                 >
                                     Send Inquiry
@@ -236,7 +283,7 @@ export default function ViewApartment() {
                             </div>
 
                             <div className='flex items-center justify-center'>
-                                <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 '
+                                <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 w-40 '
                                 onClick={handleRegister}
                                 >
                                     Register
@@ -245,8 +292,13 @@ export default function ViewApartment() {
                             </div>
                             </>
                         )}
-                    </div>
-                </div>
+                        </div>
+
+
+                
+
+
+              
 
                 <div className='text-3xl p-2 mt-14' style={{ fontFamily: 'Georgia, serif' }}>
                     Other Apartments
