@@ -26,4 +26,17 @@ const getAllLRentInqueries = async (req, res) => {
     }
 }
 
-module.exports = { createLRentInquery , getAllLRentInqueries };
+const updateLRentInqueryStatus = async (req, res) => {
+    const inqueryID = req.query.inqueryID;
+    const status = req.body.status;
+    const reply = req.body.reply;
+    try {
+        await LRentInqueryService.updateLRentInqueryStatus(inqueryID, status, reply);
+        res.status(200).json({ message: 'Inquery status updated successfully' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
+
+module.exports = { createLRentInquery , getAllLRentInqueries , updateLRentInqueryStatus };

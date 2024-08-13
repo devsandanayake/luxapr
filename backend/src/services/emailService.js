@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 
 async function sendEmail(email, adCode) {
     const mailOptions = {
-        from: 'devthashi@gmail.com',
+        from: 'no-reply@email.com',
         to: email,
         subject: 'Approval of your advertisement',
         text: `Your advertisement has been approved. Your ad code is ${adCode}`
@@ -31,7 +31,7 @@ async function sendEmail(email, adCode) {
 
 async function auctionAlert(email, auctionID, userOffer) {
     const mailOptions = {
-        from: 'devthashi@gmail.com',
+        from: 'no-reply@email.com',
         to: email,
         subject: 'Auction Alert',
         text: `We regret to inform you that your bid has been outbid in auction ${auctionID}. The current highest offer is ${userOffer}. Please consider placing a higher bid to stay in the competition.
@@ -50,7 +50,7 @@ The Auction Team`
 
 async function inquiryEmail(email) {
     const mailOptions = {
-        from: 'devthashi@gmail.com',
+        from: 'no-reply@email.com',
         to: email,
         subject: 'Inquiry Alert',
         text: 'Your inquiry has been successfully submitted.'
@@ -66,7 +66,7 @@ async function inquiryEmail(email) {
 
 async function replyEmail(email, message) {
     const mailOptions = {
-        from: 'devthashi@gmail.com',
+        from: 'no-reply@email.com',
         to: email,
         subject: 'Inquiry Reply',
         text: message
@@ -112,4 +112,57 @@ async function longTermRentEmail(email, adCode , monthlyRate , advancePayment ,S
     }
 }
 
-module.exports = { sendEmail, auctionAlert, inquiryEmail, replyEmail, longTermRentEmail };
+//long rent inquery assign agent email
+async function longRentInqueryAssignAgentEmail(email, inqueryID) {
+    const mailOptions = {
+        from: 'no-reply@email.com',
+        to: email,
+        subject: 'Long Rental Inquiry Assigned',
+        text: `Your long rental inquiry with ID ${inqueryID} has been assigned to an agent. You will be contacted shortly with further details.`
+    };
+
+    try {
+        const info = await transporter.sendMail(mailOptions);
+        console.log(info);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+//long rent inquery email completed
+async function longRentInqueryEmailCompleted(email, inqueryID) {
+    const mailOptions = {
+        from: 'no-reply@email.com',
+        to: email,
+        subject: 'Long Rental Inquiry Completed',
+        text: `Your long rental inquiry with ID ${inqueryID} has been completed. Thank you for your interest.`
+    };
+
+    try {
+        const info = await transporter.sendMail(mailOptions);
+        console.log(info);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+//long rent inquery email rejected
+async function longRentInqueryEmailRejected(email, inqueryID ,reply) {
+    const mailOptions = {
+        from: 'no-reply@email.com',
+        to: email,
+        subject: 'Long Rental Inquiry Rejected',
+        text: `Your long rental inquiry with ID ${inqueryID} has been rejected. Please contact us for further details.
+        
+        Resone : ${reply}`
+    };
+
+    try {
+        const info = await transporter.sendMail(mailOptions);
+        console.log(info);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+module.exports = { sendEmail, auctionAlert, inquiryEmail, replyEmail, longTermRentEmail , longRentInqueryAssignAgentEmail , longRentInqueryEmailCompleted , longRentInqueryEmailRejected };

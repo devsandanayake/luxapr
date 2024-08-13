@@ -2,6 +2,7 @@ const LRentInqueryModel = require('../models/LRentInqueryModel');
 const userModel =  require('../models/user');
 const adsModel = require('../models/ads');
 const LRentalTransactionModel = require('../models/LRentTransactionModel');
+const { longRentInqueryAssignAgentEmail, longRentInqueryEmailCompleted, longRentInqueryEmailRejected } = require('./emailService');
 
 
 const generateUniqueCode = async () => {
@@ -72,7 +73,50 @@ const getAllLRentInqueries = async () => {
     return await LRentInqueryModel.find();
 }
 
+//update long rental inquery status
+const updateLRentInqueryStatus = async (inqueryID, status, reply) => {
+    try {
+        const inqueryDetails = await LRentInqueryModel.findOne({ inqueryID });
+
+        if (!inqueryDetails) {
+            throw new Error('Inquery not found');
+        }
+
+        const user = await userModel.findOne({ username: inqueryDetails.username });
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        const email = user.email;
+
+        switch (status) {
+            case 'AssignAgent':
+                await longRentInqueryAssignAgentEmail(email, inqueryID);
+                break;
+            case 'Completed':
+                await longRentInqueryEmailCompleted(email, inqueryID);
+                break;
+            case 'Rejected':
+                await longRentInqueryEmailRejected(email, inqueryID , reply);
+                break;
+            default:
+                throw new Error('Invalid status');
+        }
+
+        return await LRentInqueryModel.findOneAndUpdate(
+            { inqueryID: inqueryID },
+            { replyStatus: status, reply: reply },
+            { new: true }
+        );
+    } catch (error) {
+        console.error('Error updating long rental inquiry status:', error);
+        throw error;
+    }
+};
+
+ 
 module.exports = {
       createLRentInquery,
-      getAllLRentInqueries
+      getAllLRentInqueries,
+      updateLRentInqueryStatus
 };
