@@ -114,9 +114,19 @@ const updateLRentInqueryStatus = async (inqueryID, status, reply) => {
     }
 };
 
+
+//get inqueries for login user
+const getInqueriesForUser = async (username) => {
+    return await LRentInqueryModel.find(
+        { username: username },
+        { alertMsg: 0 } 
+    );
+}
+
  
 module.exports = {
       createLRentInquery,
       getAllLRentInqueries,
-      updateLRentInqueryStatus
+      updateLRentInqueryStatus,
+      getInqueriesForUser
 };

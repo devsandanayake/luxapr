@@ -8,4 +8,7 @@ router.post('/add', authMiddleware.authUser, LRentInqueryController.createLRentI
 router.get('/all', authMiddleware.authAdmin, LRentInqueryController.getAllLRentInqueries);
 router.patch('/update', authMiddleware.authAdmin, LRentInqueryController.updateLRentInqueryStatus);
 
+router.get('/user', authMiddleware.authUser, LRentInqueryController.getLRentInqueriesByUser);
+
+ 
 module.exports = router;
