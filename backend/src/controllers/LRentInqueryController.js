@@ -17,4 +17,13 @@ const createLRentInquery = async (req, res) => {
     }
 }
 
-module.exports = { createLRentInquery };
+const getAllLRentInqueries = async (req, res) => {
+    try {
+        const inqueries = await LRentInqueryService.getAllLRentInqueries();
+        res.status(200).json(inqueries);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
+module.exports = { createLRentInquery , getAllLRentInqueries };

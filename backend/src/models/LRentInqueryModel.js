@@ -43,6 +43,9 @@ const LRentInquerySchema = new mongoose.Schema({
         enum: ['Pending', 'Replied'],
         default: 'Pending',
         required: true
+    },
+    alertMsg:{
+        type: String
     }
     
 

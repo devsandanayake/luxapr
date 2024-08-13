@@ -3,6 +3,7 @@ const path = require('path');
 const PDFDocument = require('pdfkit');
 
 const PDF_Creator = async (adCode, monthlyRate, advancePayment, StartDate, EndDate) => {
+    // eslint-disable-next-line no-undef
     const pdfPath = path.join(__dirname, 'longTermRentPDF.pdf');
     const doc = new PDFDocument();
 
