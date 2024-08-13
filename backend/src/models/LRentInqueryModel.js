@@ -40,7 +40,6 @@ const LRentInquerySchema = new mongoose.Schema({
     },
     replyStatus:{
         type: String,
-        enum: ['Pending', 'Replied'],
         default: 'Pending',
         required: true
     },
