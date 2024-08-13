@@ -41,7 +41,7 @@ const updateLRentInqueryStatus = async (req, res) => {
 const getLRentInqueriesByUser = async (req, res) => {
     const username = req.user;
     try {
-        const inqueries = await LRentInqueryService.getLRentInqueriesByUser(username);
+        const inqueries = await LRentInqueryService.getInqueriesForUser(username);
         res.status(200).json(inqueries);
     } catch (err) {
         res.status(500).json({ message: err.message });
