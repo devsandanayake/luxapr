@@ -30,6 +30,9 @@ export default function LongTermBooking() {
     const [apartmentDetails, setApartmentDetails] = useState({});
 
     useEffect(() => {
+      window.scrollTo(0, 0);
+
+
         axiosInstance.get(`/api/ads/viewSpecificAd/${urladcode}`)
             .then((response) => {
                 setApartmentDetails(response.data);

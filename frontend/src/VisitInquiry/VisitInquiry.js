@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
 import { useLocation } from 'react-router-dom';
 import './VisitInquiry.css';
-import PopupWindow from '../AuctionInquiry/NotificationPopup';
+import PopupWindow from './DetailsPopup';
 import { FaUser, FaEnvelope, FaCalendarAlt, FaClock, FaCommentDots } from 'react-icons/fa';
 
 export default function VisitInquiry() {
@@ -14,7 +14,9 @@ export default function VisitInquiry() {
     const [error, setError] = useState(null);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [inquiryID, setInquiryID] = useState('');
     const [formData, setFormData] = useState({
+        Inquery: '',
         adCode: adCode,
         preferredDate: '',
         preferredTime: '',
@@ -37,6 +39,8 @@ export default function VisitInquiry() {
                 setFormData((prevData) => ({
                     ...prevData,
                     adCode: adCode,
+                    fullName: `${response.data.user.firstName} ${response.data.user.lastName}`,
+                    email: response.data.user.email,
                 }));
             } catch (err) {
                 console.error('Error fetching user profile:', err);
@@ -79,6 +83,12 @@ export default function VisitInquiry() {
         return `${hours}:${minutes}`;
     };
 
+    // Function to generate inquiryID
+    const generateInquiryID = () => {
+        const randomNum = Math.floor(1000 + Math.random() * 9000); // Generates a random 4-digit number
+        return `INQLR${randomNum}`;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -91,11 +101,13 @@ export default function VisitInquiry() {
             ...formData,
             preferredTime: preferredTime24,
             alternateTime: alternateTime24,
+            inquiryID: generateInquiryID(), // Add the generated inquiryID
         };
 
         // Logging the converted times
         console.log('Preferred Time (24-hour):', formDataWith24HourFormat.preferredTime); 
         console.log('Alternate Time (24-hour):', formDataWith24HourFormat.alternateTime); 
+        console.log('Generated Inquiry ID:', formDataWith24HourFormat.inquiryID);
 
         try {
             const response = await axiosInstance.post('/api/longrental-inquery/add', formDataWith24HourFormat, {
@@ -103,6 +115,7 @@ export default function VisitInquiry() {
                     'Authorization': `${token}`,
                 },
             });
+            setInquiryID(formDataWith24HourFormat.inquiryID); // Set the inquiryID state
             setIsPopupVisible(true);
         } catch (error) {
             console.error('There was an error creating the rental transaction!', error);
@@ -235,7 +248,7 @@ export default function VisitInquiry() {
                         </div>
                         <button type="submit" className="submitt">Submit</button>
                     </form>
-                    {isPopupVisible && <PopupWindow setIsPopupVisible={setIsPopupVisible} message="Inquiry added successfully" />}
+                    {isPopupVisible && <PopupWindow setIsPopupVisible={setIsPopupVisible} message="Inquiry added successfully" formData={formData} inquiryID={inquiryID} />}
                 </div>
             </div>
         </>

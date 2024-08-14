@@ -241,7 +241,7 @@ export default function ViewApartment() {
                         {(apartmentDetails.transactionType === 1 ) && (
                             <div className='flex items-center justify-center'>
                                 <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 w-40'
-                                onClick={handlebookNow}
+                                onClick={''}
                                 >
                                     Book Now
                                 </button>
@@ -261,7 +261,7 @@ export default function ViewApartment() {
                         
                                     <div className='flex items-center justify-center'>
                                         <button className='bg-gold text-white text-center text-lg font-bold py-2 px-4 rounded-md mt-5 w-40'
-                                            onClick={handleRegister}
+                                            onClick={handlebookNow}
                                         >
                                             Book Now
                                         </button>
