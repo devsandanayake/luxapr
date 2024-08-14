@@ -54,10 +54,12 @@ const authAdmin = (req, res, next) => {
         }
         req.user = decoded.username;
         next();
-    } catch (err) {
-        next(err)
+    } catch {
+        return next({ status: 401, message: 'Invalid token' });
+
     }
 }
+
 
 
 module.exports = { authUser, authAdmin , editPostuserSideauth};

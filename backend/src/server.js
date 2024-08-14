@@ -55,8 +55,10 @@ app.get('/', (req, res) => {
 //Error handling middleware
 // eslint-disable-next-line 
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send(res.json({ message: err.message }));
+    // Use the error status if available, otherwise default to 500
+    const status = err.status || 500;
+    // Send the error status and message as JSON
+    res.status(status).json({ message: err.message });
 });
 
 

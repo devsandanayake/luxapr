@@ -64,7 +64,7 @@ const loginUser = async ({ username, password }) => {
             role: user.role
         };
 
-        // Sign the token with a more readable expiresIn value
+               // Sign the token with a more readable expiresIn value
         const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '24h' });
 
         return { error: false, token };
