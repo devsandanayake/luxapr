@@ -54,6 +54,20 @@ export default function VisitRequests() {
         return `${hours}:${minutes} ${ampm}`;
     };
 
+    const statusconverter = (replyStatus) => {
+        if (replyStatus === 'Pending') {
+            return "Pending";
+        } else if (replyStatus === 'AssignAgent') {
+            return "Agent Assigned";
+        } else if (replyStatus === 'Completed') {
+            return "Completed";
+        } else if (replyStatus === 'Rejected') {
+            return "Rejected";
+        } else {
+            return "";
+        }
+    }
+
     return (
         <div className='w-10/12 mx-auto'>
             <h1 className='text-center text-2xl mb-2'>Visit Requests</h1>
@@ -71,13 +85,16 @@ export default function VisitRequests() {
                     </div>
                     <div className="visit-request__details w-full md:w-2/3 pl-0 md:pl-4 mt-4 md:mt-0 text-center md:text-left">
                         <h3 className="text-xl font-bold text-gold mb-3">{adDetails[request.adCode]?.title}</h3>
+                        <p className='mb-1'><strong>Status:</strong> {statusconverter(request.replyStatus)}</p>
                         <p>
                             <strong>Preferred Date and Time:</strong> {request.preferredDate} || {convertTo12HourFormat(request.preferredTime)}
                         </p>
                         <p>
                             <strong>Alternate Date and Time:</strong> {request.alternateDate} || {convertTo12HourFormat(request.alternateTime)}
                         </p>
-                        <p><strong>Status:</strong> {request.status}</p>
+                        <p><strong>Location :</strong> {adDetails[request.adCode]?.areas}</p>
+
+                        
                     </div>
                 </div>
             ))}
