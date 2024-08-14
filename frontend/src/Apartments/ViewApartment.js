@@ -6,7 +6,7 @@ import { IoBedOutline } from "react-icons/io5";
 import { FaShower } from "react-icons/fa";
 import { BsTextarea, BsCurrencyDollar } from "react-icons/bs";
 import ApartmentCard from '../ApartmentCard/ApartmentCard';
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaCar } from "react-icons/fa";
 import { Pannellum } from "pannellum-react";
 import './ViewApartment.css';
 
@@ -217,6 +217,15 @@ export default function ViewApartment() {
                             </>
                         )}
 
+                        {apartmentDetails.parkSpace && (
+                            <>
+                                <div className='flex items-center text-xl text-gold ml-20 mt-3 gap-4'>
+                                <FaCar />
+                                <span className='text-black'>{apartmentDetails.parkSpace} Parking Spaces</span>
+                                </div>
+                            </>
+                        )}
+
                         {apartmentDetails.price && (
                             <>
                                 <div className='flex items-center text-xl text-gold ml-20 mt-3 gap-4'>
@@ -229,13 +238,39 @@ export default function ViewApartment() {
                     </div>
                 </div>
 
-                        <div>
 
-                        {apartmentDetails.additionalInformation && (
-                    <div className='text-2xl mt-2 font-semibold'>
-                    Additional Information
-                    </div>
-                    )}
+
+                <div className='mt-5 '>
+    <h2 className='text-2xl font-bold'>Additional Information</h2>
+
+    <div className='additional'>
+    <div className='mt-2'>
+        <h3 className='text-xl font-semibold'>Key Features:</h3>
+        <ul className='list-disc list-inside text-lg'>
+            {apartmentDetails.keyFeatures && apartmentDetails.keyFeatures.map((feature, index) => (
+                <li key={index}>{feature}</li>
+            ))}
+        </ul>
+    </div>
+    <div className='mt-2'>
+        <h3 className='text-xl font-semibold'>Exclusive Amenities:</h3>
+        <ul className='list-disc list-inside text-lg'>
+            {apartmentDetails.ExclusiveAmenities && apartmentDetails.ExclusiveAmenities.map((amenity, index) => (
+                <li key={index}>{amenity}</li>
+            ))}
+        </ul>
+    </div>
+    <div className='mt-2'>
+        <h3 className='text-xl font-semibold'>Community Perks:</h3>
+        <ul className='list-disc list-inside text-lg'>
+            {apartmentDetails.CommunityPerks && apartmentDetails.CommunityPerks.map((perk, index) => (
+                <li key={index}>{perk}</li>
+            ))}
+        </ul>
+    </div>
+    </div>
+    
+
   
 
                         {(apartmentDetails.transactionType === 1 ) && (
