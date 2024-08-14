@@ -10,11 +10,11 @@ const LRentalTransactionSchema = new mongoose.Schema({
         required: true,
     },
     rentalStartDate: {
-        type: Date,
+        type: String,
         required: true,
     },
     rentalEndDate: {
-        type: Date,
+        type: String,
         required: true,
     },
     adminKeyStatus: {

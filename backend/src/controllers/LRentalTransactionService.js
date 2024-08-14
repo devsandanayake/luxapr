@@ -69,11 +69,24 @@ const updateLRentalTransactionStatus = async (req, res) =>{
     }
 }
 
+const viewAllForFrontendUsers = async (req, res) =>{
+    const rentalStartDate = req.query.rentalStartDate;
+    const rentalEndDate = req.query.rentalEndDate;
+    try{
+        const allLRentalTransactions = await LRentalTransactionService.viewAllForFrontendUsers(rentalStartDate, rentalEndDate);
+        res.status(200).json(allLRentalTransactions);
+    }
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+}
+
 
 module.exports = {
     createLRentalTransaction,
     getAllLRentalTransactions,
     getUserLRentalTransactions,
     getadCodeLRentalTransactions,
-    updateLRentalTransactionStatus
+    updateLRentalTransactionStatus,
+    viewAllForFrontendUsers
 }

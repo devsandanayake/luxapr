@@ -8,6 +8,7 @@ const router = express.Router();
 router.post('/createLRentalTransaction', authMiddleware.authUser, LRentalTransactionController.createLRentalTransaction);
 router.get('/getUserLRentalTransactions', authMiddleware.authUser, LRentalTransactionController.getUserLRentalTransactions);
 router.get('/getAllLRentalTransactions', authMiddleware.authAdmin, LRentalTransactionController.getAllLRentalTransactions);
+router.get('/rent', LRentalTransactionController.viewAllForFrontendUsers);
 
 
 // Admin routes
