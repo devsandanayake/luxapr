@@ -66,11 +66,24 @@ const updateLRentalTransactionStatus = async (adCode, adminKeyStatus, monthlyRat
     return updatedTransaction;
 };
 
+
+const viewAllForFrontendUsers = async (rentalStartDate, rentalEndDate) => {
+    return await LRentalTransactionModel.find(
+        {
+            adminKeyStatus: 'Approved',
+            rentalStartDate: { $gte: rentalStartDate },
+            rentalEndDate: { $lte: rentalEndDate }
+        },
+        { adCode: 1, rentalStartDate: 1, rentalEndDate: 1, _id: 0 }
+    );
+}
+
  
 module.exports = {
     createLRentalTransaction,
     getAllLRentalTransactions,
     getUserLRentalTransactions,
     getadCodeLRentalTransactions,
-    updateLRentalTransactionStatus
+    updateLRentalTransactionStatus,
+    viewAllForFrontendUsers
 }
