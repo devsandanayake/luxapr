@@ -18,7 +18,7 @@ const PopupWindow = ({ onClose }) => {
                 </div>
                 <p className='popup-textt'>Your apartment details have been successfully submitted. </p>
                 <p className='popup-textt'>Please wait until you receive an email.</p>
-                <button className='popup-buttonn' onClick={handleNavigateHome}>Go to Home</button>
+                <button className='popup-buttonn' onClick={handleNavigateHome}>Home</button>
             </div>
         </div>
     );

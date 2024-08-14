@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import axiosInstance from '../axiosConfig';
 import './AddApartment.css';
 import { useParams, useLocation } from 'react-router-dom';
-import { FaHome, FaMapMarkerAlt, FaCity, FaBuilding, FaBed, FaBath, FaLayerGroup, FaRulerCombined, FaDollarSign, FaMoneyBillWave } from 'react-icons/fa';
+import { FaHome, FaMapMarkerAlt, FaCity, FaBuilding, FaBed, FaBath, FaLayerGroup, FaRulerCombined, FaDollarSign, FaMoneyBillWave,  FaListAlt, FaStar, FaUsers } from 'react-icons/fa';
+import { IoIosRemoveCircleOutline } from "react-icons/io";
 import PopupWindow from './PopupWindow';
 
 
@@ -29,6 +30,10 @@ export default function AddApartment() {
     areaSize: '',
     price: '',
     currency: '',
+    parkSpace: '',
+    keyFeatures: [],
+    ExclusiveAmenities: [],
+    CommunityPerks: [],
     transactionType: value,
   });
   const [images, setImages] = useState([]);
@@ -58,6 +63,27 @@ export default function AddApartment() {
         [name]: value,
       });
     }
+  };
+
+  const handleKeyPress = (e, fieldName) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const value = e.target.value.trim();
+      if (value) {
+        setFormData({
+          ...formData,
+          [fieldName]: [...formData[fieldName], value]
+        });
+        e.target.value = '';
+      }
+    }
+  };
+
+  const handleRemoveItem = (fieldName, index) => {
+    setFormData({
+      ...formData,
+      [fieldName]: formData[fieldName].filter((_, i) => i !== index)
+    });
   };
 
   const titlebyvalue = () => {
@@ -266,6 +292,19 @@ export default function AddApartment() {
           </div>
         </div>
       </div>
+
+      <div className='mt-2'>
+            <label className='text-lg' htmlFor="floor">Floor Level (optional)</label>
+            <div className="relative">
+              <FaLayerGroup className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
+              <input
+                type="number"
+                name="floor"
+                onChange={handleChange}
+                className="input pl-10"
+              />
+            </div>
+          </div>
           
           <div className='mt-2'>
             <label className='text-lg' htmlFor="description">Description</label>
@@ -301,20 +340,6 @@ export default function AddApartment() {
               <input
                 type="number"
                 name="bathroomCount"
-                onChange={handleChange}
-                className="input pl-10"
-                required
-              />
-            </div>
-          </div>
-          
-          <div className='mt-2'>
-            <label className='text-lg' htmlFor="floor">Floor</label>
-            <div className="relative">
-              <FaLayerGroup className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
-              <input
-                type="number"
-                name="floor"
                 onChange={handleChange}
                 className="input pl-10"
                 required
@@ -365,6 +390,89 @@ export default function AddApartment() {
               </select>
             </div>
           </div>
+
+          <div className='mt-2'>
+        <label className='text-lg' htmlFor="parkSpace">Parking Space</label>
+        <div className="relative">
+          <FaBuilding className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
+          <input
+            type="text"
+            name="parkSpace"
+            onChange={handleChange}
+            className="input pl-10"
+            
+          />
+        </div>
+      </div>
+
+      <div className='mt-2'>
+        <label className='text-lg' htmlFor="keyFeatures">Key Features</label>
+        <div className="relative">
+          <FaListAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
+          <textarea
+            name="keyFeatures"
+            onKeyPress={(e) => handleKeyPress(e, 'keyFeatures')}
+            className="input pl-10"
+            placeholder="Enter key features by pressing Enter"
+            
+          />
+        </div>
+        <ul>
+          {formData.keyFeatures.map((feature, index) => (
+            <li key={index}>
+              {feature}
+              <button className='text-red-500' onClick={() => handleRemoveItem('keyFeatures', index)}><IoIosRemoveCircleOutline />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className='mt-2'>
+        <label className='text-lg' htmlFor="ExclusiveAmenities">Exclusive Amenities</label>
+        <div className="relative">
+          <FaStar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
+          <textarea
+            name="ExclusiveAmenities"
+            onKeyPress={(e) => handleKeyPress(e, 'ExclusiveAmenities')}
+            className="input pl-10"
+            placeholder="Enter exclusive amenities by pressing Enter"
+            
+          />
+        </div>
+        <ul>
+          {formData.ExclusiveAmenities.map((amenity, index) => (
+            <li key={index}>
+              {amenity}
+              <button className='text-red-500' onClick={() => handleRemoveItem('ExclusiveAmenities', index)}><IoIosRemoveCircleOutline />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className='mt-2'>
+        <label className='text-lg' htmlFor="CommunityPerks">Community Perks</label>
+        <div className="relative">
+          <FaUsers className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
+          <textarea
+            name="CommunityPerks"
+            onKeyPress={(e) => handleKeyPress(e, 'CommunityPerks')}
+            className="input pl-10"
+            placeholder="Enter community perks by pressing Enter"
+            
+          />
+        </div>
+        <ul>
+          {formData.CommunityPerks.map((perk, index) => (
+            <li key={index}>
+              {perk}
+              <button className='text-red-500' onClick={() => handleRemoveItem('CommunityPerks', index)}><IoIosRemoveCircleOutline />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
 
           <div className='mt-2'>
             <div>

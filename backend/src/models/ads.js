@@ -56,9 +56,6 @@ const adsSchema =  new mongoose.Schema({
     images:{
         type:[String]
     },
-    floorLevel:{
-        type:Number
-    },
     parkSpace:{
         type:String
     },    
