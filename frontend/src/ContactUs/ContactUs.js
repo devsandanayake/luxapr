@@ -4,12 +4,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faPhone, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import './ContactUs.css';
 import Popupbox from './Popupbox';
+import axiosInstance from '../axiosConfig';
 
 export default function ContactUs() {
-
-    const isLoggedIn = () => {
-        return localStorage.getItem('token') !== null;
-    };
+const isLoggedIn = async () => {
+    try {
+        const response = await axiosInstance.post('/api/users/verify');
+        
+        if (response.status === 200 && localStorage.getItem('token') !== null) {
+            return true;
+        }
+    } catch (error) {
+        console.error('Verification failed:', error);
+    }
+    
+    return false;
+};
     const navigate = useNavigate();
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
