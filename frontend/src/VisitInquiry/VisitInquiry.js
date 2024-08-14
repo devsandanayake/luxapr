@@ -24,6 +24,7 @@ export default function VisitInquiry() {
         alternateTime: '',
         message: '',
     });
+    const [adDetails, setAdDetails] = useState({});
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -51,6 +52,18 @@ export default function VisitInquiry() {
         fetchData();
     }, [token, adCode]);
 
+    useEffect(() => {
+        if (adCode) {
+            axiosInstance.get(`/api/ads/viewSpecificAd/${adCode}`)
+                .then((response) => {
+                    setAdDetails(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    }, [adCode]);
+
     if (error) {
         return <div className="text-red-500">Error loading profile: {error.message}</div>;
     }
@@ -67,7 +80,6 @@ export default function VisitInquiry() {
         });
     };
 
-    // Function to convert 12-hour format to 24-hour format
     const convertTo24HourFormat = (time) => {
         const [timePart, modifier] = time.split(' ');
         let [hours, minutes] = timePart.split(':');
@@ -83,9 +95,8 @@ export default function VisitInquiry() {
         return `${hours}:${minutes}`;
     };
 
-    // Function to generate inquiryID
     const generateInquiryID = () => {
-        const randomNum = Math.floor(1000 + Math.random() * 9000); // Generates a random 4-digit number
+        const randomNum = Math.floor(1000 + Math.random() * 9000);
         return `INQLR${randomNum}`;
     };
 
@@ -93,7 +104,6 @@ export default function VisitInquiry() {
         e.preventDefault();
         setIsLoading(true);
 
-        // Convert to 24-hour format if needed
         const preferredTime24 = convertTo24HourFormat(formData.preferredTime);
         const alternateTime24 = convertTo24HourFormat(formData.alternateTime);
 
@@ -101,13 +111,8 @@ export default function VisitInquiry() {
             ...formData,
             preferredTime: preferredTime24,
             alternateTime: alternateTime24,
-            inquiryID: generateInquiryID(), // Add the generated inquiryID
+            inquiryID: generateInquiryID(),
         };
-
-        // Logging the converted times
-        console.log('Preferred Time (24-hour):', formDataWith24HourFormat.preferredTime); 
-        console.log('Alternate Time (24-hour):', formDataWith24HourFormat.alternateTime); 
-        console.log('Generated Inquiry ID:', formDataWith24HourFormat.inquiryID);
 
         try {
             const response = await axiosInstance.post('/api/longrental-inquery/add', formDataWith24HourFormat, {
@@ -115,7 +120,7 @@ export default function VisitInquiry() {
                     'Authorization': `${token}`,
                 },
             });
-            setInquiryID(formDataWith24HourFormat.inquiryID); // Set the inquiryID state
+            setInquiryID(formDataWith24HourFormat.inquiryID);
             setIsPopupVisible(true);
         } catch (error) {
             console.error('There was an error creating the rental transaction!', error);
@@ -140,8 +145,30 @@ export default function VisitInquiry() {
                     Book Your Visit
                 </h1>
             </div>
+
             <div className="full-screen">
-                <div className="w-8/12">
+<div className='w-4/12 text-2xl text-center font-semibold visit-inquiry' style={{ borderRight: '2px solid gold', paddingRight: '40px' }}>
+    {adDetails.title}
+    {adDetails.images && adDetails.images.length > 0 && (
+        <>
+            <img 
+                src={`http://124.43.179.118:8081/uploads/${adDetails.images[0].split('\\').pop()}`} 
+                alt={adDetails.title || "Room"} 
+                className="inquiry-image left-aligned mb-5 mt-8" 
+            />
+            {adDetails.images.length > 1 && (
+                <img 
+                    src={`http://124.43.179.118:8081/uploads/${adDetails.images[1].split('\\').pop()}`} 
+                    alt={adDetails.title || "Room"} 
+                    className="inquiry-image right-aligned mb-5 mt-5" 
+                />
+            )}
+        </>
+    )}
+</div>
+
+
+                <div className="w-6/12">
                     <form className="mt-10 ml-3 w-full mb-5" onSubmit={handleSubmit}>
                         <div className="visit-inquiry-input mt-2">
                             <label className="text-lg" htmlFor="fullName">Full Name</label>
