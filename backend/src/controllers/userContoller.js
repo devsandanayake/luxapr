@@ -67,10 +67,20 @@ const viewUserProfile = async (req,res,next)=>{
     }
 }
 
+//verify user
+const verifyUser = async (req,res,next)=>{
+    try{
+        res.status(200).json({message:"User verified"});
+    }catch(err){
+        next(err);
+    }
+}
+
 module.exports = {
     createUser,
     loginUser,
     viewAllUsers,
     viewAdsUser,
-    viewUserProfile
+    viewUserProfile,
+    verifyUser
 };

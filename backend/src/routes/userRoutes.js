@@ -8,7 +8,9 @@ router.post('/signin',userController.loginUser);
 router.get('/viewAllUsers',auth.authAdmin,userController.viewAllUsers);
 router.get('/viewAllAds/:username',auth.authUser,userController.viewAdsUser);
 router.get('/viewUserProfile',auth.authUser,userController.viewUserProfile);
- 
+
+//verify user
+router.post('/verify',auth.authUser,userController.verifyUser);
 
 module.exports = router;
 
