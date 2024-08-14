@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const LRentInquerySchema = new mongoose.Schema({
     inqueryID:{
         type: String,
-        required: true
+        required: true,
+        unique : true
     },
     adCode: {
         type: String,

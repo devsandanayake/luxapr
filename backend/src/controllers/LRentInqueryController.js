@@ -3,6 +3,7 @@ const LRentInqueryService = require('../services/LRentInqueryService');
 // Function to create a long rental inquery
 const createLRentInquery = async (req, res) => {
     const username = req.user;
+    const Inquery = req.body.Inquery;
     const adCode = req.body.adCode;
     const message = req.body.message;
     const preferredDate = req.body.preferredDate;
@@ -10,7 +11,7 @@ const createLRentInquery = async (req, res) => {
     const alternateDate = req.body.alternateDate;
     const alternateTime = req.body.alternateTime;
     try {
-        await LRentInqueryService.createLRentInquery(username, adCode, message, preferredDate, preferredTime, alternateDate, alternateTime);
+        await LRentInqueryService.createLRentInquery(Inquery ,username, adCode, message, preferredDate, preferredTime, alternateDate, alternateTime);
         res.status(201).json({ message: 'Inquery added successfully' });
     } catch (err) {
         res.status(500).json({ message: err.message });
