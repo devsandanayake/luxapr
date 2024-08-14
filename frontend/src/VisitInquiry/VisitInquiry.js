@@ -63,11 +63,42 @@ export default function VisitInquiry() {
         });
     };
 
+    // Function to convert 12-hour format to 24-hour format
+    const convertTo24HourFormat = (time) => {
+        const [timePart, modifier] = time.split(' ');
+        let [hours, minutes] = timePart.split(':');
+
+        if (hours === '12') {
+            hours = '00';
+        }
+
+        if (modifier === 'PM') {
+            hours = parseInt(hours, 10) + 12;
+        }
+
+        return `${hours}:${minutes}`;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
+
+        // Convert to 24-hour format if needed
+        const preferredTime24 = convertTo24HourFormat(formData.preferredTime);
+        const alternateTime24 = convertTo24HourFormat(formData.alternateTime);
+
+        const formDataWith24HourFormat = {
+            ...formData,
+            preferredTime: preferredTime24,
+            alternateTime: alternateTime24,
+        };
+
+        // Logging the converted times
+        console.log('Preferred Time (24-hour):', formDataWith24HourFormat.preferredTime); 
+        console.log('Alternate Time (24-hour):', formDataWith24HourFormat.alternateTime); 
+
         try {
-            const response = await axiosInstance.post('/api/longrental-inquery/add', formData, {
+            const response = await axiosInstance.post('/api/longrental-inquery/add', formDataWith24HourFormat, {
                 headers: {
                     'Authorization': `${token}`,
                 },

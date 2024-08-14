@@ -3,6 +3,7 @@ import axiosInstance from '../axiosConfig';
 import './user.css';
 import { FaUser, FaLock, FaBell, FaCreditCard, FaGavel, FaQuestionCircle } from 'react-icons/fa';
 import BookingDetails from './BookingDetails';
+import VisitRequests from './VisitRequests';
 
 export default function UserProfile() {
   const [userProfile, setUserProfile] = useState(null);
@@ -59,10 +60,10 @@ export default function UserProfile() {
               <p className="flex items-center"><FaLock className="mr-2" /> Security</p>
             </button>
             <button onClick={() => setActiveTab('notifications')} className={`nav-link ${activeTab === 'notifications' ? 'active' : ''}`}>
-              <p className="flex items-center"><FaBell className="mr-2" /> Notifications</p>
+              <p className="flex items-center"><FaBell className="mr-2" /> Bookings</p>
             </button>
             <button onClick={() => setActiveTab('billing')} className={`nav-link ${activeTab === 'billing' ? 'active' : ''}`}>
-              <p className="flex items-center"><FaCreditCard className="mr-2" /> Billing</p>
+              <p className="flex items-center"><FaCreditCard className="mr-2" /> Visit Requests</p>
             </button>
             <button onClick={() => setActiveTab('auction')} className={`nav-link ${activeTab === 'auction' ? 'active' : ''}`}>
               <p className="flex items-center"><FaGavel className="mr-2" /> Auction Registration</p>
@@ -116,7 +117,7 @@ export default function UserProfile() {
             )}
             {activeTab === 'billing' && (
               <div id="account-billing" className="tab-pane fade show active">
-                {/* Billing tab content */}
+                <VisitRequests/>
               </div>
             )}
             {activeTab === 'auction' && (

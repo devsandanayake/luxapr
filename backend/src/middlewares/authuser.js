@@ -14,7 +14,7 @@ const authUser = (req, res, next) => {
         console.log(decoded);
         next();
     } catch (err) {
-         next(err)
+        return next({ status: 401, message: 'Invalid token' });
     }
 };
 
