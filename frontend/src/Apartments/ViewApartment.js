@@ -240,36 +240,46 @@ export default function ViewApartment() {
 
 
 
-                <div className='mt-5 '>
-    <h2 className='text-2xl font-bold'>Additional Information</h2>
+{(apartmentDetails.keyFeatures?.length > 0 || apartmentDetails.ExclusiveAmenities?.length > 0 || apartmentDetails.CommunityPerks?.length > 0) && (
+    <div className='mt-5'>
+        <h2 className='text-2xl font-bold'>Additional Information</h2>
 
-    <div className='additional'>
-    <div className='mt-2'>
-        <h3 className='text-xl font-semibold'>Key Features:</h3>
-        <ul className='list-disc list-inside text-lg'>
-            {apartmentDetails.keyFeatures && apartmentDetails.keyFeatures.map((feature, index) => (
-                <li key={index}>{feature}</li>
-            ))}
-        </ul>
+        <div className='additional'>
+            {apartmentDetails.keyFeatures?.length > 0 && (
+                <div className='mt-2'>
+                    <h3 className='text-xl font-semibold'>Key Features:</h3>
+                    <ul className='list-disc list-inside text-lg'>
+                        {apartmentDetails.keyFeatures.map((feature, index) => (
+                            <li key={index}>{feature}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+            {apartmentDetails.ExclusiveAmenities?.length > 0 && (
+                <div className='mt-2'>
+                    <h3 className='text-xl font-semibold'>Exclusive Amenities:</h3>
+                    <ul className='list-disc list-inside text-lg'>
+                        {apartmentDetails.ExclusiveAmenities.map((amenity, index) => (
+                            <li key={index}>{amenity}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+            {apartmentDetails.CommunityPerks?.length > 0 && (
+                <div className='mt-2'>
+                    <h3 className='text-xl font-semibold'>Community Perks:</h3>
+                    <ul className='list-disc list-inside text-lg'>
+                        {apartmentDetails.CommunityPerks.map((perk, index) => (
+                            <li key={index}>{perk}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+        </div>
     </div>
-    <div className='mt-2'>
-        <h3 className='text-xl font-semibold'>Exclusive Amenities:</h3>
-        <ul className='list-disc list-inside text-lg'>
-            {apartmentDetails.ExclusiveAmenities && apartmentDetails.ExclusiveAmenities.map((amenity, index) => (
-                <li key={index}>{amenity}</li>
-            ))}
-        </ul>
-    </div>
-    <div className='mt-2'>
-        <h3 className='text-xl font-semibold'>Community Perks:</h3>
-        <ul className='list-disc list-inside text-lg'>
-            {apartmentDetails.CommunityPerks && apartmentDetails.CommunityPerks.map((perk, index) => (
-                <li key={index}>{perk}</li>
-            ))}
-        </ul>
-    </div>
-    </div>
+)}
     
+    <div>
 
   
 
