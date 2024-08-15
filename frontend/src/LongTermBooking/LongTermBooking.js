@@ -92,10 +92,35 @@ export default function LongTermBooking() {
         </div>
       )}
       <div>
-        <h1 className='title text-3xl mt-20 ml-3 text-gold' style={{ fontFamily: 'Georgia, serif' }}>{apartmentDetails.title}</h1>
-      </div>
+      <h1 className="title text-3xl mt-20 ml-3 text-gold text-center" style={{ fontFamily: 'Georgia, serif' }}>
+                    Book Your Apartment
+                </h1>      
+        </div>
       <div className="full-screen">
-        <div className='w-8/12'>
+
+        <div className='w-4/12 text-2xl text-center font-semibold booking-details' style={{ borderRight: '2px solid gold', paddingRight: '40px' }}>
+          {apartmentDetails.title}
+          {apartmentDetails.images && apartmentDetails.images.length > 0 && (
+            <>
+            <img 
+                src={`http://124.43.179.118:8081/uploads/${apartmentDetails.images[0].split('\\').pop()}`} 
+                alt={apartmentDetails.title || "Room"} 
+                className="booking-image left-aligned mb-5 mt-8" 
+            />
+            {apartmentDetails.images.length > 1 && (
+                <img 
+                    src={`http://124.43.179.118:8081/uploads/${apartmentDetails.images[1].split('\\').pop()}`} 
+                    alt={apartmentDetails.title || "Room"} 
+                    className="booking-image right-aligned mb-5 mt-5" 
+                />
+            )}
+        </>
+    )}
+</div>
+
+
+
+        <div className='w-6/12'>
           <form className='mt-10 ml-3 w-full mb-5' onSubmit={handleSubmit}>
             <div className='mt-2'>
               <label className='text-lg' htmlFor="rentalStartDate">Rental Start Date</label>
