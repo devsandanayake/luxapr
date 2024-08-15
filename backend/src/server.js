@@ -29,6 +29,8 @@ app.use(morgan('dev'));
 // eslint-disable-next-line no-undef
 app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
 // eslint-disable-next-line no-undef
+app.use('/profilePic', express.static(path.join(__dirname, '../../profilePic')));
+// eslint-disable-next-line no-undef
 app.use('/uploads/watermarked', express.static(path.join(__dirname, '../../uploads/watermarked')));
 
 //IMPORT ROUTES
