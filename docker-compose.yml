@@ -19,6 +19,7 @@ services:
     volumes:
       - uploads:/usr/src/uploads
       - watermarked:/usr/src/uploads/watermarked
+      - profilePic:/usr/src/profilePic
     environment:
       - PORT=8081
 

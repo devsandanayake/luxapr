@@ -8,8 +8,9 @@ const process = require('process');
 
 dotenv.config();
 
-const createUser = async ({ username, firstName, lastName, email, password, contactNumber }) => {
+const createUser = async ({ images,username, firstName, lastName, email, password, contactNumber ,occupation}) => {
     try {
+        console.log(images);
         const now = moment.tz('Asia/Colombo');
         const formattedDate = now.format('YYYY-MM-DD HH:mm:ss');
 
@@ -27,13 +28,16 @@ const createUser = async ({ username, firstName, lastName, email, password, cont
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         const newUser = new UserModel({
+            images,
             username,
             email,
             password: hashedPassword,
             contactNumber,
             firstName,
             lastName,
-            registerDate: formattedDate
+            registerDate: formattedDate,
+            occupation
+
         });
 
         await newUser.save();

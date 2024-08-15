@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
  const UserSchema = new mongoose.Schema({
+    images: {
+        type: String,
+     
+    },
     username: {
       type: String,
       required: true,
@@ -33,6 +37,9 @@ const mongoose = require('mongoose');
     registerDate: {
         type: String,
         required: true,
+    },
+    occupation: {
+        type: String,
     },
     auctionID:{
         type: [String],

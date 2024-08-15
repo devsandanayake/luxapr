@@ -3,9 +3,11 @@ const userService = require('../services/userService');
 // Create a new user in the database
 const createUser = async (req, res, next) => {
     try {
-        const { username, firstName, lastName, email, password, contactNumber } = req.body;
+        const images = req.file.path;
 
-        const response = await userService.createUser({ username, firstName, lastName, email, password, contactNumber });
+        const {  username, firstName, lastName, email, password, contactNumber ,occupation } = req.body;
+
+        const response = await userService.createUser({ images,username, firstName, lastName, email, password, contactNumber,occupation });
 
         if (response.error) {
             return res.status(response.status).json({ message: response.message });
