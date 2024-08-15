@@ -12,6 +12,7 @@ router.post('/createAds', authMiddleware.authUser, upload.fields([
 router.get('/viewAds', adsController.viewAllAds);
 router.patch('/edit/:adCode', authMiddleware.editPostuserSideauth, adsController.editAds);
 router.get('/viewSpecificAd/:adCode', adsController.viewSpecificAd);
+router.post('/searchAds',adsController.searchAdsCompareWithDate);
 
 // Admin routes
 router.get('/viewAllAdsForAdmin', authMiddleware.authAdmin, adsController.viewAllAdsForAdmin);

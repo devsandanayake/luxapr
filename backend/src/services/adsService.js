@@ -1,4 +1,5 @@
 const AdsModel = require('../models/ads');
+const LongRentalModel = require('../models/LRentTransactionModel');
 const UserModel = require('../models/user');
 const moment = require('moment-timezone');
 const { sendEmail } = require('./emailService');
@@ -134,6 +135,35 @@ const updateAuctionDetails = async (adCode, startDate,endDate, startPrice,maxRat
     }, { new: true });
 }
 
+//search ads compare with date
+const searchAdsCompareWithDate = async (startDate, endDate) => {
+    const ads = await AdsModel.find({ status: 1, transactionType: { $ne: 4 } });
+    const LongRental = await LongRentalModel.find({ adminKeyStatus: 'Approved' });
+    
+    // Filter LongRentalArray based on date range
+    const LongRentalArray = LongRental
+        .filter(element => {
+            const rentalStartDate = element.rentalStartDate;
+            const rentalEndDate = element.rentalEndDate;
+            return (startDate >= rentalStartDate && startDate <= rentalEndDate) ||
+                   (endDate >= rentalStartDate && endDate <= rentalEndDate) ||
+                   (startDate <= rentalStartDate && endDate >= rentalEndDate);
+        })
+        .map(element => element.adCode);
+
+    console.log(LongRentalArray);
+
+    // Filter adsArray by excluding ads present in LongRentalArray
+    const adsArray = ads.map(element => {
+        if (LongRentalArray.includes(element.adCode)) {
+            return { element, label: 'included' };
+        }  
+        return { element, label: 'excluded' };
+    });
+    return adsArray;
+}
+
+
 
 
 
@@ -146,5 +176,6 @@ module.exports = {
     editAds,
     openORcloseForBidding,
     updateAuctionDetails,
-    viewSpecificAdForAdmin
+    viewSpecificAdForAdmin,
+    searchAdsCompareWithDate
 };

@@ -105,6 +105,17 @@ const updateAuctionDetails = async (req, res, next) => {
     }
 }
 
+//search ads
+const searchAdsCompareWithDate = async (req, res, next) => {
+    try {
+        const { startDate, endDate } = req.body;
+        const ads = await adsService.searchAdsCompareWithDate(startDate, endDate);
+        res.json(ads);
+    } catch (err) {
+        next(err);
+    }
+}
+
 module.exports = {
     createAd,
     viewAllAds,
@@ -114,5 +125,6 @@ module.exports = {
     editAds,
     openORcloseForBidding,
     updateAuctionDetails,
-    viewSpecificAdForAdmin
+    viewSpecificAdForAdmin,
+    searchAdsCompareWithDate
 };
