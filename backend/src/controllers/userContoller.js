@@ -82,8 +82,11 @@ const verifyUser = async (req,res,next)=>{
 const editUserProfile = async (req,res,next)=>{
     try{
         const username = req.user;
-        const userData = req.body;
-        // const images = req.file.path;           
+
+        const userData = req.body;         
+        if (req.file) {
+            userData.images = req.file.path;
+        } 
         const response = await userService.editUserProfile(username,userData);
         res.json(response);
     }catch(err){
