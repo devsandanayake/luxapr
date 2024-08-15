@@ -123,10 +123,33 @@ const viewUserProfile = async (username) => {
     }
 }
 
+
+//edit user profile
+const editUserProfile = async (username,userData) => {
+    try{
+        const user = await UserModel.findOne({ username: username });
+        if (!user) {
+            return { error: true, status: 404, message: 'User not found' };
+        }
+        const updatedUser = await UserModel.findOneAndUpdate
+        (
+            { username: username },
+            userData,
+            { new: true }
+        );
+        return { error: false, updatedUser };
+    }
+    catch (err) {
+        console.error(err); // Consider more sophisticated logging for production
+        throw new Error('Error editing user profile');
+    }
+}
+
 module.exports = {
     createUser,
     loginUser,
     viewAllUsers,
     viewAdsUser,
-    viewUserProfile
+    viewUserProfile,
+    editUserProfile
 };

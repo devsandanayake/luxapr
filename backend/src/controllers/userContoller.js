@@ -78,11 +78,25 @@ const verifyUser = async (req,res,next)=>{
     }
 }
 
+//update user profile
+const editUserProfile = async (req,res,next)=>{
+    try{
+        const username = req.user;
+        const userData = req.body;
+        // const images = req.file.path;           
+        const response = await userService.editUserProfile(username,userData);
+        res.json(response);
+    }catch(err){
+        next(err);
+    }
+}
+
 module.exports = {
     createUser,
     loginUser,
     viewAllUsers,
     viewAdsUser,
     viewUserProfile,
-    verifyUser
+    verifyUser,
+    editUserProfile
 };
