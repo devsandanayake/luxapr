@@ -9,6 +9,10 @@ const LRentalTransactionSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    BookingID: {
+        type: String,
+        required: true,
+    },
     rentalStartDate: {
         type: String,
         required: true,
