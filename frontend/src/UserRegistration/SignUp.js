@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './SignUp.css'; // Adjusted to match Login.css naming conventions
-import Logo from '../Images/Logo.png'; // Assuming you have the logo image available
-import axiosInstance from '../axiosConfig'; // Import the axios instance
+import './SignUp.css'; 
+import Logo from '../Images/Logo.png'; 
+import axiosInstance from '../axiosConfig';
 import Popup from './Popup'; 
 
 export default function SignUp() {
@@ -10,10 +10,13 @@ export default function SignUp() {
     firstName: '',
     lastName: '',
     email: '',
+    occupation: '',
     password: '',
     contactNumber: ''
   });
 
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePicturePreview, setProfilePicturePreview] = useState(null);
   const [message, setMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
 
@@ -25,10 +28,33 @@ export default function SignUp() {
     });
   };
 
+  const handleProfilePictureClick = () => {
+    document.getElementById('images').click();
+  };
+  
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setProfilePicture(file);
+    setProfilePicturePreview(URL.createObjectURL(file));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formDataWithImage = new FormData();
+    for (const key in formData) {
+      formDataWithImage.append(key, formData[key]);
+    }
+    if (profilePicture) {
+      formDataWithImage.append('images', profilePicture);
+    }
+
     try {
-      const response = await axiosInstance.post('/api/users/signup', formData);
+      const response = await axiosInstance.post('/api/users/signup', formDataWithImage, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
 
       if (response.status === 201) {
         setMessage('Account created successfully!');
@@ -50,18 +76,24 @@ export default function SignUp() {
       <div className="signup-card">
         <h2 className="signup-title">Create Account</h2>
         <form className="signup-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input 
-              type="text" 
-              name="username" 
-              id="username" 
-              value={formData.username} 
-              onChange={handleChange} 
-              required 
-              className="form-input"
-            />
-          </div>
+        <div className="form-group profile-picture-group">
+  <div className="profile-picture-container" onClick={handleProfilePictureClick}>
+    {profilePicturePreview ? (
+      <img src={profilePicturePreview} alt="Profile Preview" className="profile-picture" />
+    ) : (
+      <div className="profile-picture-placeholder">
+        <span className="placeholder-icon">👤</span>
+      </div>
+    )}
+  </div>
+  <input 
+    type="file" 
+    name="images" 
+    id="images" 
+    onChange={handleFileChange} 
+  />
+</div>
+
           <div className="form-group">
             <label htmlFor="firstName">First Name</label>
             <input 
@@ -99,6 +131,30 @@ export default function SignUp() {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="occupation">Occupation</label>
+            <input
+              type="text"
+              name="occupation"
+              id="occupation"
+              value={formData.occupation}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input 
+              type="text" 
+              name="username" 
+              id="username" 
+              value={formData.username} 
+              onChange={handleChange} 
+              required 
+              className="form-input"
+            />
+          </div>
+          <div className="form-group">
             <label htmlFor="password">Password</label>
             <input 
               type="password" 
@@ -113,7 +169,7 @@ export default function SignUp() {
           <div className="form-group">
             <label htmlFor="contactNumber">Contact Number</label>
             <input 
-              type="text" 
+              type="number" 
               name="contactNumber" 
               id="contactNumber" 
               value={formData.contactNumber} 

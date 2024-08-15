@@ -78,11 +78,21 @@ export default function UserProfile() {
             {activeTab === 'general' && (
               <div id="account-general" className="tab-pane fade show active">
                 <div className="flex items-center mb-4">
-                  <img className="h-20 w-20 rounded-full mr-4" src={userProfile.avatar || "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png"} alt="User Avatar" />
-                  <div>
+                  <img 
+                    className="h-20 w-20 rounded-full mr-4" 
+                    src={userProfile.images ? `http://124.43.179.118:8081/${userProfile.images}` : "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png"} 
+                    alt="User Avatar" 
+                  />                  <div>
                     <p className="btn btn-default">{userProfile.username}</p>
                     <p className="text-gray-600">Joined: {new Date(userProfile.registerDate).toDateString()}</p>
                   </div>
+                  <div className="ml-auto">
+                    <a href='/editprofile'>
+                    <button className=" p-2 border rounded-lg bg-blue-400">Edit Profile</button>
+                    </a>
+                  </div>
+
+
                 </div>
                 <hr className="border-gray-300 mb-4" />
                 <div>
@@ -97,10 +107,14 @@ export default function UserProfile() {
                   <div className="mb-4">
                     <label className="block text-gray-700">E-mail</label>
                     <input type="text" className="form-input mt-1 block w-full" value={userProfile.email} readOnly />
-                    <div className="bg-yellow-100 text-yellow-800 text-sm p-2 mt-2">
-                      Your email is not confirmed. Please check your inbox.<br />
-                      <a href="#" className="text-yellow-800 underline">Resend confirmation</a>
-                    </div>
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-gray-700">Phone</label>
+                    <input type="text" className="form-input mt-1 block w-full" value={userProfile.contactNumber} readOnly />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-gray-700">occupation</label>
+                    <input type="text" className="form-input mt-1 block w-full" value={userProfile.occupation} readOnly />
                   </div>
                 </div>
               </div>
