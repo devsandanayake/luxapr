@@ -3,14 +3,16 @@ const UserModel = require('../models/user')
 const {longTermRentEmail} = require('./emailService')
 
 // Function to create a long rental transaction
-const createLRentalTransaction = async (username , adCode , rentalStartDate , rentalEndDate , userMessage , phoneNumber) => {
+const createLRentalTransaction = async (username , adCode ,BookingID, rentalStartDate , rentalEndDate , userMessage , phoneNumber) => {
     const newLRentalTransaction = new LRentalTransactionModel({
         username,
         adCode,
+        BookingID,
         rentalStartDate,
         rentalEndDate,
         userMessage,
-        phoneNumber
+        phoneNumber,
+        
     });
     return await newLRentalTransaction.save();
 }
