@@ -137,7 +137,17 @@ const updateAuctionDetails = async (adCode, startDate,endDate, startPrice,maxRat
 
 //search ads compare with date
 const searchAdsCompareWithDate = async (startDate, endDate,areas,districts) => {
-    const ads = await AdsModel.find({ status: 1, areas:areas, districts:districts, transactionType: { $ne: 4 } });
+    const query = { status: 1, transactionType: { $ne: 4 } };
+    
+    if (areas) {
+        query.areas = areas;
+    }
+    
+    if (districts) {
+        query.districts = districts;
+    }
+    
+    const ads = await AdsModel.find(query);
     const LongRental = await LongRentalModel.find({ adminKeyStatus: 'Approved' });
     
     // Filter LongRentalArray based on date range
