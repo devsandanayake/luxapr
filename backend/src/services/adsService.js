@@ -141,7 +141,7 @@ const updateAuctionDetails = async (adCode, startDate,endDate, startPrice,maxRat
 }
 
 //search ads compare with date
-const searchAdsCompareWithDate = async (startDate, endDate, areas, districts, bedroomCount) => {
+const searchAdsCompareWithDate = async (startDate, endDate,areas,districts,bedroomCount) => {
     const query = { status: 1, transactionType: { $ne: 4 } };
     
     if (areas) {
@@ -155,6 +155,7 @@ const searchAdsCompareWithDate = async (startDate, endDate, areas, districts, be
     if (bedroomCount) {
         query.bedroomCount = bedroomCount;
     }
+    console.log(query);
     
     const ads = await AdsModel.find(query);
     const LongRental = await LongRentalModel.find({ adminKeyStatus: 'Approved' });
@@ -162,13 +163,15 @@ const searchAdsCompareWithDate = async (startDate, endDate, areas, districts, be
     // Filter LongRentalArray based on date range
     const LongRentalArray = LongRental
         .filter(element => {
-            const rentalStartDate = new Date(element.rentalStartDate);
-            const rentalEndDate = new Date(element.rentalEndDate);
-            return (new Date(startDate) >= rentalStartDate && new Date(startDate) <= rentalEndDate) ||
-                   (new Date(endDate) >= rentalStartDate && new Date(endDate) <= rentalEndDate) ||
-                   (new Date(startDate) <= rentalStartDate && new Date(endDate) >= rentalEndDate);
+            const rentalStartDate = element.rentalStartDate;
+            const rentalEndDate = element.rentalEndDate;
+            return (startDate >= rentalStartDate && startDate <= rentalEndDate) ||
+                   (endDate >= rentalStartDate && endDate <= rentalEndDate) ||
+                   (startDate <= rentalStartDate && endDate >= rentalEndDate);
         })
         .map(element => element.adCode);
+
+    console.log(LongRentalArray);
 
     // Filter adsArray by excluding ads present in LongRentalArray
     const adsArray = ads.map(element => {
@@ -177,7 +180,6 @@ const searchAdsCompareWithDate = async (startDate, endDate, areas, districts, be
         }  
         return { element, label: 'excluded' };
     });
-
     return adsArray;
 }
 
