@@ -38,8 +38,13 @@ const createAd = async (user, adData, files) => {
     return await newAd.save();
 };
 
+
+
+
+
 const viewAllAds = async () => {
-    return await AdsModel.find({ status: 1 }).sort('-publishedAt');
+    const ads = await AdsModel.find({ status: 1 }).sort('-publishedAt');
+    return ads.map(ad => ({ element: ad, label: '200' }));
 };
 
 const approved = async (adCode, status) => {
@@ -136,7 +141,7 @@ const updateAuctionDetails = async (adCode, startDate,endDate, startPrice,maxRat
 }
 
 //search ads compare with date
-const searchAdsCompareWithDate = async (startDate, endDate,areas,districts) => {
+const searchAdsCompareWithDate = async (startDate, endDate, areas, districts, bedroomCount) => {
     const query = { status: 1, transactionType: { $ne: 4 } };
     
     if (areas) {
@@ -146,6 +151,10 @@ const searchAdsCompareWithDate = async (startDate, endDate,areas,districts) => {
     if (districts) {
         query.districts = districts;
     }
+
+    if (bedroomCount) {
+        query.bedroomCount = bedroomCount;
+    }
     
     const ads = await AdsModel.find(query);
     const LongRental = await LongRentalModel.find({ adminKeyStatus: 'Approved' });
@@ -153,15 +162,13 @@ const searchAdsCompareWithDate = async (startDate, endDate,areas,districts) => {
     // Filter LongRentalArray based on date range
     const LongRentalArray = LongRental
         .filter(element => {
-            const rentalStartDate = element.rentalStartDate;
-            const rentalEndDate = element.rentalEndDate;
-            return (startDate >= rentalStartDate && startDate <= rentalEndDate) ||
-                   (endDate >= rentalStartDate && endDate <= rentalEndDate) ||
-                   (startDate <= rentalStartDate && endDate >= rentalEndDate);
+            const rentalStartDate = new Date(element.rentalStartDate);
+            const rentalEndDate = new Date(element.rentalEndDate);
+            return (new Date(startDate) >= rentalStartDate && new Date(startDate) <= rentalEndDate) ||
+                   (new Date(endDate) >= rentalStartDate && new Date(endDate) <= rentalEndDate) ||
+                   (new Date(startDate) <= rentalStartDate && new Date(endDate) >= rentalEndDate);
         })
         .map(element => element.adCode);
-
-    console.log(LongRentalArray);
 
     // Filter adsArray by excluding ads present in LongRentalArray
     const adsArray = ads.map(element => {
@@ -170,6 +177,7 @@ const searchAdsCompareWithDate = async (startDate, endDate,areas,districts) => {
         }  
         return { element, label: 'excluded' };
     });
+
     return adsArray;
 }
 

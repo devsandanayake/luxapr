@@ -8,28 +8,31 @@ export default function AllApartments() {
     const [apartments, setApartments] = useState([]);
     const [filteredApartments, setFilteredApartments] = useState([]);
     const [selectedLocation, setSelectedLocation] = useState('');
+    const [selectedDistrict, setSelectedDistrict] = useState('');
+    const [selectedArea, setSelectedArea] = useState('');
     const [selectedType, setSelectedType] = useState('');
-    const [selectedRoomCount, setSelectedRoomCount] = useState(''); // New state for room count
-    const [sortCriteria, setSortCriteria] = useState(''); // State for sorting criteria
-    const [sortOrder, setSortOrder] = useState(''); // State for sorting order
+    const [selectedRoomCount, setSelectedRoomCount] = useState('');
+    const [sortCriteria, setSortCriteria] = useState('');
+    const [sortOrder, setSortOrder] = useState('');
     const [showFiltered, setShowFiltered] = useState(false);
-    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768); // State for screen size
-    const [activeTab, setActiveTab] = useState('all'); // State for active tab
-    const [currentPage, setCurrentPage] = useState(1); // State for current page
-    const itemsPerPage = 5; // Number of items per page
+    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const itemsPerPage = 5;
 
     useEffect(() => {
         const fetchApartments = async () => {
             try {
                 const response = await axiosInstance.get('/api/ads/viewAds');
                 const apartmentsData = response.data
-                    .filter(apartment => apartment.transactionType !== 4) // Exclude apartments with transactionType 4
-                    .map(apartment => ({
-                        ...apartment,
-                        publishedAt: new Date(apartment.publishedAt) // Ensure publishedAt is a Date object
+                    .filter(item => item.element.transactionType !== 4)
+                    .map(item => ({
+                        ...item,
+                        publishedAt: new Date(item.element.publishedAt).toISOString().slice(0, 10)
                     }));
                 setApartments(apartmentsData);
-                setFilteredApartments(apartmentsData); // Initialize filtered apartments
+                setFilteredApartments(apartmentsData);
             } catch (error) {
                 console.error(error);
             }
@@ -48,65 +51,45 @@ export default function AllApartments() {
         };
     }, []);
 
-    const filterByTab = (apartments, tab) => {
-        if (tab === 'all') {
-            return apartments.filter(apartment => 
-                apartment.transactionType === 1 || apartment.transactionType === 2 || apartment.transactionType === 3
-            );
-        }
-        return apartments.filter(apartment => {
-            if (tab === 'short-term') {
-                return apartment.transactionType === 1;
-            } else if (tab === 'long-term') {
-                return apartment.transactionType === 2;
-            }  
-        });
-    };
-
-    const filterApartments = (tab = activeTab) => {
-        let filtered = apartments;
-
-        if (selectedLocation) {
-            filtered = filtered.filter(apartment => 
-                apartment.districts.toLowerCase().includes(selectedLocation.toLowerCase()) ||
-                apartment.areas.toLowerCase().includes(selectedLocation.toLowerCase())
-            );        
-        }
-
-        if (selectedRoomCount) {
-            filtered = filtered.filter(apartment => 
-                apartment.bedroomCount === parseInt(selectedRoomCount)
-            );
-        }
-
-        filtered = filterByTab(filtered, tab);
-
-        // Sorting logic
-        if (sortCriteria) {
-            filtered = filtered.sort((a, b) => {
-                if (sortCriteria === 'price') {
-                    return sortOrder === 'asc' ? a.price - b.price : b.price - a.price;
-                } else if (sortCriteria === 'date') {
-                    return sortOrder === 'asc' ? new Date(a.publishedAt) - new Date(b.publishedAt) : new Date(b.publishedAt) - new Date(a.publishedAt);
-                } else if (sortCriteria === 'area') {
-                    return sortOrder === 'asc' ? a.areaSize - b.areaSize : b.areaSize - a.areaSize;
-                }
-                return 0;
+    const filterApartments = async () => {
+        try {
+            const response = await axiosInstance.post('/api/ads/searchAds', {
+                startDate,
+                endDate,
+                areas: selectedArea,
+                districts: selectedDistrict,
+                bedroomCount: parseInt(selectedRoomCount),
             });
+
+            console.log('adda',parseInt(selectedRoomCount));
+
+            let filtered = response.data;
+
+            if (selectedRoomCount) {
+                filtered = filtered.filter(apartment => 
+                    apartment.bedroomCount === parseInt(selectedRoomCount)
+                );
+            }
+
+            if (sortCriteria) {
+                filtered = filtered.sort((a, b) => {
+                    if (sortCriteria === 'price') {
+                        return sortOrder === 'asc' ? a.price - b.price : b.price - a.price;
+                    } else if (sortCriteria === 'date') {
+                        return sortOrder === 'asc' ? new Date(a.publishedAt) - new Date(b.publishedAt) : new Date(b.publishedAt) - new Date(a.publishedAt);
+                    } else if (sortCriteria === 'area') {
+                        return sortOrder === 'asc' ? a.areaSize - b.areaSize : b.areaSize - a.areaSize;
+                    }
+                    return 0;
+                });
+            }
+
+            setFilteredApartments(filtered);
+            setShowFiltered(true);
+            setCurrentPage(1);
+        } catch (error) {
+            console.error(error);
         }
-
-        setFilteredApartments(filtered);
-        setShowFiltered(true);
-        setCurrentPage(1); // Reset to first page on filter change
-    };
-
-    const handleTabClick = (tab) => {
-        setActiveTab(tab);
-        setSelectedLocation('');
-        setSelectedRoomCount('');
-        setSortCriteria('');
-        setSortOrder('');
-        filterApartments(tab);
     };
 
     const handleNextPage = () => {
@@ -121,37 +104,38 @@ export default function AllApartments() {
     const endIndex = startIndex + itemsPerPage;
     const displayedApartments = showFiltered ? filteredApartments.slice(startIndex, endIndex) : apartments.slice(startIndex, endIndex);
 
-    console.log('Current Page:', currentPage);
-    console.log('Displayed Apartments:', displayedApartments);
-
     return (
         <>
             <div className='AllApartments-title'>Apartment List</div>
-
-            <div className="tabs">
-                <button className={`tab ${activeTab === 'all' ? 'active' : ''}`} onClick={() => handleTabClick('all')}>All</button>
-                <button className={`tab ${activeTab === 'short-term' ? 'active' : ''}`} onClick={() => handleTabClick('short-term')}>Short-Term</button>
-                <button className={`tab ${activeTab === 'long-term' ? 'active' : ''}`} onClick={() => handleTabClick('long-term')}>Long-Term</button>
-            </div>
 
             <div className="containerr mx-auto">
 
                 <div className='con-sidebar'>
                 <div className="sidebar">
                 <h2 className="sidebar-title mt-2">Check Now</h2>
-
-                     <div className="booking-option">
-                         <input
+                    <div className="booking-option">
+                        <input
                             type="text"
-                            id="location"
-                            value={selectedLocation}
-                            onChange={(e) => setSelectedLocation(e.target.value)}
-                            placeholder="Enter location"
+                            id="district"
+                            value={selectedDistrict}
+                            onChange={(e) => setSelectedDistrict(e.target.value)}
+                            placeholder="Enter district"
                             className='w-full h-full p-2'
                             style={{ backgroundColor: '#f9f9f9' }}
                         />
                     </div>
-                    <div className="booking-option"> {/* New input field for room count */}
+                    <div className="booking-option">
+                        <input
+                            type="text"
+                            id="area"
+                            value={selectedArea}
+                            onChange={(e) => setSelectedArea(e.target.value)}
+                            placeholder="Enter area"
+                            className='w-full h-full p-2'
+                            style={{ backgroundColor: '#f9f9f9' }}
+                        />
+                    </div>
+                    <div className="booking-option">
                         <input
                             type="number"
                             id="roomCount"
@@ -162,14 +146,32 @@ export default function AllApartments() {
                             style={{ backgroundColor: '#f9f9f9' }}
                         />
                     </div>
+                    <div className="booking-option">
+                        <input
+                            type="date"
+                            id="startDate"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            placeholder="Start Date"
+                            className='w-full h-full p-2'
+                            style={{ backgroundColor: '#f9f9f9' }}
+                        />
+                    </div>
+                    <div className="booking-option">
+                        <input
+                            type="date"
+                            id="endDate"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                            placeholder="End Date"
+                            className='w-full h-full p-2'
+                            style={{ backgroundColor: '#f9f9f9' }}
+                        />
+                    </div>
                     <button className="check-button" onClick={() => filterApartments()}>CHECK ➔</button>
-
-
                 </div>
 
-
                 <div className="sidebar2">
-
                     <h2 className="sidebar-title mt-2">Filters</h2>
                     <div className="sort-options">
                         <select value={sortCriteria} onChange={(e) => { setSortCriteria(e.target.value); setSortOrder(''); }}>
@@ -187,10 +189,7 @@ export default function AllApartments() {
                             </select>
                         )}
                     </div>
-
                 </div>
-
-
 
                 <div className="sidebar3">
                     <div className='other-contents'>
@@ -199,7 +198,7 @@ export default function AllApartments() {
                             Auction
                         </div>
 
-                        <a href='/'>
+                        <a href='/' >
                         <div className='side-links'>
                             Home
                         </div>
@@ -211,7 +210,6 @@ export default function AllApartments() {
                         </div>
                         </a>
                     </div>
-
                 </div>
                 </div>
                 

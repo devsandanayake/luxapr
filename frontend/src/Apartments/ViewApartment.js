@@ -125,7 +125,7 @@ export default function ViewApartment() {
                 </div>
 
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8'>
-                    <div className="image-gallery w-full lg:w-full border border-gold p-3 ml-2 rounded-xl">
+                    <div className="image-gallery w-full lg:w-full  p-3 ml-2 rounded-xl">
                         <div className="main-image-container">
                             {selectedImage && isPannellumReady && (
                                 isEquirectangular(selectedImage) ? (

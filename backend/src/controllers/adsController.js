@@ -108,8 +108,8 @@ const updateAuctionDetails = async (req, res, next) => {
 //search ads
 const searchAdsCompareWithDate = async (req, res, next) => {
     try {
-        const { startDate, endDate ,areas ,districts } = req.body;
-        const ads = await adsService.searchAdsCompareWithDate(startDate, endDate ,areas ,districts);
+        const { startDate, endDate ,areas ,districts, bedroomCount } = req.body;
+        const ads = await adsService.searchAdsCompareWithDate(startDate, endDate ,areas ,districts, bedroomCount);
         res.json(ads);
     } catch (err) {
         next(err);

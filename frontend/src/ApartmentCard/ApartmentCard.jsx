@@ -10,14 +10,14 @@ const ApartmentCard = ({ apartment }) => {
     const [isHovered, setIsHovered] = useState(false);
     const navigate = useNavigate();
 
-    const truncatedTitle = apartment.title.length > 80 ? apartment.title.substring(0, 80) + '...' : apartment.title;
+    const truncatedTitle = apartment.element.title.length > 80 ? apartment.element.title.substring(0, 80) + '...' : apartment.element.title;
 
     const priceTag = (() => {
-        if (apartment.transactionType === 1) {
+        if (apartment.element.transactionType === 1) {
             return "Per Day";
-        } else if (apartment.transactionType === 2) {
+        } else if (apartment.element.transactionType === 2) {
             return "Per Month";
-        } else if (apartment.transactionType === 3) {
+        } else if (apartment.element.transactionType === 3) {
             return "Per Day";
         } else {
             return "";
@@ -25,13 +25,13 @@ const ApartmentCard = ({ apartment }) => {
     })();
 
     const TermTag = (() => {
-        if (apartment.transactionType === 1) {
+        if (apartment.element.transactionType === 1) {
             return "Short-Term";
-        } else if (apartment.transactionType === 2) {
+        } else if (apartment.element.transactionType === 2) {
             return "Long-Term";
-        } else if (apartment.transactionType === 3) {
+        } else if (apartment.element.transactionType === 3) {
             return "Short / Long Term";
-        } else if (apartment.transactionType === 4) {
+        } else if (apartment.element.transactionType === 4) {
             return "Auction";
         }
     })();
@@ -42,27 +42,27 @@ const ApartmentCard = ({ apartment }) => {
             className="card"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            onClick={() => navigate(`/viewapartment?adcode=${apartment.adCode}`)}
+            onClick={() => navigate(`/viewapartment?adcode=${apartment.element.adCode}`)}
         >
             <div className="image-container">
                 <img 
-                    src={apartment.images && apartment.images.length > 0 
-                        ? `http://124.43.179.118:8081/uploads/${apartment.images[0].split('\\').pop()}` 
+                    src={apartment.element.images && apartment.element.images.length > 0 
+                        ? `http://124.43.179.118:8081/uploads/${apartment.element.images[0].split('\\').pop()}` 
                         : background}  
-                    alt={apartment.name || "Room"} 
+                    alt={apartment.element.name || "Room"} 
                     className="room-image" 
                 />
-                {apartment.transactionType !== 3 && (
-                <div className="price-tag">LKR. &nbsp;{apartment.price}/= {priceTag}</div>
+                {apartment.element.transactionType !== 3 && (
+                <div className="price-tag">LKR. &nbsp;{apartment.element.price}/= {priceTag}</div>
                 )}
                 <div className="term-tag">{TermTag}</div>
             </div>
             <div className={`details ${isHovered ? 'expanded' : ''}`}>
                 <h3>{truncatedTitle}</h3>
-                <p>{apartment.areas}, &nbsp; {apartment.districts}</p>
+                <p>{apartment.element.areas}, &nbsp; {apartment.element.districts}</p>
                 <div className="info">
-                    <span><IoBedOutline />({apartment.bedroomCount}) Bed's</span>
-                    <span><FaShower />({apartment.bathroomCount}) Baths</span>
+                    <span><IoBedOutline />({apartment.element.bedroomCount}) Bed's</span>
+                    <span><FaShower />({apartment.element.bathroomCount}) Baths</span>
                 </div>
             </div>
         </div>
