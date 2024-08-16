@@ -148,11 +148,11 @@ const searchAdsCompareWithDate = async (startDate, endDate,areas,districts,bedro
         query.areas = areas;
     }
     
-    if (districts) {
+    else if (districts) {
         query.districts = districts;
     }
 
-    if (bedroomCount) {
+    else if (bedroomCount) {
         query.bedroomCount = bedroomCount;
     }
     console.log(query);
