@@ -39,9 +39,9 @@ const createAd = async (user, adData, files) => {
 };
 
 const viewAllAds = async () => {
-    const ads = await AdsModel.find({ status: 1 }).sort('-publishedAt');
-    return ads.map(ad => ({ element: ad, label: '200' }));
+    return await AdsModel.find({ status: 1 }).sort('-publishedAt');
 };
+
 const approved = async (adCode, status) => {
     const ad = await AdsModel.findOneAndUpdate({ adCode }, { status }, { new: true });
     if (!ad) {
