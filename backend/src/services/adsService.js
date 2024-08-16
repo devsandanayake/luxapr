@@ -140,21 +140,21 @@ const updateAuctionDetails = async (adCode, startDate,endDate, startPrice,maxRat
     }, { new: true });
 }
 
-//search ads compare with date
-const searchAdsCompareWithDate = async (startDate, endDate,areas,districts,bedroomCount) => {
+const searchAdsCompareWithDate = async (startDate, endDate, areas, districts, bedroomCount) => {
     const query = { status: 1, transactionType: { $ne: 4 } };
     
     if (areas) {
         query.areas = areas;
     }
-    
-    else if (districts) {
+
+    if (districts) {
         query.districts = districts;
     }
 
     if (bedroomCount) {
         query.bedroomCount = bedroomCount;
     }
+
     console.log(query);
     
     const ads = await AdsModel.find(query);
@@ -180,8 +180,10 @@ const searchAdsCompareWithDate = async (startDate, endDate,areas,districts,bedro
         }  
         return { element, label: 'excluded' };
     });
+
     return adsArray;
-}
+};
+
 
 
 

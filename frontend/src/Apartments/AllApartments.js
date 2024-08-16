@@ -62,6 +62,7 @@ export default function AllApartments() {
             });
 
             console.log('adda',parseInt(selectedRoomCount));
+            console.log('response',response.data);
 
             let filtered = response.data;
 
@@ -216,7 +217,7 @@ export default function AllApartments() {
                 <div className="main-content">
                     <div className="content">
                         <div className="content-body">
-                            {displayedApartments.map((apartment) => (
+                            {Array.isArray(displayedApartments) && displayedApartments.map((apartment) => (
                                 isSmallScreen ? (
                                     <SmallCard key={apartment.adCode} apartment={apartment} />
                                 ) : (
