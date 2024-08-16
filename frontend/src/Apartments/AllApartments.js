@@ -68,7 +68,7 @@ export default function AllApartments() {
 
             if (selectedRoomCount) {
                 filtered = filtered.filter(apartment => 
-                    apartment.bedroomCount === parseInt(selectedRoomCount)
+                    apartment.element.bedroomCount === parseInt(selectedRoomCount)
                 );
             }
 
