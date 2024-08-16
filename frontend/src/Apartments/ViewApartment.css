@@ -107,3 +107,28 @@
   flex-wrap: wrap;
   margin-top: 10px;
 }
+
+/* Flex Search Bar */
+.search-barrr {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.booking-optionnn {
+    flex: 1;
+    min-width: 150px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.check-buttonn {
+    background: #d4a553;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    min-width: 100px;
+}

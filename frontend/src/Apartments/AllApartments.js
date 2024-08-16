@@ -1,24 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import axiosInstance from '../axiosConfig';
 import './AllApartments.css';
 import NewCard from '../ApartmentCard/NewCard';
 import SmallCard from '../ApartmentCard/ApartmentCard';
 
 export default function AllApartments() {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+
+    const initialDistrict = queryParams.get('district') || '';
+    const initialArea = queryParams.get('area') || '';
+    const initialRoomCount = queryParams.get('roomCount') || '';
+    const initialStartDate = queryParams.get('startDate') || '';
+    const initialEndDate = queryParams.get('endDate') || '';
+
     const [apartments, setApartments] = useState([]);
     const [filteredApartments, setFilteredApartments] = useState([]);
-    const [selectedLocation, setSelectedLocation] = useState('');
-    const [selectedDistrict, setSelectedDistrict] = useState('');
-    const [selectedArea, setSelectedArea] = useState('');
-    const [selectedType, setSelectedType] = useState('');
-    const [selectedRoomCount, setSelectedRoomCount] = useState('');
-    const [sortCriteria, setSortCriteria] = useState('');
-    const [sortOrder, setSortOrder] = useState('');
+    const [selectedDistrict, setSelectedDistrict] = useState(initialDistrict);
+    const [selectedArea, setSelectedArea] = useState(initialArea);
+    const [selectedRoomCount, setSelectedRoomCount] = useState(initialRoomCount);
+    const [startDate, setStartDate] = useState(initialStartDate);
+    const [endDate, setEndDate] = useState(initialEndDate);
     const [showFiltered, setShowFiltered] = useState(false);
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
     const [currentPage, setCurrentPage] = useState(1);
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
     const itemsPerPage = 5;
 
     useEffect(() => {
@@ -51,6 +57,12 @@ export default function AllApartments() {
         };
     }, []);
 
+    useEffect(() => {
+        if (initialDistrict || initialArea || initialRoomCount || initialStartDate || initialEndDate) {
+            filterApartments();
+        }
+    }, [initialDistrict, initialArea, initialRoomCount, initialStartDate, initialEndDate]);
+
     const filterApartments = async () => {
         try {
             const response = await axiosInstance.post('/api/ads/searchAds', {
@@ -61,28 +73,12 @@ export default function AllApartments() {
                 bedroomCount: parseInt(selectedRoomCount),
             });
 
-            console.log('adda',parseInt(selectedRoomCount));
-            console.log('response',response.data);
-
             let filtered = response.data;
 
             if (selectedRoomCount) {
                 filtered = filtered.filter(apartment => 
                     apartment.element.bedroomCount === parseInt(selectedRoomCount)
                 );
-            }
-
-            if (sortCriteria) {
-                filtered = filtered.sort((a, b) => {
-                    if (sortCriteria === 'price') {
-                        return sortOrder === 'asc' ? a.price - b.price : b.price - a.price;
-                    } else if (sortCriteria === 'date') {
-                        return sortOrder === 'asc' ? new Date(a.publishedAt) - new Date(b.publishedAt) : new Date(b.publishedAt) - new Date(a.publishedAt);
-                    } else if (sortCriteria === 'area') {
-                        return sortOrder === 'asc' ? a.areaSize - b.areaSize : b.areaSize - a.areaSize;
-                    }
-                    return 0;
-                });
             }
 
             setFilteredApartments(filtered);
@@ -170,26 +166,6 @@ export default function AllApartments() {
                         />
                     </div>
                     <button className="check-button" onClick={() => filterApartments()}>CHECK ➔</button>
-                </div>
-
-                <div className="sidebar2">
-                    <h2 className="sidebar-title mt-2">Filters</h2>
-                    <div className="sort-options">
-                        <select value={sortCriteria} onChange={(e) => { setSortCriteria(e.target.value); setSortOrder(''); }}>
-                            <option value="">Select</option>
-                            <option value="price">Price</option>
-                            <option value="date">Date</option>
-                            <option value="area">Area Size</option>
-                        </select>
-
-                        {sortCriteria && (
-                            <select value={sortOrder} onChange={(e) => { setSortOrder(e.target.value); filterApartments(); }}>
-                                <option value="">Select Order</option>
-                                <option value="asc">High - Low</option>
-                                <option value="desc">Low - High</option>
-                            </select>
-                        )}
-                    </div>
                 </div>
 
                 <div className="sidebar3">
