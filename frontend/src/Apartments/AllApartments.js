@@ -27,8 +27,8 @@ export default function AllApartments() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
 
-    useEffect(() => {
-        const fetchApartments = async () => {
+       useEffect(() => {
+         const fetchApartments = async () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             try {
                 const response = await axiosInstance.get('/api/ads/viewAds');
@@ -45,8 +45,6 @@ export default function AllApartments() {
             }
         };
     
-        fetchApartments();
-    
         const handleResize = () => {
             setIsSmallScreen(window.innerWidth <= 768);
         };
@@ -57,31 +55,53 @@ export default function AllApartments() {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-
+    
     useEffect(() => {
-        if (initialDistrict || initialArea || initialRoomCount || initialStartDate || initialEndDate) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const hasQueryParams = initialDistrict || initialArea || initialRoomCount || initialStartDate || initialEndDate;
+    
+        if (hasQueryParams) {
             filterApartments();
+        } else {
+            const fetchApartments = async () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                try {
+                    const response = await axiosInstance.get('/api/ads/viewAds');
+                    const apartmentsData = response.data
+                        .filter(item => item.element.transactionType !== 4)
+                        .map(item => ({
+                            ...item,
+                            publishedAt: new Date(item.element.publishedAt).toISOString().slice(0, 10)
+                        }));
+                    setApartments(apartmentsData);
+                    setFilteredApartments(apartmentsData);
+                } catch (error) {
+                    console.error(error);
+                }
+            };
+    
+            fetchApartments();
         }
     }, [initialDistrict, initialArea, initialRoomCount, initialStartDate, initialEndDate]);
-
+    
     const filterApartments = async () => {
         try {
             const response = await axiosInstance.post('/api/ads/searchAds', {
                 startDate,
                 endDate,
-                areas: selectedArea,
-                districts: selectedDistrict,
+                areas: selectedArea.toLowerCase(),
+                districts: selectedDistrict.toLowerCase(),
                 bedroomCount: parseInt(selectedRoomCount),
             });
-
+    
             let filtered = response.data;
-
+    
             if (selectedRoomCount) {
                 filtered = filtered.filter(apartment => 
                     apartment.element.bedroomCount === parseInt(selectedRoomCount)
                 );
             }
-
+    
             setFilteredApartments(filtered);
             setShowFiltered(true);
             setCurrentPage(1);

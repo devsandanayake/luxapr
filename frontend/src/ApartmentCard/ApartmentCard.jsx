@@ -36,6 +36,10 @@ const ApartmentCard = ({ apartment }) => {
         }
     })();
 
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    };
+
 
     return (
         <div
@@ -59,8 +63,11 @@ const ApartmentCard = ({ apartment }) => {
             </div>
             <div className={`details ${isHovered ? 'expanded' : ''}`}>
                 <h3>{truncatedTitle}</h3>
-                <p>{apartment.element.areas}, &nbsp; {apartment.element.districts}</p>
-                <div className="info">
+                <p>
+            {capitalizeFirstLetter(apartment.element.areas)}, &nbsp; 
+            {capitalizeFirstLetter(apartment.element.districts)}
+                </p>                
+            <div className="info">
                     <span><IoBedOutline />({apartment.element.bedroomCount}) Bed's</span>
                     <span><FaShower />({apartment.element.bathroomCount}) Baths</span>
                 </div>

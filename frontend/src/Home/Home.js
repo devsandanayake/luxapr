@@ -47,12 +47,12 @@ export default function Home() {
       .slice(0, 4);
 
   const handleCheckNow = () => {
-    const district = document.getElementById('district').value;
-    const area = document.getElementById('area').value;
+    const district = document.getElementById('district').value.toLowerCase();
+    const area = document.getElementById('area').value.toLowerCase();
     const startDate = document.getElementById('startDate').value;
     const endDate = document.getElementById('endDate').value;
     const roomCount = document.getElementById('roomCount').value;
-
+  
     const queryParams = new URLSearchParams({
       district,
       area,
@@ -60,7 +60,7 @@ export default function Home() {
       endDate,
       roomCount
     }).toString();
-
+  
     navigate(`/allapartments?${queryParams}`);
   };
 
@@ -118,7 +118,7 @@ export default function Home() {
         <div className="booking-form">
           <div className="booking-field">
             <label htmlFor="location">District</label>
-            <input type="text" id="district" name="district" placeholder="Enter District" />
+            <input type="text" id="district" name="districtt" placeholder="Enter District" />
           </div>
           <div className="booking-field">
             <label htmlFor="Period">Area</label>
@@ -135,6 +135,7 @@ export default function Home() {
           <div className="booking-field">
             <label htmlFor="room">Room</label>
             <select id="roomCount" name="roomCount">
+              <option value="">Select Room Count</option>
               <option value="1">1 Room</option>
               <option value="2">2 Rooms</option>
               <option value="3">3 Rooms</option>

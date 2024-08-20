@@ -8,6 +8,7 @@ import { BsTextarea, BsCurrencyDollar } from "react-icons/bs";
 import ApartmentCard from '../ApartmentCard/ApartmentCard';
 import { FaArrowRight, FaCar } from "react-icons/fa";
 import { Pannellum } from "pannellum-react";
+import { useSwipeable } from 'react-swipeable';
 import './ViewApartment.css';
 
 export default function ViewApartment() {
@@ -23,6 +24,7 @@ export default function ViewApartment() {
     const [OtherApartments, setOtherApartments] = useState([]);
     const [selectedImage, setSelectedImage] = useState('');
     const [isPannellumReady, setIsPannellumReady] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [searchFields, setSearchFields] = useState({
         district: '',
         area: '',
@@ -62,9 +64,27 @@ export default function ViewApartment() {
         setIsPannellumReady(true);
     }, []);
 
-    const handleImageClick = (image) => {
-        setSelectedImage(image);
+    const handleImageClick = (index) => {
+        setSelectedImage(apartmentDetails.images[index]);
+        setCurrentIndex(index);
     };
+
+    const handleNextImage = () => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === apartmentDetails.images.length - 1 ? 0 : prevIndex + 1
+        );
+    };
+
+    const handlePrevImage = () => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === 0 ? apartmentDetails.images.length - 1 : prevIndex - 1
+        );
+    };
+
+    const swipeHandlers = useSwipeable({
+        onSwipedLeft: () => handleNextImage(),
+        onSwipedRight: () => handlePrevImage(),
+    });
 
     const isEquirectangular = (image) => {
         return image.includes('images360');
@@ -124,7 +144,7 @@ export default function ViewApartment() {
         const { id, value } = e.target;
         setSearchFields(prevState => ({
             ...prevState,
-            [id]: value
+            [id]: (id === 'district' || id === 'area') ? value.toLowerCase() : value
         }));
     };
 
@@ -195,40 +215,40 @@ export default function ViewApartment() {
                 </div>
 
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8'>
-                    <div className="image-gallery w-full lg:w-full  p-3 ml-2 rounded-xl">
-                        <div className="main-image-container">
-                            {selectedImage && isPannellumReady && (
-                                isEquirectangular(selectedImage) ? (
-                                    <Pannellum
-                                        width="100%"
-                                        height="400px"
-                                        image={`http://124.43.179.118:8081/uploads/${selectedImage.split('\\').pop()}`}
-                                        pitch={10}
-                                        yaw={180}
-                                        hfov={110}
-                                        autoLoad
-                                    />
-                                ) : (
-                                    <img
-                                        src={`http://124.43.179.118:8081/uploads/${selectedImage.split('\\').pop()}`}
-                                        alt="Selected"
-                                        className="large-image"
-                                    />
-                                )
-                            )}
-                        </div>
-                        <div className="thumbnail-images-container">
-                            {apartmentDetails.images && apartmentDetails.images.map((image, index) => (
-                                <img
-                                    key={index}
-                                    src={`http://124.43.179.118:8081/uploads/${image.split('\\').pop()}`}
-                                    alt={`Thumbnail ${index}`}
-                                    className={`thumbnail cursor-pointer ${selectedImage === image ? 'border-2 border-blue-500' : ''}`}
-                                    onClick={() => handleImageClick(image)}
+                <div className="image-gallery w-full lg:w-full p-3 ml-2 rounded-xl" {...swipeHandlers}>
+                    <div className="main-image-container">
+                        {selectedImage && isPannellumReady && (
+                            isEquirectangular(selectedImage) ? (
+                                <Pannellum
+                                    width="100%"
+                                    height="400px"
+                                    image={`http://124.43.179.118:8081/uploads/${selectedImage.split('\\').pop()}`}
+                                    pitch={10}
+                                    yaw={180}
+                                    hfov={110}
+                                    autoLoad
                                 />
-                            ))}
-                        </div>
+                            ) : (
+                                <img
+                                    src={`http://124.43.179.118:8081/uploads/${selectedImage.split('\\').pop()}`}
+                                    alt="Selected"
+                                    className="large-image"
+                                />
+                            )
+                        )}
                     </div>
+                    <div className="thumbnail-images-container">
+                        {apartmentDetails.images && apartmentDetails.images.map((image, index) => (
+                            <img
+                                key={index}
+                                src={`http://124.43.179.118:8081/uploads/${image.split('\\').pop()}`}
+                                alt={`Thumbnail ${index}`}
+                                className={`thumbnail cursor-pointer ${currentIndex === index ? 'border-2 border-blue-500' : ''}`}
+                                onClick={() => handleImageClick(index)}
+                            />
+                        ))}
+                    </div>
+                </div>
 
                     <div className="lg:ml-4">
                         <div className='text-xl font-medium mt-3 text-justify'>
