@@ -111,6 +111,7 @@ export default function AllApartments() {
     };
 
     const handleNextPage = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         setCurrentPage(prevPage => prevPage + 1);
     };
 
