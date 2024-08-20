@@ -59,7 +59,7 @@ const loginUser = async ({ username, password }) => {
         // Compare password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return { error: true, status: 401, message: 'Invalid credentials' };
+            return { error: true, status: 403, message: 'Invalid credentials' };
         }
 
         const payload = {

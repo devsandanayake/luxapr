@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.css';
 import Logo from '../Images/Logo.png'; // Import the logo
 import axiosInstance from '../axiosConfig'; 
@@ -13,6 +13,11 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
+
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
