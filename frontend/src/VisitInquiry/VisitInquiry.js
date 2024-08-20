@@ -26,6 +26,11 @@ export default function VisitInquiry() {
     });
     const [adDetails, setAdDetails] = useState({});
 
+    const generateInquiryID = () => {
+        const randomNum = Math.floor(1000 + Math.random() * 9000);
+        return `INQLR${randomNum}`;
+    };
+
     useEffect(() => {
         window.scrollTo(0, 0);
 
@@ -64,6 +69,15 @@ export default function VisitInquiry() {
         }
     }, [adCode]);
 
+    useEffect(() => {
+        const newInquiryID = generateInquiryID();
+        setInquiryID(newInquiryID);
+        setFormData((prevData) => ({
+            ...prevData,
+            Inquery: newInquiryID,
+        }));
+    }, []);
+
     if (error) {
         return <div className="text-red-500">Error loading profile: {error.message}</div>;
     }
@@ -95,11 +109,6 @@ export default function VisitInquiry() {
         return `${hours}:${minutes}`;
     };
 
-    const generateInquiryID = () => {
-        const randomNum = Math.floor(1000 + Math.random() * 9000);
-        return `INQLR${randomNum}`;
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -111,8 +120,9 @@ export default function VisitInquiry() {
             ...formData,
             preferredTime: preferredTime24,
             alternateTime: alternateTime24,
-            inquiryID: generateInquiryID(),
         };
+
+        console.log('formDataWith24HourFormat:', formDataWith24HourFormat);
 
         try {
             const response = await axiosInstance.post('/api/longrental-inquery/add', formDataWith24HourFormat, {
@@ -120,7 +130,6 @@ export default function VisitInquiry() {
                     'Authorization': `${token}`,
                 },
             });
-            setInquiryID(formDataWith24HourFormat.inquiryID);
             setIsPopupVisible(true);
         } catch (error) {
             console.error('There was an error creating the rental transaction!', error);
@@ -147,26 +156,25 @@ export default function VisitInquiry() {
             </div>
 
             <div className="full-screen">
-<div className='w-4/12 text-2xl text-center font-semibold visit-inquiry' style={{ borderRight: '2px solid gold', paddingRight: '40px' }}>
-    {adDetails.title}
-    {adDetails.images && adDetails.images.length > 0 && (
-        <>
-            <img 
-                src={`http://124.43.179.118:8081/uploads/${adDetails.images[0].split('\\').pop()}`} 
-                alt={adDetails.title || "Room"} 
-                className="inquiry-image left-aligned mb-5 mt-8" 
-            />
-            {adDetails.images.length > 1 && (
-                <img 
-                    src={`http://124.43.179.118:8081/uploads/${adDetails.images[1].split('\\').pop()}`} 
-                    alt={adDetails.title || "Room"} 
-                    className="inquiry-image right-aligned mb-5 mt-5" 
-                />
-            )}
-        </>
-    )}
-</div>
-
+                <div className='w-4/12 text-2xl text-center font-semibold visit-inquiry' style={{ borderRight: '2px solid gold', paddingRight: '40px' }}>
+                    {adDetails.title}
+                    {adDetails.images && adDetails.images.length > 0 && (
+                        <>
+                            <img 
+                                src={`http://124.43.179.118:8081/uploads/${adDetails.images[0].split('\\').pop()}`} 
+                                alt={adDetails.title || "Room"} 
+                                className="inquiry-image left-aligned mb-5 mt-8" 
+                            />
+                            {adDetails.images.length > 1 && (
+                                <img 
+                                    src={`http://124.43.179.118:8081/uploads/${adDetails.images[1].split('\\').pop()}`} 
+                                    alt={adDetails.title || "Room"} 
+                                    className="inquiry-image right-aligned mb-5 mt-5" 
+                                />
+                            )}
+                        </>
+                    )}
+                </div>
 
                 <div className="w-6/12">
                     <form className="mt-10 ml-3 w-full mb-5" onSubmit={handleSubmit}>
