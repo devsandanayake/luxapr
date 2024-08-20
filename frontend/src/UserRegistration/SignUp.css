@@ -5,6 +5,30 @@
   box-sizing: border-box;
 }
 
+.loader {
+  display: flex;
+  align-items: center;
+}
+
+.bar {
+  display: inline-block;
+  width: 3px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, .5);
+  border-radius: 10px;
+  animation: scale-up4 1s linear infinite;
+}
+
+.bar:nth-child(2) {
+  height: 35px;
+  margin: 0 5px;
+  animation-delay: .25s;
+}
+
+.bar:nth-child(3) {
+  animation-delay: .5s;
+}
+
 /* Container for the entire signup component */
 .signup-container {
   display: flex;
@@ -150,6 +174,23 @@
 .signup-footer a:hover {
   text-decoration: underline;
 }
+
+
+
+/* Error text styling */
+.error-text {
+  color: #e74c3c; /* Red color for errors */
+  font-size: 0.875rem; /* Slightly smaller font size */
+  margin-top: 0.25rem; /* Space between input and error text */
+  display: block; /* Ensure it takes up its own line */
+}
+
+/* Styling for the input field with an error */
+.form-input.error {
+  border-color: #e74c3c; /* Red border for error input */
+  background-color: #fce4e4; /* Light red background for error input */
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
