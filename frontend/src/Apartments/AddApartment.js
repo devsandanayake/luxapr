@@ -29,7 +29,7 @@ export default function AddApartment() {
     floor: '',
     areaSize: '',
     price: '',
-    currency: '',
+    currency: 'LKR',
     parkSpace: '',
     keyFeatures: [],
     ExclusiveAmenities: [],

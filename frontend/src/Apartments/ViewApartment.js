@@ -153,6 +153,13 @@ export default function ViewApartment() {
         navigate(`/allapartments?${queryParams}`);
     };
 
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      };
+
+      
+
     return (
         <>
             <div className='fullScreen'>
@@ -270,7 +277,10 @@ export default function ViewApartment() {
                             <>
                                 <div className='flex items-center text-xl text-gold ml-20 mt-10 gap-4'>
                                     <MdLocationOn />
-                                    <span className='text-black'>{apartmentDetails.areas}</span>
+                                        <span className='text-black'>
+                                            {capitalizeFirstLetter(apartmentDetails.areas)}, &nbsp; 
+                                            {capitalizeFirstLetter(apartmentDetails.districts)}
+                                        </span>                                
                                 </div>
                             </>
                         )}
