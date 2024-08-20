@@ -1,5 +1,20 @@
 const mongoose = require('mongoose');
 
+const pricingDetailSchema = new mongoose.Schema({
+    startmonth: {
+        type: Number,
+        required: true
+    },
+    endmonth: {
+        type: Number,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    }
+});
+
 const pricingSchema = new mongoose.Schema({
     adCode: {
         type: String,
@@ -10,24 +25,13 @@ const pricingSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    price: {
-        Year: {
+    price: [{
+        year: {
             type: Number,
             required: true
         },
-        startmonth: {
-            type: Number,
-            required: true
-        },
-        endmonth: {
-            type: Number,
-            required: true
-        },
-        price: {
-            type: Number,
-            required: true
-        }
-    }
+        details: [pricingDetailSchema]
+    }]
 });
 
 const PricingModel = mongoose.model('Pricing', pricingSchema);

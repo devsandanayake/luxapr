@@ -40,6 +40,7 @@ const auctionRegRoutes = require('./routes/auctionRegRoutes');
 const auctionInqueryRoutes = require('./routes/auctionInqueryRoutes');
 const LRentalTransactionRoutes = require('./routes/LRentalTransactionRoutes');
 const LRentInqueryRoutes = require('./routes/LRentInqueryRoutes');
+const PricingRoutes = require('./routes/PricingRoutes');
 
 //API routes
 app.use('/api/users', userRoutes);
@@ -48,6 +49,7 @@ app.use('/api/auction', auctionRegRoutes);
 app.use('/api/auction-inquery', auctionInqueryRoutes);
 app.use('/api/longrental', LRentalTransactionRoutes);
 app.use('/api/longrental-inquery', LRentInqueryRoutes);
+app.use('/api/pricing', PricingRoutes);
 
 // Basic route
 app.get('/', (req, res) => {

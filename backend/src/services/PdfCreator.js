@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const PDFDocument = require('pdfkit');
 
-const PDF_Creator = async (adCode, monthlyRate, advancePayment, StartDate, EndDate) => {
+const PDF_Creator = async (adCode, totalDays, breakdown, chargesByMonth, advancePayment, StartDate, EndDate) => {
     // eslint-disable-next-line no-undef
     const pdfPath = path.join(__dirname, 'longTermRentPDF.pdf');
     const doc = new PDFDocument();
@@ -28,8 +28,8 @@ const PDF_Creator = async (adCode, monthlyRate, advancePayment, StartDate, EndDa
         doc.fontSize(16).fillColor('black').text(`AD Code: ${adCode}`);
         doc.moveDown();
 
-        // Monthly Rate
-        doc.fontSize(16).fillColor('black').text(`Monthly Rate: ${monthlyRate}`);
+        // Total Days
+        doc.fontSize(16).fillColor('black').text(`Total Days: ${totalDays}`);
         doc.moveDown();
 
         // Advance Payment
@@ -44,14 +44,28 @@ const PDF_Creator = async (adCode, monthlyRate, advancePayment, StartDate, EndDa
         doc.fontSize(16).fillColor('black').text(`End Date: ${EndDate}`);
         doc.moveDown();
 
+        // Breakdown Section
+        doc.fontSize(14).fillColor('black').text('Breakdown by Month:', { underline: true });
+        doc.moveDown();
+
+        for (const year in breakdown) {
+            doc.fontSize(14).fillColor('black').text(`Year: ${year}`);
+            for (const month in breakdown[year]) {
+                const days = breakdown[year][month];
+                const charge = chargesByMonth[year][month];
+                doc.fontSize(12).fillColor('black').text(`Month: ${month}, Days: ${days}, Charge: ${charge.toFixed(2)}`);
+            }
+            doc.moveDown();
+        }
+
         // Professional Description
         doc.fontSize(14).fillColor('black').text('Description:', { underline: true });
         doc.moveDown();
-        doc.fontSize(12).fillColor('black').text(`This document provides the details of the long-term rental agreement for the property associated with the advertisement code ${adCode}. The monthly rental rate is set at ${monthlyRate}, with an advance payment of ${advancePayment} required. The rental period commences on ${StartDate} and concludes on ${EndDate}. Please review the details carefully and contact us if you have any questions or require further information.`);
+        doc.fontSize(12).fillColor('black').text(`This document provides the details of the long-term rental agreement for the property associated with the advertisement code ${adCode}. The total rental period is ${totalDays} days, commencing on ${StartDate} and concluding on ${EndDate}. The advance payment required is ${advancePayment}. Below is the breakdown of charges by month.`);
         doc.moveDown();
 
         // Footer
-        doc.fontSize(12).fillColor('gray').text('Your Long term rent', { align: 'center' });
+        doc.fontSize(12).fillColor('gray').text('Your Long Term Rent Agreement', { align: 'center' });
 
         doc.end();
     });

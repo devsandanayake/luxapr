@@ -80,8 +80,8 @@ async function replyEmail(email, message) {
     }
 }
 
-async function longTermRentEmail(email, adCode , monthlyRate , advancePayment ,StartDate , EndDate) {
-    const pdfPath = await PDF_Creator(adCode, monthlyRate , advancePayment ,StartDate , EndDate);
+async function longTermRentEmail(email, adCode , totalDays ,breakdown,chargesByMonth, advancePayment ,StartDate , EndDate) {
+    const pdfPath = await PDF_Creator(adCode, totalDays ,breakdown,chargesByMonth,advancePayment ,StartDate , EndDate);
     const mailOptions = {
         from: 'no-reply@email.com',
         to: email,

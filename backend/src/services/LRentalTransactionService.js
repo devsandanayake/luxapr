@@ -1,6 +1,7 @@
 const LRentalTransactionModel = require('../models/LRentTransactionModel');
 const UserModel = require('../models/user')
 const {longTermRentEmail} = require('./emailService')
+const PricingService = require('./PricingService');
  
 
 // Function to create a long rental transaction
@@ -59,12 +60,19 @@ const updateLRentalTransactionStatus = async (adCode, adminKeyStatus, monthlyRat
     const StartDate = updatedTransaction.rentalStartDate;
     const EndDate = updatedTransaction.rentalEndDate;
 
-
-
-    // Send the long term rent email
-    if(adminKeyStatus == "Approved"){
-        await longTermRentEmail(email, adCode , monthlyRate , advancePayment ,StartDate , EndDate);
-    }
+    PricingService.calculatePrice(adCode, StartDate, EndDate)
+        .then(async (result) => {
+            console.log(result);
+            const { totalDays, breakdown, chargesByMonth } = result;
+    
+            // Send the long term rent email
+            if (adminKeyStatus == "Approved") {
+                await longTermRentEmail(email, adCode,totalDays, breakdown,chargesByMonth, advancePayment, StartDate, EndDate);
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
    
     return updatedTransaction;
 };
