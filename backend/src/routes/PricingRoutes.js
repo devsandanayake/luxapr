@@ -6,4 +6,7 @@ const router = express.Router();
 router.post('/', PricingController.createPricing);
 router.post('/calculate', PricingController.calculatePrice);
 
+// get all pricings
+router.get('/:adCode', PricingController.getPricing);
+
 module.exports = router;
