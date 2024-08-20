@@ -99,7 +99,7 @@ const Footer = () => {
 
             </div>
             <div className="footer-bottom">
-                <p>&copy; 2023 ThemeOri Website by Hostily</p>
+                <p>&copy; Effective Solutions</p>
                 <div className="footer-links">
                     <a href="#">FAQ</a>
                     <a href="#">Terms of Use</a>
