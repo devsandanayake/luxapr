@@ -18,9 +18,9 @@ const createPricing = async (adCode, transactionType, pricingDetails) => {
 
 
 // get all pricings
-const getPricing = async () => {
+const getPricing = async (adCode) => {
     try {
-        const pricings = await PricingModel.find();
+        const pricings = await PricingModel.findOne({adCode: adCode});
         return pricings;
     } catch (error) {
         throw new Error(`Error getting pricings: ${error.message}`);

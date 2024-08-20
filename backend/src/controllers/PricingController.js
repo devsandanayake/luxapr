@@ -22,8 +22,20 @@ const calculatePrice = async (req, res) => {
     }
 }
 
+//get 
+const getPricing = async (req, res) => {
+    const adCode = req.params.adCode;
+    try {
+        const pricings = await PricingService.getPricing(adCode);
+        res.status(200).json(pricings);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
 
 module.exports = {
     createPricing,
-    calculatePrice
+    calculatePrice,
+    getPricing
 };
