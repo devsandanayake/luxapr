@@ -1,6 +1,7 @@
 const LRentalTransactionModel = require('../models/LRentTransactionModel');
 const UserModel = require('../models/user')
 const {longTermRentEmail} = require('./emailService')
+ 
 
 // Function to create a long rental transaction
 const createLRentalTransaction = async (username , adCode ,BookingID, rentalStartDate , rentalEndDate , userMessage , phoneNumber) => {
@@ -79,6 +80,8 @@ const viewAllForFrontendUsers = async (rentalStartDate, rentalEndDate) => {
         { adCode: 1, rentalStartDate: 1, rentalEndDate: 1, _id: 0 }
     );
 }
+
+ 
 
  
 module.exports = {
