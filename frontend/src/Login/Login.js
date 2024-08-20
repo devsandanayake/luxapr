@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Login.css';
-import Logo from '../Images/Logo.png'; // Import the logo
-import axiosInstance from '../axiosConfig'; 
+import Logo from '../Images/Logo.png';
+import axiosInstance from '../axiosConfig';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Login() {
@@ -10,10 +10,10 @@ export default function Login() {
     password: ''
   });
   const [message, setMessage] = useState('');
+  const [errorType, setErrorType] = useState(''); // For setting error type (success or error)
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
-
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -35,19 +35,22 @@ export default function Login() {
 
       if (response.status === 200) {
         setMessage('Login successful!');
+        setErrorType('success');
         localStorage.setItem('token', response.data.token);
-        
+
         const adcode = location.state?.adcode;
         if (adcode) {
-            navigate(`${from}?adcode=${adcode}`, { replace: true });
+          navigate(`${from}?adcode=${adcode}`, { replace: true });
         } else {
-            navigate(from, { replace: true });
+          navigate(from, { replace: true });
         }
-    } else {
+      } else {
         setMessage(response.data.message || 'Something went wrong. Please try again.');
+        setErrorType('error');
       }
     } catch (error) {
       setMessage(error.response?.data?.message || 'An error occurred. Please try again.');
+      setErrorType('error');
     }
   };
 
@@ -58,28 +61,28 @@ export default function Login() {
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
-            <input 
-              type="text" 
-              id="username" 
+            <input
+              type="text"
+              id="username"
               name="username"
-              className="form-input" 
+              className="form-input"
               value={formData.username}
               onChange={handleChange}
             />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input 
-              type="password" 
-              id="password" 
+            <input
+              type="password"
+              id="password"
               name="password"
-              className="form-input" 
+              className="form-input"
               value={formData.password}
               onChange={handleChange}
             />
           </div>
           <button type="submit" className="login-button">Login</button>
-          {message && <p className="login-message">{message}</p>}
+          {message && <p className={`login-message ${errorType}`}>{message}</p>}
 
           <div className="signup flex items-center justify-center">
             <p>Don't have an account?</p>

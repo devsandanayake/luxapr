@@ -65,11 +65,12 @@
   cursor: pointer;
 }
 
+/* Signup section styling */
 .signup {
   display: flex;
   margin-top: 45px;
   align-items: center;
-  gap: 10px; /* Optional: Adds space between the text and the link */
+  gap: 10px;
 }
 
 .signup a {
@@ -94,4 +95,25 @@
   .form-input, .login-button {
     font-size: 0.875rem;
   }
+}
+
+/* Message styling */
+.login-message {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.login-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.login-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
 }
