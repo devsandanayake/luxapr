@@ -29,6 +29,7 @@ export default function AllApartments() {
 
     useEffect(() => {
         const fetchApartments = async () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             try {
                 const response = await axiosInstance.get('/api/ads/viewAds');
                 const apartmentsData = response.data
@@ -43,15 +44,15 @@ export default function AllApartments() {
                 console.error(error);
             }
         };
-
+    
         fetchApartments();
-
+    
         const handleResize = () => {
             setIsSmallScreen(window.innerWidth <= 768);
         };
-
+    
         window.addEventListener('resize', handleResize);
-
+    
         return () => {
             window.removeEventListener('resize', handleResize);
         };
