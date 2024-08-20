@@ -191,7 +191,7 @@ export default function ViewApartment() {
                             onChange={handleSearchChange}
                         />
                     </div>
-                    <button className="check-buttonnn" onClick={handleSearch}>CHECK ➔</button>
+                    <button className="check-buttonn" onClick={handleSearch}>CHECK</button>
                 </div>
 
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8'>

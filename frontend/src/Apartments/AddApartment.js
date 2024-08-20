@@ -150,8 +150,14 @@ export default function AddApartment() {
     setImage360Urls(newImage360Urls);
   };
 
-  const handleSubmit = async (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    if (images.length < 6 || images.length > 12) {
+      alert('Please select between 6 and 12 images.');
+      return;
+    }
+  
     setIsLoading(true);
     const data = new FormData();
     for (let key in formData) {
@@ -169,19 +175,19 @@ export default function AddApartment() {
     for (let i = 0; i < images360.length; i++) {
       data.append('images360', images360[i]);
     }
-
+  
     let token = localStorage.getItem('token');
     console.log('Retrieved token:', token);
-
+  
     if (token && token.startsWith('Bearer ')) {
       token = token.slice(7);
     }
-
+  
     if (!token) {
       console.error('No token found in local storage');
       return;
     }
-
+  
     try {
       const response = await axiosInstance.post('/api/ads/createAds', data, {
         headers: {
