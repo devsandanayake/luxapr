@@ -18,6 +18,7 @@ import AuctionRegistration from './AuctionRegistration/AuctionRegistration';
 import AuctionInquiry from './AuctionInquiry/AuctionInquiry';
 import VisitInquiry from './VisitInquiry/VisitInquiry';
 import EditProfile from './UserProfile/EditProfile';
+import AuctionApartments from './Auction/AuctionApartments';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/auctioninquiry" element={<AuctionInquiry />} />
           <Route path="/visitinquiry" element={<VisitInquiry />} />
           <Route path="/editprofile" element={<EditProfile />} />
+          <Route path="/auctionapartments" element={<AuctionApartments />} />
         </Routes>
       </div>
       <Footer />

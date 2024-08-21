@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../axiosConfig';
-import './user.css';
 import { FaUser, FaLock, FaBell, FaCreditCard, FaGavel, FaQuestionCircle } from 'react-icons/fa';
-import BookingDetails from './BookingDetails';
-import VisitRequests from './VisitRequests';
+import BookingDetails from './BookingDetails/BookingDetails';
+import VisitRequests from './VisitRequests/VisitRequests';
+import YourAds from './YourAds/YourAds';
 
 export default function UserProfile() {
   const [userProfile, setUserProfile] = useState(null);
@@ -57,7 +57,7 @@ export default function UserProfile() {
               <p className="flex items-center"><FaUser className="mr-2" /> General</p>
             </button>
             <button onClick={() => setActiveTab('security')} className={`nav-link ${activeTab === 'security' ? 'active' : ''}`}>
-              <p className="flex items-center"><FaLock className="mr-2" /> Security</p>
+              <p className="flex items-center"><FaLock className="mr-2" /> Your Ads</p>
             </button>
             <button onClick={() => setActiveTab('notifications')} className={`nav-link ${activeTab === 'notifications' ? 'active' : ''}`}>
               <p className="flex items-center"><FaBell className="mr-2" /> Bookings</p>
@@ -121,7 +121,7 @@ export default function UserProfile() {
             )}
             {activeTab === 'security' && (
               <div id="account-security" className="tab-pane fade show active">
-                {/* Security tab content */}
+                <YourAds/>
               </div>
             )}
             {activeTab === 'notifications' && (
