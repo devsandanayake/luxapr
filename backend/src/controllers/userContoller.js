@@ -52,7 +52,8 @@ const viewAllUsers = async (req,res,next)=>{
 
 const viewAdsUser = async (req,res,next)=>{
     try{
-        const response = await userService.viewAdsUser(req.params.username);
+        const username = req.user
+        const response = await userService.viewAdsUser(username);
         res.json(response);
     }catch(err){
         next(err);

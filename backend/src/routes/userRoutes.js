@@ -7,7 +7,7 @@ const {uploadP} = require('../middlewares/uploadMiddleware');
 router.post('/signup', uploadP.single('images'), userController.createUser);
 router.post('/signin',userController.loginUser);
 router.get('/viewAllUsers',auth.authAdmin,userController.viewAllUsers);
-router.get('/viewAllAds/:username',auth.authUser,userController.viewAdsUser);
+router.get('/viewAllAds/user',auth.authUser,userController.viewAdsUser);
 router.get('/viewUserProfile',auth.authUser,userController.viewUserProfile);
 router.patch('/editUserProfile',auth.authUser,uploadP.single('images'),userController.editUserProfile);
 
