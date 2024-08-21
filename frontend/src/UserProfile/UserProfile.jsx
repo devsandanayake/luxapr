@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../axiosConfig';
 import { FaUser, FaLock, FaBell, FaCreditCard, FaGavel, FaQuestionCircle } from 'react-icons/fa';
-import BookingDetails from './BookingDetails/BookingDetails';
 import VisitRequests from './VisitRequests/VisitRequests';
 import YourAds from './YourAds/YourAds';
-import BookingDetails from './BookingDetails';
-import VisitRequests from './VisitRequests';
+import BookingDetails from './BookingDetails/BookingDetails';
 import AdsMng from './AdsMng';
 
 export default function UserProfile() {
