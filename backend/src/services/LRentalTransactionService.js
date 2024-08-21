@@ -6,6 +6,18 @@ const PricingService = require('./PricingService');
 
 // Function to create a long rental transaction
 const createLRentalTransaction = async (username , adCode ,BookingID, rentalStartDate , rentalEndDate , userMessage , phoneNumber) => {
+    const currentDate = new Date();
+    const startDate = new Date(rentalStartDate);
+    const endDate = new Date(rentalEndDate);
+
+    if (startDate < currentDate) {
+        throw new Error('Rental start date cannot be in the past');
+    }
+
+    if (endDate < currentDate) {
+        throw new Error('Rental end date cannot be in the past');
+    }
+    
     const newLRentalTransaction = new LRentalTransactionModel({
         username,
         adCode,
