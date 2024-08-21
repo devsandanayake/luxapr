@@ -66,7 +66,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="slider-container" style={{ height: 'calc(100vh - 60px)', overflow: 'hidden' }}>
+      <div className="slider-container">
         <div className="slider-title">
           Discover and Own Your Dream Luxury Apartment
         </div>
@@ -81,8 +81,48 @@ export default function Home() {
             <img src={Apartment3} alt="Apartment 3" style={{ width: '100vw', height: '100vh', objectFit: 'cover', filter: 'brightness(0.4)' }} />
           </div>
         </Slider>
+
+<div className="booking-form-container">
+  <div className="booking-form">
+    <div className="booking-field">
+      <label htmlFor="location">District</label>
+      <input type="text" id="district" name="districtt" placeholder="Enter District" />
+    </div>
+    <div className="booking-field">
+      <label htmlFor="Period">Area</label>
+      <input type="text" id="area" name="area" placeholder="Enter Area" />
+    </div>
+    <div className="booking-field">
+      <label htmlFor="checkin">Check In</label>
+      <input type="date" id="startDate" name="startDate" placeholder="" />
+    </div>
+    <div className="booking-field">
+      <label htmlFor="checkout">Check Out</label>
+      <input type="date" id="endDate" name="endDate" placeholder="dd-----yyyy" />
+    </div>
+    <div className="booking-field">
+      <label htmlFor="room">Room</label>
+      <select id="roomCount" name="roomCount">
+        <option value="">Select Room Count</option>
+        <option value="1">1 Room</option>
+        <option value="2">2 Rooms</option>
+        <option value="3">3 Rooms</option>
+        <option value="4">4 Rooms</option>
+        <option value="5">5 Rooms</option>
+      </select>
+    </div>
+    <div className='booking-field'>
+    <div className="booking-button">
+      <button type="button" onClick={handleCheckNow}>CHECK</button>
+    </div>
+    </div>
+  
+  </div>
+</div>
+        </div>
         
         {/* Include the luxury living details here */}
+        <div className='w-full flex items-center justify-center mt-10'>
         <div className="luxury-living-container">
           <div className="luxury-living-title">Welcome to Your Luxury Living Experience in Sri Lanka</div>
           <div className="luxury-living-content flex">
@@ -106,62 +146,28 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className='background'></div>
-
-      <div className='text-3xl p-2' style={{ fontFamily: 'Georgia, serif' }}>
-        Find Your Luxury Apartments
-      </div>
-
-      <div className="booking-form-container">
-        <div className="booking-form">
-          <div className="booking-field">
-            <label htmlFor="location">District</label>
-            <input type="text" id="district" name="districtt" placeholder="Enter District" />
-          </div>
-          <div className="booking-field">
-            <label htmlFor="Period">Area</label>
-            <input type="text" id="area" name="area" placeholder="Enter Area" />
-          </div>
-          <div className="booking-field">
-            <label htmlFor="checkin">Check In</label>
-            <input type="date" id="startDate" name="startDate" placeholder="dd-----yyyy" />
-          </div>
-          <div className="booking-field">
-            <label htmlFor="checkout">Check Out</label>
-            <input type="date" id="endDate" name="endDate" placeholder="dd-----yyyy" />
-          </div>
-          <div className="booking-field">
-            <label htmlFor="room">Room</label>
-            <select id="roomCount" name="roomCount">
-              <option value="">Select Room Count</option>
-              <option value="1">1 Room</option>
-              <option value="2">2 Rooms</option>
-              <option value="3">3 Rooms</option>
-              <option value="4">4 Rooms</option>
-              <option value="5">5 Rooms</option>
-            </select>
-          </div>
-          <div className="booking-button">
-            <button type="button" onClick={handleCheckNow}>CHECK NOW</button>
-          </div>
         </div>
-      </div>
+
+
+
+
+     
 
       <div className="auction-description">
         <p className="auction-text">
           We also have an auction for the apartments where users can browse and place bids on their desired properties. Experience the excitement of finding your dream home at a great price!
         </p>
+        <a href='/auctionapartments'>
         <button type="button" className="auction-button">Go to Auction <FaArrowRight /></button>
+        </a>
       </div>
 
-      <div className='text-3xl p-2 mt-10' style={{ fontFamily: 'Georgia, serif' }}>
-        Our Apartments
+      <div className='OurLatest'>
+        Our Latest Apartments
       </div>
 
       <div className="apartment-list-container">
-        <div className="apartment-list flex flex-wrap gap-4 p-2">
+        <div className="apartment-list flex flex-wrap gap-4">
           {displayedApartments.map(apartment => (
             <ApartmentCard key={apartment.id} apartment={apartment} />
           ))}

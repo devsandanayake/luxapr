@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axiosInstance from '../axiosConfig';
+import axiosInstance from '../../axiosConfig';
 import './BookingDetails.css';
 
 export default function BookingDetails() {
