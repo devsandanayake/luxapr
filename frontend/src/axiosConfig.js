@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8081',
+  baseURL: 'http://124.43.179.118:8081',
 });
 
 // Add an interceptor to include the token in every request
