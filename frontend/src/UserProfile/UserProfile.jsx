@@ -4,6 +4,9 @@ import { FaUser, FaLock, FaBell, FaCreditCard, FaGavel, FaQuestionCircle } from 
 import BookingDetails from './BookingDetails/BookingDetails';
 import VisitRequests from './VisitRequests/VisitRequests';
 import YourAds from './YourAds/YourAds';
+import BookingDetails from './BookingDetails';
+import VisitRequests from './VisitRequests';
+import AdsMng from './AdsMng';
 
 export default function UserProfile() {
   const [userProfile, setUserProfile] = useState(null);
@@ -13,7 +16,7 @@ export default function UserProfile() {
 
   const token = localStorage.getItem('token');
   const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : {};
-  const userName = decodedToken.firstName || '';
+  const userName = decodedToken.username || '';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,6 +73,9 @@ export default function UserProfile() {
             </button>
             <button onClick={() => setActiveTab('inquiries')} className={`nav-link ${activeTab === 'inquiries' ? 'active' : ''}`}>
               <p className="flex items-center"><FaQuestionCircle className="mr-2" /> Inquiries</p>
+            </button>
+            <button onClick={() => setActiveTab('ADS')} className={`nav-link ${activeTab === 'ADS' ? 'active' : ''}`}>
+              <p className="flex items-center"><FaQuestionCircle className="mr-2" />Your ADS</p>
             </button>
           </div>
         </div>
@@ -142,6 +148,11 @@ export default function UserProfile() {
             {activeTab === 'inquiries' && (
               <div id="account-inquiries" className="tab-pane fade show active">
                 {/* Inquiries tab content */}
+              </div>
+            )}
+              {activeTab === 'ADS' && (
+              <div id="account-inquiries" className="tab-pane fade show active">
+                <AdsMng  Token={token}/>
               </div>
             )}
           </div>

@@ -132,7 +132,7 @@ export default function VisitInquiry() {
             });
             setIsPopupVisible(true);
         } catch (error) {
-            console.error('There was an error creating the rental transaction!', error);
+            alert(error.response.data.message);
         } finally {
             setIsLoading(false);
         }

@@ -21,6 +21,22 @@ const { longRentInqueryAssignAgentEmail, longRentInqueryEmailCompleted, longRent
 
 const createLRentInquery = async (Inquery ,username, adCode, message, preferredDate, preferredTime, alternateDate, alternateTime) => {
     try {
+
+        const currentDate = new Date();
+
+        const preferredDateObj = new Date(preferredDate);
+        const alternateDateObj = new Date(alternateDate);
+        
+        if (preferredDateObj < currentDate) {
+            throw new Error('Preferred date cannot be in the past');
+        }
+        
+        if (alternateDateObj < currentDate) {
+            throw new Error('Alternate date cannot be in the past');
+        }
+
+         
+
         const User = await userModel.findOne({ username: username });
 
         // Check if user exists
