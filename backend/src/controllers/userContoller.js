@@ -5,9 +5,14 @@ const createUser = async (req, res, next) => {
     try {
         const images = req.file.path;
 
-        const {  username, firstName, lastName, email, password, contactNumber ,occupation } = req.body;
+        const { username, firstName, lastName, email, password, contactNumber, occupation } = req.body;
 
-        const response = await userService.createUser({ images,username, firstName, lastName, email, password, contactNumber,occupation });
+        const userData = { username, firstName, lastName, email, password, contactNumber, occupation };
+        if (images) {
+            userData.images = images;
+        }
+
+        const response = await userService.createUser(userData);
 
         if (response.error) {
             return res.status(response.status).json({ message: response.message });
