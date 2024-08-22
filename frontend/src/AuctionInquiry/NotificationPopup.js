@@ -17,7 +17,7 @@ const NotificationPopup = ({ onClose }) => {
                     <SiTicktick />
                 </div>
                 <p className='popup-textt'>Your inquiry have been successfully submitted. </p>
-                <button className='popup-buttonn' onClick={handleNavigateHome}>Go to Home</button>
+                <button className='popup-buttonn' onClick={handleNavigateHome}>Home</button>
             </div>
         </div>
     );

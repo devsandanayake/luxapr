@@ -8,16 +8,18 @@ import PopupWindow from './NotificationPopup';
 export default function AuctionInquiry() {
   const token = localStorage.getItem('token');
   const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : {};
+  const userName = decodedToken.firstName || '';
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const auctionID = queryParams.get('auctionID');
+  
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     auctionID: auctionID,
-    Name: '',
+    Name: userName,
     number: '',
     message: '',
   });
