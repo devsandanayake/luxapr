@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import './SignUp.css'; 
 import axiosInstance from '../axiosConfig';
 import Popup from './Popup'; 
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -43,6 +46,14 @@ export default function SignUp() {
     }
   };
 
+  const handlePhoneChange = (value) => {
+    setFormData({
+      ...formData,
+      contactNumber: value
+    });
+    setErrors({ ...errors, contactNumber: '' }); // Clear phone error
+  };
+
   const validateForm = () => {
     const newErrors = {};
 
@@ -52,8 +63,14 @@ export default function SignUp() {
     if (!formData.occupation) newErrors.occupation = 'Occupation is required';
     if (!formData.username) newErrors.username = 'Username is required';
     if (!formData.password) newErrors.password = 'Password is required';
-    if (!formData.contactNumber) newErrors.contactNumber = 'Contact number is required';
-    if (!profilePicture) newErrors.images = 'Profile picture is required';
+    if (!formData.contactNumber) {
+      newErrors.contactNumber = 'Contact number is required';
+    } else {
+      const phoneNumber = parsePhoneNumberFromString(formData.contactNumber, 'LK');
+      if (!phoneNumber || !phoneNumber.isValid()) {
+        newErrors.contactNumber = 'Invalid contact number';
+      }
+    }
 
     setErrors(newErrors);
 
@@ -215,17 +232,18 @@ export default function SignUp() {
 
           <div className="form-group">
             <label htmlFor="contactNumber">Contact Number</label>
-            <input 
-              type="number" 
-              name="contactNumber" 
-              id="contactNumber" 
-              value={formData.contactNumber} 
-              onChange={handleChange} 
-              required
-              className="form-input"
+            <PhoneInput
+              country={'lk'} // Set default country to Sri Lanka
+              value={formData.contactNumber}
+              onChange={handlePhoneChange}
+              inputProps={{
+                name: 'contactNumber',
+                required: true,
+                className: 'form-inputt',
+              }}
             />
-            
           </div>
+
 
           <button type="submit" className="signup-button">Sign Up</button>
           {message && <p className="signup-message">{message}</p>}

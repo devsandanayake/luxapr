@@ -3,7 +3,7 @@ const userService = require('../services/userService');
 // Create a new user in the database
 const createUser = async (req, res, next) => {
     try {
-        const images = req.file.path;
+        const images = req.file? req.file.path: null;
 
         const { username, firstName, lastName, email, password, contactNumber, occupation } = req.body;
 
