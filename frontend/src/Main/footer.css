@@ -133,18 +133,17 @@
   bottom: 20px;
   right: 20px;
   z-index: 1000;
-  background-color: transparent; /* Ensure the container background is transparent */
+  background-color: transparent;
 }
- /* styles.css */
+
 .custom-scroll-to-top {
-  background-color: yellow !important;
-  color: black !important;
+  padding: 0 !important;
   border-radius: 50% !important;
-  padding: 10px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.scroll-to-top {
-  background-color: transparent !important; /* Ensure the container background is transparent */
-}
+
 
 
 

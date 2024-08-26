@@ -27,8 +27,8 @@ export default function AllApartments() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
 
-       useEffect(() => {
-         const fetchApartments = async () => {
+    useEffect(() => {
+        const fetchApartments = async () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             try {
                 const response = await axiosInstance.get('/api/ads/viewAds');
@@ -44,22 +44,22 @@ export default function AllApartments() {
                 console.error(error);
             }
         };
-    
+
         const handleResize = () => {
             setIsSmallScreen(window.innerWidth <= 768);
         };
-    
+
         window.addEventListener('resize', handleResize);
-    
+
         return () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-    
+
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         const hasQueryParams = initialDistrict || initialArea || initialRoomCount || initialStartDate || initialEndDate;
-    
+
         if (hasQueryParams) {
             filterApartments();
         } else {
@@ -79,11 +79,11 @@ export default function AllApartments() {
                     console.error(error);
                 }
             };
-    
+
             fetchApartments();
         }
     }, [initialDistrict, initialArea, initialRoomCount, initialStartDate, initialEndDate]);
-    
+
     const filterApartments = async () => {
         try {
             const response = await axiosInstance.post('/api/ads/searchAds', {
@@ -93,15 +93,15 @@ export default function AllApartments() {
                 districts: selectedDistrict.toLowerCase(),
                 bedroomCount: parseInt(selectedRoomCount),
             });
-    
+
             let filtered = response.data;
-    
+
             if (selectedRoomCount) {
                 filtered = filtered.filter(apartment => 
                     apartment.element.bedroomCount === parseInt(selectedRoomCount)
                 );
             }
-    
+
             setFilteredApartments(filtered);
             setShowFiltered(true);
             setCurrentPage(1);
@@ -122,10 +122,11 @@ export default function AllApartments() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const displayedApartments = showFiltered ? filteredApartments.slice(startIndex, endIndex) : apartments.slice(startIndex, endIndex);
+    const totalPages = Math.ceil((showFiltered ? filteredApartments.length : apartments.length) / itemsPerPage);
 
     return (
         <>
-            <div className='AllApartments-title'>Apartment List</div>
+            <div className='AllApartments-title'>All Apartments</div>
 
             <div className="containerr mx-auto">
 
@@ -226,21 +227,20 @@ export default function AllApartments() {
                     </div>
 
                     <div className="pagination">
-                            {currentPage > 1 && (
-                                <>
-                                     <button className="pagination-button" onClick={handlePrevPage}>
-                                        Previous
-                                    </button>
-                                </>
-                            )}
-                            {endIndex < (showFiltered ? filteredApartments.length : apartments.length) && (
-                                <>
-                                     <button className="pagination-button" onClick={handleNextPage}>
-                                        Next
-                                    </button>
-                                </>
-                            )}
-                        </div>
+                    {currentPage > 1 && (
+                            <button className="pagination-button" onClick={handlePrevPage}>
+                                Previous
+                            </button>
+                        )}
+
+                        <span className="page-info">Page {currentPage} of {totalPages}</span>
+                       
+                        {endIndex < (showFiltered ? filteredApartments.length : apartments.length) && (
+                            <button className="pagination-button" onClick={handleNextPage}>
+                                Next
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
         </>

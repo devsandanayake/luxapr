@@ -9,8 +9,10 @@ export default function Login() {
     username: '',
     password: ''
   });
+  const [errors, setErrors] = useState({}); // To hold error messages
   const [message, setMessage] = useState('');
-  const [errorType, setErrorType] = useState(''); // For setting error type (success or error)
+  const [errorType, setErrorType] = useState('');
+
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
@@ -25,10 +27,27 @@ export default function Login() {
       ...formData,
       [name]: value
     });
+    setErrors({
+      ...errors,
+      [name]: '' // Clear the error as the user types
+    });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.username) newErrors.username = 'Username is required';
+    if (!formData.password) newErrors.password = 'Password is required';
+    return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
     try {
       const response = await axiosInstance.post('/api/users/signin', formData);

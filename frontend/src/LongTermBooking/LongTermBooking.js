@@ -6,6 +6,8 @@ import './LongTermBooking.css';
 import PopupWindow from './SuccessPopup';
 
 export default function LongTermBooking() {
+  const [userProfile, setUserProfile] = useState(null);
+  const [error, setError] = useState(null);
   const token = localStorage.getItem('token');
   const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : {};
   const userName = decodedToken.username || '';
@@ -49,6 +51,29 @@ export default function LongTermBooking() {
       [name]: value
     });
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get('/api/users/viewUserProfile', {
+          headers: {
+            'Authorization': `${token}`,
+          },
+        });
+        const userProfile = response.data.user;
+        setUserProfile(userProfile);
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          phoneNumber: `+${userProfile.contactNumber}`,
+        }));
+      } catch (err) {
+        console.error('Error fetching user profile:', err);
+        setError(err);
+      }
+    };
+    
+    fetchData();
+  }, [token]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -163,7 +188,7 @@ export default function LongTermBooking() {
                   value={formData.phoneNumber} 
                   onChange={handleChange} 
                   className="input pl-10"
-                  required 
+                  disabled
                 />
               </div>
             </div>

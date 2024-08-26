@@ -18,10 +18,6 @@ const SuccessPopup = ({ bookingDetails, onClose }) => {
         doc.setFontSize(18);
         doc.text('Your Booking Details', 10, 10);
     
-        // Add a line break
-        doc.setFontSize(12);
-        doc.text(' ', 10, 20);
-    
         // Define the details
         const details = [
             { label: 'Booking ID:', value: bookingDetails.BookingID },
@@ -36,19 +32,28 @@ const SuccessPopup = ({ bookingDetails, onClose }) => {
         // Set initial positions
         let x = 10;
         let y = 30;
+        const labelWidth = 60; // Fixed width for labels
+        const valueX = x + labelWidth + 2; // Starting X position for values
+        const maxTextWidth = doc.internal.pageSize.getWidth() - valueX - 10;
+        const lineHeight = 10;
     
         // Loop through the details and add them to the PDF
         details.forEach((detail) => {
             doc.text(`${detail.label}`, x, y);
-            doc.text(`${detail.value}`, x + 50, y);
     
-            // Move to the next line
-            y += 10;
+            // Handle text wrapping for long text
+            let splitText = doc.splitTextToSize(detail.value, maxTextWidth);
+            doc.text(splitText, valueX, y);
+    
+            // Adjust the y position based on the number of lines
+            y += lineHeight * splitText.length;
         });
     
         // Save the PDF
         doc.save('booking-details.pdf');
     };
+    
+    
 
     return (
         <div className="popup-overlayy">

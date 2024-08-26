@@ -6,6 +6,7 @@ import './AuctionInquiry.css';
 import PopupWindow from './NotificationPopup';
 
 export default function AuctionInquiry() {
+  const [userProfile, setUserProfile] = useState(null);
   const token = localStorage.getItem('token');
   const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : {};
   const userName = decodedToken.firstName || '';
@@ -14,9 +15,10 @@ export default function AuctionInquiry() {
   const queryParams = new URLSearchParams(location.search);
   const auctionID = queryParams.get('auctionID');
   
-
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     auctionID: auctionID,
     Name: userName,
@@ -25,6 +27,29 @@ export default function AuctionInquiry() {
   });
 
   const [apartmentDetails, setApartmentDetails] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get('/api/users/viewUserProfile', {
+          headers: {
+            'Authorization': `${token}`,
+          },
+        });
+        const userProfile = response.data.user;
+        setUserProfile(userProfile);
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          number: `+${userProfile.contactNumber}`,
+        }));
+      } catch (err) {
+        console.error('Error fetching user profile:', err);
+        setError(err);
+      }
+    };
+    
+    fetchData();
+  }, [token]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -68,7 +93,7 @@ export default function AuctionInquiry() {
       <div className="full-screen">
         <div className='w-8/12'>
           <form className='mt-10 ml-3 w-full mb-5' onSubmit={handleSubmit}>
-                        <div className='mt-2'>
+            <div className='mt-2'>
               <label className='text-lg' htmlFor="Name">Name</label>
               <div className='relative'>
                 <FaUserAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
@@ -79,7 +104,7 @@ export default function AuctionInquiry() {
                   value={formData.Name} 
                   onChange={handleChange} 
                   className="input pl-10"
-                  required 
+                  disabled
                 />
               </div>
             </div>
@@ -94,7 +119,7 @@ export default function AuctionInquiry() {
                   value={formData.number} 
                   onChange={handleChange} 
                   className="input pl-10"
-                  required 
+                  disabled
                 />
               </div>
             </div>

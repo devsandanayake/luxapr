@@ -23,6 +23,7 @@
     "react-router-dom": "^6.25.1",
     "react-scripts": "^5.0.1",
     "react-scroll-to-top": "^3.0.0",
+    "react-scroll-up-button": "^1.6.4",
     "react-slick": "^0.30.2",
     "react-swipeable": "^7.0.1",
     "slick-carousel": "^1.8.1",
