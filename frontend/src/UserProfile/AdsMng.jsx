@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig'; // Ensure correct import path
 import { useNavigate } from 'react-router-dom';
+import { Tabs } from 'antd'; // Import Tabs from Ant Design
+import SmallCard from './ApartmentCard/NewCard';
 
-export default function AdsMng({token}) {
-  const [ads, setAds] = React.useState(null);
-  const [error, setError] = React.useState(null);
+const { TabPane } = Tabs;
+
+export default function AdsMng({ token }) {
+  const [ads, setAds] = useState(null);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get('/api/users/viewAllAds/user', {
@@ -21,7 +25,7 @@ export default function AdsMng({token}) {
         setError(err);
       }
     };
-    
+
     fetchData();
   }, [token]);
 
@@ -37,22 +41,32 @@ export default function AdsMng({token}) {
     const query = new URLSearchParams({ adCode });
     navigate(`/charging/planes?${query.toString()}`);
   };
-  
+
+  const renderAds = (transactionType) => {
+    return ads
+      .filter((apartment) => apartment.transactionType === transactionType)
+      .map((apartment) => (
+        <li key={apartment.id}>
+          <SmallCard key={apartment.adCode} apartment={apartment} />
+          <button onClick={() => handleViewClick(apartment.adCode)}>View</button>
+        </li>
+      ));
+  };
 
   return (
     <div>
       <h1>Ads Management</h1>
-      <ul>
-        {ads.map((ad) => (
-          <li key={ad.id}>{ad.title}
-          
-          <button onClick={()=>handleViewClick(ad.adCode)}>
-              View
-            </button>
-          </li>
-
-        ))}
-      </ul>
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="Short Term Rent" key="2">
+          <ul>{renderAds(1)}</ul>
+        </TabPane>
+        <TabPane tab="Long Term Rent" key="1">
+          <ul>{renderAds(2)}</ul>
+        </TabPane>
+        <TabPane tab="Auction" key="3">
+          <ul>{renderAds(3)}</ul>
+        </TabPane>
+      </Tabs>
     </div>
   );
 }

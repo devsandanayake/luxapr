@@ -1,0 +1,160 @@
+.newcard {
+    width: 100%;
+    max-width: 1200px;
+    max-height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    position: relative;
+}
+
+.image-containerr {
+    position: relative;
+    width: 35%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.room-imagee {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.price-taggg {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.term-taggg {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.detailsss {
+    padding: 16px;
+    width: 65%;
+    height: auto;
+    opacity: 1;
+    transition: opacity 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.detailsss h3 {
+    margin: 0 0 8px 0;
+    font-size: 1em;
+    height: 72px;
+    width: 100%;
+}
+
+.detailsss p {
+    margin: 8px 0;
+    color: #555;
+}
+
+.infooo {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+}
+
+.infooo span {
+    display: flex;
+    align-items: center;
+}
+
+.infooo span svg {
+    margin-right: 4px;
+}
+
+.read-more {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.read-more a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.read-more .rating {
+    font-size: 14px;
+    color: #555;
+}
+
+.newcard:hover {
+    transform: translateY(-5px);
+}
+
+.details.expanded {
+    height: auto;
+    opacity: 1;
+}
+
+.newcard .details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 150px;
+}
+
+.read-more a {
+    display: inline-flex;
+    align-items: center;
+}
+
+.read-more a:after {
+    content: ' ➔';
+    font-size: 1.2em;
+    margin-left: 4px;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+}
+
+.rating:before {
+    content: '★';
+    color: #ffb400;
+    margin-right: 4px;
+}
+
+
+@media (max-width: 768px) {
+    .newcard {
+        flex-direction: column;
+    }
+    
+    .image-container {
+        width: 100%;
+        height: 200px;
+    }
+
+    .details {
+        width: 100%;
+    }
+}

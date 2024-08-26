@@ -2,12 +2,12 @@ const PricingModel = require('../models/PricingModel');
 
 
 // Create a new pricing
-const createPricing = async (adCode, transactionType, pricingDetails) => {
+const createPricing = async (adCode, transactionType, priceDetails) => {
     try {
         const newPricing = new PricingModel({
             adCode,
             transactionType,
-            price: pricingDetails
+            price: priceDetails
         });
         await newPricing.save();
         return newPricing;
@@ -21,6 +21,16 @@ const createPricing = async (adCode, transactionType, pricingDetails) => {
 const getPricing = async (adCode) => {
     try {
         const pricings = await PricingModel.findOne({adCode: adCode});
+        return pricings;
+    } catch (error) {
+        throw new Error(`Error getting pricings: ${error.message}`);
+    }
+};
+
+// get  specific pricing
+const getPricingOne = async (adCode) => {
+    try {
+        const pricings = await PricingModel.findOne({adCode});
         return pricings;
     } catch (error) {
         throw new Error(`Error getting pricings: ${error.message}`);
@@ -88,7 +98,7 @@ const calculatePrice = async (adCode, startDate, endDate) => {
         if (priceYear) {
             for (const month in breakdown[year]) {
                 const days = breakdown[year][month];
-                const priceDetail = priceYear.details.find(d => month >= d.startmonth && month <= d.endmonth);
+                const priceDetail = priceYear.details.find(d => month >= d.startMonth && month <= d.endMonth);
 
                 if (priceDetail) {
                     const monthlyPrice = priceDetail.price;
@@ -104,9 +114,26 @@ const calculatePrice = async (adCode, startDate, endDate) => {
 }
  
 
+const editPricing = async (adCode,transactionType, priceDetails) => {
+    try {
+        const pricingData = await PricingModel.findOne({ adCode: adCode });
+        if (!pricingData) {
+            throw new Error(`Pricing data not found for adCode: ${adCode}`);
+        }
+        pricingData.transactionType = transactionType;
+        pricingData.price = priceDetails;
+        await pricingData.save();
+        return pricingData;
+    } catch (error) {
+        console.error('Error editing pricing:', error);
+        throw error;
+    }
+};
  
 module.exports = {
     createPricing,
     getPricing,
-    calculatePrice
+    calculatePrice,
+    editPricing,
+    getPricingOne
 };

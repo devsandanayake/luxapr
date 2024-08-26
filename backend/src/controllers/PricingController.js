@@ -3,9 +3,9 @@ const PricingService = require('../services/PricingService');
 
 // Create a new pricing
 const createPricing = async (req, res) => {
-    const { adCode, transactionType, pricingDetails } = req.body;
+    const { adCode, transactionType, priceDetails } = req.body;
     try {
-        const newPricing = await PricingService.createPricing(adCode, transactionType, pricingDetails);
+        const newPricing = await PricingService.createPricing(adCode, transactionType, priceDetails);
         res.status(201).json(newPricing);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -33,9 +33,32 @@ const getPricing = async (req, res) => {
     }
 }
 
+const EditPricingDetails = async (req, res) => {
+    const { adCode, transactionType, priceDetails } = req.body;
+    try {
+        const newPricing = await PricingService.editPricing(adCode, transactionType, priceDetails);
+        res.status(201).json(newPricing);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
+//get specific pricing
+const getPricingOne = async (req, res) => {
+    const adCode = req.params.adCode;
+    try {
+        const pricings = await PricingService.getPricingOne(adCode);
+        res.status(200).json(pricings);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
 
 module.exports = {
     createPricing,
     calculatePrice,
-    getPricing
+    getPricing,
+    EditPricingDetails,
+    getPricingOne
 };

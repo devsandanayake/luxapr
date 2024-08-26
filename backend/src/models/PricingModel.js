@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
 const pricingDetailSchema = new mongoose.Schema({
-    startmonth: {
-        type: Number,
+    startMonth: {
+        type: String,
         required: true
     },
-    endmonth: {
-        type: Number,
+    endMonth: {
+        type: String,
         required: true
     },
     price: {
-        type: Number,
+        type: String,
         required: true
     }
 });
@@ -19,15 +19,15 @@ const pricingSchema = new mongoose.Schema({
     adCode: {
         type: String,
         required: true,
-        unique: true
+        
     },
     transactionType: {
-        type: Number,
+        type: String,
         required: true
     },
     price: [{
         year: {
-            type: Number,
+            type: String,
             required: true
         },
         details: [pricingDetailSchema]

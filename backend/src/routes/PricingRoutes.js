@@ -8,5 +8,7 @@ router.post('/calculate', PricingController.calculatePrice);
 
 // get all pricings
 router.get('/:adCode', PricingController.getPricing);
+router.patch('/', PricingController.EditPricingDetails);
+router.get('/one/:adCode', PricingController.getPricingOne);
 
 module.exports = router;

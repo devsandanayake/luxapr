@@ -1,13 +1,16 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom'
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+import CreatePricingForm from './CreatePricingForm'; // Adjust the path as necessary
 
 export default function Charging() {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const adCode = queryParams.get('adCode'); // Retrieve adCode from the URL
 
-  const location = useLocation()
-  const queryParams = new URLSearchParams(location.search)
-  const value = queryParams.get('adCode')
-   
-  return (
-    <div></div>
-  )
+    return (
+        <div>
+            {/* Pass the adCode as a prop to CreatePricingForm */}
+            <CreatePricingForm adCode={adCode} />
+        </div>
+    );
 }
