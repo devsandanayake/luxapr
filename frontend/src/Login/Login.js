@@ -3,6 +3,7 @@ import './Login.css';
 import Logo from '../Images/Logo.png';
 import axiosInstance from '../axiosConfig';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { FaLock, FaUser, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ export default function Login() {
   const [errors, setErrors] = useState({}); // To hold error messages
   const [message, setMessage] = useState('');
   const [errorType, setErrorType] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -73,6 +75,10 @@ export default function Login() {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="login-container">
       <div className="login-card">
@@ -80,25 +86,35 @@ export default function Login() {
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              className="form-input"
-              value={formData.username}
-              onChange={handleChange}
-            />
+            <div className="relative">
+              <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" /> 
+              <input
+                type="text"
+                id="username"
+                name="username"
+                className="form-input with-icon"
+                value={formData.username}
+                onChange={handleChange}
+              />
+            </div>
           </div>
+
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="form-input"
-              value={formData.password}
-              onChange={handleChange}
-            />
+            <div className="relative">
+              <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                className="form-input with-icon"
+                value={formData.password}
+                onChange={handleChange}
+              />
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer z-10" onClick={togglePasswordVisibility}>
+                {showPassword ? <FaEyeSlash className="text-gray-500" /> : <FaEye className="text-gray-500" />}
+              </div>
+            </div>
           </div>
           <button type="submit" className="login-button">Login</button>
           {message && <p className={`login-message ${errorType}`}>{message}</p>}

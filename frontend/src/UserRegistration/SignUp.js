@@ -5,6 +5,9 @@ import Popup from './Popup';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import { FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { MdWorkOutline, MdEmail } from 'react-icons/md';
+import { FaUser, FaUserCircle } from 'react-icons/fa';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -23,6 +26,7 @@ export default function SignUp() {
   const [message, setMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -113,6 +117,10 @@ export default function SignUp() {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="signup-container">
       {isLoading && (
@@ -148,6 +156,8 @@ export default function SignUp() {
 
           <div className="form-group">
             <label htmlFor="firstName">First Name</label>
+            <div className="relative">
+              <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
             <input 
               type="text" 
               name="firstName" 
@@ -155,13 +165,16 @@ export default function SignUp() {
               value={formData.firstName} 
               onChange={handleChange} 
               required 
-              className="form-input"
+              className="form-input with-icon"
             />
+            </div>
             
           </div>
 
           <div className="form-group">
             <label htmlFor="lastName">Last Name</label>
+            <div className="relative">
+              <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
             <input 
               type="text" 
               name="lastName" 
@@ -169,13 +182,16 @@ export default function SignUp() {
               value={formData.lastName} 
               onChange={handleChange} 
               required 
-              className="form-input"
+              className="form-input with-icon"
             />
+            </div>
             
           </div>
 
           <div className="form-group">
             <label htmlFor="email">Email</label>
+            <div className="relative">
+            <MdEmail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
             <input 
               type="email" 
               name="email" 
@@ -183,13 +199,16 @@ export default function SignUp() {
               value={formData.email} 
               onChange={handleChange} 
               required 
-              className="form-input"
+              className="form-input with-icon"
             />
+            </div>
             
           </div>
 
           <div className="form-group">
             <label htmlFor="occupation">Occupation</label>
+            <div className="relative">
+              <MdWorkOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
             <input
               type="text"
               name="occupation"
@@ -197,13 +216,16 @@ export default function SignUp() {
               value={formData.occupation}
               onChange={handleChange}
               required
-              className="form-input"
+              className="form-input with-icon"
             />
+            </div>
             
           </div>
 
           <div className="form-group">
             <label htmlFor="username">Username</label>
+            <div className="relative">
+              <FaUserCircle className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
             <input 
               type="text" 
               name="username" 
@@ -211,22 +233,29 @@ export default function SignUp() {
               value={formData.username} 
               onChange={handleChange} 
               required 
-              className="form-input"
+              className="form-input with-icon"
             />
+            </div>
             
           </div>
 
           <div className="form-group">
             <label htmlFor="password">Password</label>
+            <div className="relative">
+              <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
             <input 
-              type="password" 
+              type={showPassword ? "text" : "password"} 
               name="password" 
               id="password" 
               value={formData.password} 
               onChange={handleChange} 
               required 
-              className="form-input"
+              className="form-input with-icon"
             />
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer z-10" onClick={togglePasswordVisibility}>
+              {showPassword ? <FaEyeSlash className="text-gold" /> : <FaEye className="text-gold" />}
+            </div>
+            </div>
             
           </div>
 
