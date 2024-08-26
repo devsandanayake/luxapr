@@ -4,6 +4,7 @@ import axiosInstance from '../axiosConfig';
 import './AllApartments.css';
 import NewCard from '../ApartmentCard/NewCard';
 import SmallCard from '../ApartmentCard/ApartmentCard';
+import { suggestLocations } from 'srilanka-location';
 
 export default function AllApartments() {
     const location = useLocation();
@@ -26,6 +27,29 @@ export default function AllApartments() {
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
+    const [suggestions, setSuggestions] = React.useState([]);
+    const [areas, setAreas] = React.useState([]);
+
+    const updateLocationSuggestions = (district) => {
+        const suggestions = suggestLocations(district);
+        setSuggestions(suggestions);
+      };
+    
+      const handleDistrictChange = (e) => {
+        const newDistrict = e.target.value;
+        setSelectedDistrict(newDistrict);
+        updateLocationSuggestions(newDistrict);
+      };
+    
+      const handleSuggestionClick = (suggestion) => {
+        setSelectedDistrict(suggestion.district); // Set district from suggestion
+        setAreas(suggestion.areas); // Set areas from suggestion
+        setSuggestions([]); // Clear suggestions after selection
+      };
+    
+      const handleAreaChange = (e) => {
+        setSelectedArea(e.target.value);
+      };
 
     useEffect(() => {
         const fetchApartments = async () => {
@@ -138,22 +162,38 @@ export default function AllApartments() {
                             type="text"
                             id="district"
                             value={selectedDistrict}
-                            onChange={(e) => setSelectedDistrict(e.target.value)}
+                            onChange={handleDistrictChange}
                             placeholder="Enter district"
                             className='w-full h-full p-2'
                             style={{ backgroundColor: '#f9f9f9' }}
                         />
                     </div>
+                    <div className="flex flex-col gap-2">
+                        {suggestions.map((suggestion, index) => (
+                        <div
+                            key={index}
+                            className="border border-gray-300 p-2 rounded-lg cursor-pointer"
+                            onClick={() => handleSuggestionClick(suggestion)}
+                        >
+                            {suggestion.district}
+                        </div>
+                        ))}
+                    </div>
+
                     <div className="booking-option">
-                        <input
-                            type="text"
-                            id="area"
-                            value={selectedArea}
-                            onChange={(e) => setSelectedArea(e.target.value)}
-                            placeholder="Enter area"
-                            className='w-full h-full p-2'
-                            style={{ backgroundColor: '#f9f9f9' }}
-                        />
+                       {Array.isArray(areas) && areas.length > 0 ? (
+                            <select value={selectedArea} onChange={handleAreaChange}  className='w-full h-full p-2'  style={{ backgroundColor: '#f9f9f9' }}>
+                            {areas.map((area, areaIndex) => (
+                                <option key={areaIndex} value={area}>
+                                {area}
+                                </option>
+                            ))}
+                            </select>
+                        ) : (
+                            <select value={selectedArea} onChange={handleAreaChange}   className='w-full h-full p-2' style={{ backgroundColor: '#f9f9f9' }}>
+                            <option value="">Select area</option>
+                            </select>
+                        )}
                     </div>
                     <div className="booking-option">
                         <input
