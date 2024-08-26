@@ -114,15 +114,17 @@ const calculatePrice = async (adCode, startDate, endDate) => {
 }
  
 
-const editPricing = async (adCode,transactionType, priceDetails) => {
+const editPricing = async (adCode, transactionType, priceDetails) => {
     try {
-        const pricingData = await PricingModel.findOne({ adCode: adCode });
-        if (!pricingData) {
-            throw new Error(`Pricing data not found for adCode: ${adCode}`);
-        }
-        pricingData.transactionType = transactionType;
-        pricingData.price = priceDetails;
-        await pricingData.save();
+        const pricingData = await PricingModel.findOneAndUpdate(
+            { adCode: adCode },
+            {
+                adCode: adCode,
+                transactionType: transactionType,
+                price: priceDetails
+            },
+            { new: true, upsert: true } // Create a new document if it doesn't exist
+        );
         return pricingData;
     } catch (error) {
         console.error('Error editing pricing:', error);
