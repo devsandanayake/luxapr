@@ -72,7 +72,7 @@ const CreatePricingForm = ({ adCode: initialAdCode }) => {
     };
 
     return (
-        <>{transactionType}
+        <>
         <Form onFinish={handleSubmit} layout="vertical">
             <Form.Item label="Ad Code" required>
                 <Input
@@ -86,6 +86,7 @@ const CreatePricingForm = ({ adCode: initialAdCode }) => {
                     type="text"
                     value={transactionType}
                     onChange={(e) => setTransactionType(e.target.value)}
+                    readOnly
                     
                 />
             </Form.Item>
