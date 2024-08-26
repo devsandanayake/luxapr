@@ -39,6 +39,9 @@ const LRentalTransactionSchema = new mongoose.Schema({
     advancePayment:{
         type: Number
     },
+    alertMsg:{
+        type: String
+    }
     
 });
 

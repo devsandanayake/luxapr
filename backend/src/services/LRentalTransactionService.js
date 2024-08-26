@@ -17,6 +17,14 @@ const createLRentalTransaction = async (username , adCode ,BookingID, rentalStar
     if (endDate < currentDate) {
         throw new Error('Rental end date cannot be in the past');
     }
+
+    const LRentTrans = await LRentalTransactionModel.findOne({ adCode: adCode });
+       
+    let alertMsg = null;
+
+    if (LRentTrans && LRentTrans.adminKeyStatus === 'Approved') {
+        alertMsg = `You have already rented this property. ${LRentTrans.rentalStartDate} to ${LRentTrans.rentalEndDate}`;
+    }
     
     const newLRentalTransaction = new LRentalTransactionModel({
         username,
@@ -26,6 +34,7 @@ const createLRentalTransaction = async (username , adCode ,BookingID, rentalStar
         rentalEndDate,
         userMessage,
         phoneNumber,
+        alertMsg
         
     });
     return await newLRentalTransaction.save();
