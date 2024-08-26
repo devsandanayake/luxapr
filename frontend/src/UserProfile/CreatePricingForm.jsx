@@ -86,7 +86,7 @@ const CreatePricingForm = ({ adCode: initialAdCode }) => {
                     type="text"
                     value={transactionType}
                     onChange={(e) => setTransactionType(e.target.value)}
-                    readOnly
+ 
                     
                 />
             </Form.Item>
