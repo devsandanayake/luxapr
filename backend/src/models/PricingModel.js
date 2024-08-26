@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 
 const pricingDetailSchema = new mongoose.Schema({
     startMonth: {
-        type: String,
+        type: Number,
         required: true
     },
     endMonth: {
-        type: String,
+        type: Number,
         required: true
     },
     price: {
-        type: String,
+        type: Number,
         required: true
     }
 });
@@ -22,12 +22,12 @@ const pricingSchema = new mongoose.Schema({
         
     },
     transactionType: {
-        type: String,
+        type: Number,
         required: true
     },
     price: [{
         year: {
-            type: String,
+            type: Number,
             required: true
         },
         details: [pricingDetailSchema]
