@@ -74,6 +74,7 @@ export default function BookingDetails() {
             <div className="w-full md:w-2/3 pl-0 md:pl-4 mt-4 md:mt-0 text-center md:text-left">
               <p className='text-gold text-xl mb-2'>{adDetails[detail.adCode]?.title || 'Loading...'}</p>
               <h1 className='text-lg mb-2'> {rentType(adDetails[detail.adCode]?.transactionType)}</h1>
+              <p><strong>Booking ID:</strong> {detail.BookingID}</p>
               <p><strong>Rental Start Date:</strong> {new Date(detail.rentalStartDate).toLocaleDateString()}</p>
               <p><strong>Rental End Date:</strong> {new Date(detail.rentalEndDate).toLocaleDateString()}</p>
               <p><strong>Phone Number:</strong> {detail.phoneNumber}</p>
