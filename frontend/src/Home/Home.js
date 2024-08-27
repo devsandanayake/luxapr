@@ -11,7 +11,7 @@ import background from '../Images/bg2.jpg';
 import SriLanka from '../Images/SriLanka.png';
 import { FaArrowRight } from "react-icons/fa";
 import ApartmentCard from '../ApartmentCard/ApartmentCard';
-
+import { suggestLocations } from 'srilanka-location'; 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -27,6 +27,13 @@ export default function Home() {
   };
 
   const [apartments, setApartments] = useState([]);
+  const [selectedDistrict, setSelectedDistrict] = useState('');
+  const [selectedArea, setSelectedArea] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [selectedRoomCount, setSelectedRoomCount] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [areas, setAreas] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,23 +53,44 @@ export default function Home() {
       .filter(apartment => apartment.transactionType !== 4)
       .slice(0, 4);
 
-  const handleCheckNow = () => {
-    const district = document.getElementById('district').value.toLowerCase();
-    const area = document.getElementById('area').value.toLowerCase();
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value;
-    const roomCount = document.getElementById('roomCount').value;
-  
-    const queryParams = new URLSearchParams({
-      district,
-      area,
-      startDate,
-      endDate,
-      roomCount
-    }).toString();
-  
-    navigate(`/allapartments?${queryParams}`);
-  };
+          const updateLocationSuggestions = (district) => {
+          const suggestions = suggestLocations(district);
+          
+         
+          const districtSuggestion =  suggestions[0] ;
+         
+         
+          
+          setSuggestions(districtSuggestion ? [districtSuggestion] : []);
+        };
+    
+      const handleDistrictChange = (e) => {
+        const newDistrict = e.target.value;
+        setSelectedDistrict(newDistrict);
+        updateLocationSuggestions(newDistrict);
+      };
+    
+      const handleSuggestionClick = (suggestion) => {
+        setSelectedDistrict(suggestion.district);
+        setAreas(suggestion.areas);
+        setSuggestions([]);
+      };
+    
+      const handleAreaChange = (e) => {
+        setSelectedArea(e.target.value);
+      };
+    
+      const handleCheckNow = () => {
+        const queryParams = new URLSearchParams({
+          district: selectedDistrict.toLowerCase(),
+          area: selectedArea.toLowerCase(),
+          startDate,
+          endDate,
+          roomCount: selectedRoomCount
+        }).toString();
+      
+        navigate(`/allapartments?${queryParams}`);
+      };
 
   return (
     <>
@@ -82,42 +110,92 @@ export default function Home() {
           </div>
         </Slider>
 
-<div className="booking-form-container">
-  <div className="booking-form">
-    <div className="booking-field">
-      <label htmlFor="location">District</label>
-      <input type="text" id="district" name="districtt" placeholder="Enter District" />
-    </div>
-    <div className="booking-field">
-      <label htmlFor="Period">Area</label>
-      <input type="text" id="area" name="area" placeholder="Enter Area" />
-    </div>
-    <div className="booking-field">
-      <label htmlFor="checkin">Check In</label>
-      <input type="date" id="startDate" name="startDate" placeholder="" />
-    </div>
-    <div className="booking-field">
-      <label htmlFor="checkout">Check Out</label>
-      <input type="date" id="endDate" name="endDate" placeholder="dd-----yyyy" />
-    </div>
-    <div className="booking-field">
-      <label htmlFor="room">Room</label>
-      <select id="roomCount" name="roomCount">
-        <option value="">Select Room Count</option>
-        <option value="1">1 Room</option>
-        <option value="2">2 Rooms</option>
-        <option value="3">3 Rooms</option>
-        <option value="4">4 Rooms</option>
-        <option value="5">5 Rooms</option>
-      </select>
-    </div>
-    <div className='booking-field'>
-    <div className="booking-button">
-      <button type="button" onClick={handleCheckNow}>CHECK</button>
-    </div>
-    </div>
-  
-  </div>
+        <div className="booking-form-container">
+          <div className="booking-form">
+            <div className="booking-field">
+              <div>
+              <label htmlFor="district">District</label>
+              <input 
+                type="text" 
+                id="district" 
+                value={selectedDistrict} 
+                onChange={handleDistrictChange} 
+                placeholder="Enter District" 
+              />
+            </div>
+          
+              {suggestions.map((suggestion, index) => (
+                <div
+                  key={index}
+                  className="border border-gray-300 p-2 rounded-lg cursor-pointer disSuggestion"
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
+                  {suggestion.district}
+                </div>
+              ))}
+              </div>
+          
+            <div className="booking-field">
+              <label htmlFor="area">Area</label>
+              {Array.isArray(areas) && areas.length > 0 ? (
+                <select 
+                  id="area" 
+                  value={selectedArea} 
+                  onChange={handleAreaChange}
+                >
+                  {areas.map((area, areaIndex) => (
+                    <option key={areaIndex} value={area}>
+                      {area}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input 
+                  type="text" 
+                  id="area" 
+                  value={selectedArea} 
+                  onChange={handleAreaChange} 
+                  placeholder="Enter Area" 
+                />
+              )}
+            </div>
+            <div className="booking-field">
+              <label htmlFor="startDate">Check In</label>
+              <input 
+                type="date" 
+                id="startDate" 
+                value={startDate} 
+                onChange={(e) => setStartDate(e.target.value)} 
+              />
+            </div>
+            <div className="booking-field">
+              <label htmlFor="endDate">Check Out</label>
+              <input 
+                type="date" 
+                id="endDate" 
+                value={endDate} 
+                onChange={(e) => setEndDate(e.target.value)} 
+              />
+            </div>
+            <div className="booking-field">
+              <label htmlFor="roomCount">Room</label>
+              <select 
+                id="roomCount" 
+                value={selectedRoomCount} 
+                onChange={(e) => setSelectedRoomCount(e.target.value)}
+              >
+                <option value="">Select Room Count</option>
+                <option value="1">1 Room</option>
+                <option value="2">2 Rooms</option>
+                <option value="3">3 Rooms</option>
+                <option value="4">4 Rooms</option>
+                <option value="5">5 Rooms</option>
+              </select>
+            </div>
+            <div className="booking-button">
+              <button type="button" onClick={handleCheckNow}>CHECK</button>
+            </div>
+          </div>
 </div>
         </div>
         
@@ -147,11 +225,6 @@ export default function Home() {
           </div>
         </div>
         </div>
-
-
-
-
-     
 
       <div className="auction-description">
         <p className="auction-text">

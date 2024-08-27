@@ -113,7 +113,6 @@
 
 
 /* Search Apartment */
-
 .booking-form-container {
   position: absolute;
   top: 75%;
@@ -133,6 +132,24 @@
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   grid-auto-rows: min-content;
+}
+
+.suggestion-container {
+  position: relative;
+  width: 100%;
+}
+
+.disSuggestion {
+  position: absolute;
+  top: 100%; /* Position it below the input field */
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-height: 200px; /* Limit the height of the suggestion box */
+  overflow-y: auto; /* Add scroll if the content exceeds the max height */
 }
 
 .booking-field {
@@ -184,6 +201,28 @@
   background-color: #b38742;
 }
 
+/* Auction Description */
+
+.auction-description {
+  margin-top: 50px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 60%;
+  margin-left: auto;
+  margin-right: 10px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.auction-description p {
+  font-size: 1.5rem;
+  font-family: 'Georgia', serif;
+  color: #666;
+  margin-bottom: 10px;
+}
 
 
 
