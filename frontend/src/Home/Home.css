@@ -141,15 +141,13 @@
 
 .disSuggestion {
   position: absolute;
-  top: 100%; /* Position it below the input field */
   left: 0;
+  top: 100%;
   width: 100%;
   z-index: 1000;
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 5px;
-  max-height: 200px; /* Limit the height of the suggestion box */
-  overflow-y: auto; /* Add scroll if the content exceeds the max height */
 }
 
 .booking-field {
@@ -161,6 +159,12 @@
 }
 
 .booking-field label {
+  font-size: 20px;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.districtField{
   font-size: 20px;
   color: white;
   margin-bottom: 5px;

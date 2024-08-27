@@ -52,15 +52,9 @@ export default function Home() {
   const displayedApartments = apartments
       .filter(apartment => apartment.transactionType !== 4)
       .slice(0, 4);
-
           const updateLocationSuggestions = (district) => {
           const suggestions = suggestLocations(district);
-          
-         
           const districtSuggestion =  suggestions[0] ;
-         
-         
-          
           setSuggestions(districtSuggestion ? [districtSuggestion] : []);
         };
     
@@ -113,8 +107,8 @@ export default function Home() {
         <div className="booking-form-container">
           <div className="booking-form">
             <div className="booking-field">
-              <div>
-              <label htmlFor="district">District</label>
+            
+              <label className='districtField' htmlFor="district">District</label>
               <input 
                 type="text" 
                 id="district" 
@@ -122,7 +116,7 @@ export default function Home() {
                 onChange={handleDistrictChange} 
                 placeholder="Enter District" 
               />
-            </div>
+        
           
               {suggestions.map((suggestion, index) => (
                 <div
