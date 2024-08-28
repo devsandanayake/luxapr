@@ -1,4 +1,4 @@
-.popup-overlay {
+.popup-overlayx {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,16 +11,16 @@
   z-index: 1000;
 }
 
-.popup-content {
+.popup-contentx {
   position: relative;
   width: 60%;
-  height: 80%;
+  height: 90%;
   background: #fff;
   border-radius: 8px;
   overflow: hidden;
 }
 
-.close-button {
+.close-buttonx {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -31,27 +31,28 @@
   cursor: pointer;
 }
 
-.main-image-containerrr {
-  height: calc(80% - 80px); /* Adjust height considering thumbnail slider height */
+.main-image-containerrrx {
+  height: 60%;
   width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.main-image {
-  max-width: 100%;
-  max-height: 100%;
+.main-imagex {
+  height: 100%;
+  width: 80%;
 }
 
-.thumbnaill-slider {
+.thumbnaill-sliderx {
   display: flex;
   overflow-x: auto;
   padding: 10px;
   border-top: 1px solid #ddd;
 }
 
-.thumbnaill {
+.thumbnaillx {
   width: 200px;
   height: 150px;
   object-fit: cover;
@@ -60,13 +61,13 @@
   border: 2px solid transparent;
 }
 
-.thumbnail.active {
+.thumbnailx.active {
   border-color: #000;
 }
 
 
 @media (max-width: 1024px) and (max-height: 1366px) {
-  .popup-content {
+  .popup-contentx {
     width: 80%;
     height: 80%;
   }
@@ -74,14 +75,14 @@
 
 @media (max-width: 834px) and (max-height: 1194px),
        (max-width: 834px) and (max-height: 1112px) {
-  .popup-content {
+  .popup-contentx {
     width: 90%;
     height: 90%;
   }
 }
 
 @media (max-width: 800px) and (max-height: 1280px) {
-  .popup-content {
+  .popup-contentx {
     width: 100%;
     height: 90%;
   }

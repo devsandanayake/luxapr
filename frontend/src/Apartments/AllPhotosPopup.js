@@ -15,15 +15,15 @@ const AllPhotosPopup = ({ images, isOpen, onClose }) => {
   const isEquirectangular = (image) => image.includes('images360');
 
   return (
-    <div className="popup-overlay">
-      <div className="popup-content">
-        <button className="close-button" onClick={onClose}>
+    <div className="popup-overlayx">
+      <div className="popup-contentx">
+        <button className="close-buttonx" onClick={onClose}>
           <FaTimes />
         </button>
-        <div className="main-image-containerrr">
+        <div className="main-image-containerrrx">
           {isEquirectangular(images[currentIndex]) ? (
             <Pannellum
-              width="100%"
+              width="80%"
               height="100%"
               image={`http://124.43.179.118:8081/uploads/${images[currentIndex].split('\\').pop()}`}
               pitch={10}
@@ -35,19 +35,18 @@ const AllPhotosPopup = ({ images, isOpen, onClose }) => {
             <img
               src={`http://124.43.179.118:8081/uploads/${images[currentIndex].split('\\').pop()}`}
               alt={`Slide ${currentIndex}`}
-              className="main-image"
+              className="main-imagex"
             />
           )}
         </div>
 
-
-        <div className="thumbnaill-slider">
+        <div className="thumbnaill-sliderx">
           {images.map((image, index) => (
             <img
               key={index}
               src={`http://124.43.179.118:8081/uploads/${image.split('\\').pop()}`}
               alt={`Thumbnail ${index}`}
-              className={`thumbnaill ${currentIndex === index ? 'active' : ''}`}
+              className={`thumbnaillx ${currentIndex === index ? 'active' : ''}`}
               onClick={() => handleThumbnailClick(index)}
             />
           ))}
