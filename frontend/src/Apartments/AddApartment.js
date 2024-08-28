@@ -488,85 +488,87 @@ export default function AddApartment() {
         </ul>
       </div>
 
-      <div className='mt-2'>
-  <div>
-    <label className='text-lg' htmlFor="images">Images</label>
-  </div>
-  <label className="relative border-2 border-dashed p-4 rounded-md mt-1 flex flex-col items-center cursor-pointer hover:bg-gold hover:text-white">
-    <input
-      type="file"
-      name="images"
-      multiple
-      onChange={handleImageChange}
-      className="w-full h-full opacity-0 cursor-pointer"
-    />
-    <p>Drag & Drop files here or click to upload</p>
-  </label>
-  {images.length > 0 && (
-    <div className="mt-2">
-      {images.length} file(s) selected
-      <div className="flex flex-wrap">
-        {imageUrls.map((url, index) => (
-          <div key={index} className="relative">
-            <img
-              src={url}
-              alt={`Selected file ${index + 1}`}
-              className="w-16 h-16 object-cover m-1"
-            />
-            <button
-              type="button"
-              className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
-              onClick={() => removeImage(index)}
-            >
-              &times;
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
-  )}
-</div>
+          <div className='mt-2'>
+            <div>
+              <label className='text-lg' htmlFor="images">Images</label>
+            </div>
+            <label className="relative border-2 border-dashed p-4 rounded-md mt-1 flex flex-col items-center cursor-pointer hover:bg-gold hover:text-white">
+              <input
+                type="file"
+                name="images"
+                multiple
+                onChange={handleImageChange}
+                className="inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+              <p>Drag & Drop files here or click to upload</p>
+              </label>
+              {images.length > 0 && (
+                <div className="mt-2">
+                  {images.length} file(s) selected
+                  <div className="flex flex-wrap">
+                    {imageUrls.map((url, index) => (
+                      <div key={index} className="relative">
+                         <button
+                          type="button"
+                          className="top-0 right-0 bg-red-500 text-white p-1 rounded-full"
+                          onClick={() => removeImage(index)}
+                        >
+                          &times;
+                        </button>
+                        <img
+                          src={url}
+                          alt={`Selected file ${index + 1}`}
+                          className="w-16 h-16 object-cover m-1"
+                        />
+                       
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
 
 
-<div className='mt-2'>
-  <div>
-    <label className='text-lg' htmlFor="images360">360° Images</label>
-  </div>
-  <label className="relative border-2 border-dashed p-4 rounded-md mt-1 flex flex-col items-center cursor-pointer hover:bg-gold hover:text-white">
-    <input
-      type="file"
-      name="images360"
-      multiple
-      onChange={handleImage360Change}
-      className="w-full h-full opacity-0 cursor-pointer"
-    />
-    <p>Drag & Drop files here or click to upload</p>
-  </label>
-  {images360.length > 0 && (
-    <div className="mt-2">
-      {images360.length} file(s) selected
-      <div className="flex flex-wrap">
-        {image360Urls.map((url, index) => (
-          <div key={index} className="relative">
-            <img
-              src={url}
-              alt={`Selected file ${index + 1}`}
-              className="w-16 h-16 object-cover m-1"
-            />
-            <button
-              type="button"
-              className="absolute top-0 right-0 bg-red-500 text-white rounded-full"
-              onClick={() => removeImage360(index)}
-            >
-              &times;
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
-  )}
-</div>
-
+          <div className='mt-2'>
+            <div>
+              <label className='text-lg' htmlFor="images360">360° Images</label>
+            </div>
+            <label className="relative border-2 border-dashed p-4 rounded-md mt-1 flex flex-col items-center cursor-pointer hover:bg-gold hover:text-white">
+              <input
+                type="file"
+                name="images360"
+                multiple
+                onChange={handleImage360Change}
+                className="inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+              <p>Drag & Drop files here or click to upload</p>
+            </label>
+              {images360.length > 0 && (
+                <div className="mt-2">
+                  {images360.length} file(s) selected
+                  <div className="flex flex-wrap">
+                    {image360Urls.map((url, index) => (
+                      <div key={index} className="relative">
+                         <button
+                          type="button"
+                          className="t bg-red-500 text-white p-1 rounded-full"
+                          onClick={() => removeImage360(index)}
+                        >
+                          &times;
+                        </button>
+                        <img
+                          src={url}
+                          alt={`Selected file ${index + 1}`}
+                          className="w-16 h-16 object-cover m-1"
+                        />
+                       
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          
 
           <button type="submit" className='submitt'>Add Apartment</button>
         </form>
