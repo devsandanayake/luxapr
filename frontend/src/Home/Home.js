@@ -117,7 +117,6 @@ export default function Home() {
                 placeholder="Enter District" 
               />
         
-          
               {suggestions.map((suggestion, index) => (
                 <div
                   key={index}

@@ -470,13 +470,17 @@
   }
 
   .booking-button {
-    grid-column: 2 / span 2; /* Button spans the last two columns */
+    padding-top: 20px; /* Add padding for spacing */
+  }
+
+  /* .booking-button {
+    grid-column: 2 / 4; 
+    grid-row: 2; 
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 20px; /* Add padding for spacing */
-    width: 100%; /* Button takes up the full width */
-  }
+    padding-top: 20px;
+  } */
 
   .booking-button button {
     background-color: #d4a25a;
@@ -499,6 +503,7 @@
   .luxury-living-image img {
     width: 60%; 
   }
+
 }
 
 
@@ -568,10 +573,6 @@
   }
 
   .booking-button {
-    grid-column: 2 / span 2; /* Button spans the last two columns */
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding-top: 20px; /* Add padding for spacing */
     width: 100%; /* Button takes up the full width */
   }
@@ -666,10 +667,6 @@
   }
 
   .booking-button {
-    grid-column: 2 / span 2; /* Button spans the last two columns */
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding-top: 20px; /* Add padding for spacing */
     width: 100%; /* Button takes up the full width */
   }
@@ -762,10 +759,6 @@
   }
 
   .booking-button {
-    grid-column: 2 / span 2; /* Button spans the last two columns */
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding-top: 20px; /* Add padding for spacing */
     width: 100%; /* Button takes up the full width */
   }
@@ -872,10 +865,6 @@
   }
 
   .booking-button {
-    grid-column: span 2; /* Button spans both columns */
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding-top: 20px; /* Add padding for spacing */
   }
 
