@@ -49,7 +49,8 @@ export default function AddApartment() {
  
   const updateLocationSuggestions = (district) => {
     const suggestions = suggestLocations(district);
-    setSuggestions(suggestions);
+    const districtSuggestions = suggestions[0];
+    setSuggestions(districtSuggestions ? [districtSuggestions] : []);
   };
 
  
