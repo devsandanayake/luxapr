@@ -141,7 +141,7 @@ export default function ViewApartment() {
         if (isLoggedIn()) {
             navigate(`/visitinquiry?adcode=${apartmentDetails.adCode}`);
         } else {
-            navigate('/login');
+            navigate('/login', { state: { from: location, adcode } });
         }
     };
 
