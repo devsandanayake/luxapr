@@ -5,6 +5,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { FaHome, FaMapMarkerAlt, FaCity, FaBuilding, FaBed, FaBath, FaLayerGroup, FaRulerCombined, FaDollarSign, FaMoneyBillWave,  FaListAlt, FaStar, FaUsers } from 'react-icons/fa';
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import PopupWindow from './PopupWindow';
+import { suggestLocations } from 'srilanka-location'; 
 
 
 export default function AddApartment() {
@@ -42,27 +43,64 @@ export default function AddApartment() {
   const [image360Urls, setImage360Urls] = useState([]);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // New state variable for loading
+  const [features, setFeatures] = useState();
+  const [suggestions, setSuggestions] = React.useState([]);
+  const [areas, setAreas] = React.useState([]);
+ 
+  const updateLocationSuggestions = (district) => {
+    const suggestions = suggestLocations(district);
+    setSuggestions(suggestions);
+  };
 
+ 
+ 
+
+  React.useEffect(()=>{
+    axiosInstance.get('/api/ads-feature/viewAllAdsFeature')
+    .then((res) => {
+      setFeatures(res.data);
+    })
+    .catch((error) => {
+      console.error('Error fetching data:', error);
+    });
+  })
+
+  
 
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+      const { name, value, type, checked } = e.target;
 
-    if (name.includes('.')) {
-      const [parentKey, childKey] = name.split('.');
-      setFormData({
-        ...formData,
-        [parentKey]: {
-          ...formData[parentKey],
-          [childKey]: value,
-        },
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
+      if (name === 'districts') {
+        updateLocationSuggestions(value);
+      }
+  
+      if (type === 'checkbox') {
+          setFormData((prevState) => {
+              const selectedFeatures = prevState.features || [];
+              if (checked) {
+                  // Add feature to array
+                  return { ...prevState, features: [...selectedFeatures, value] };
+              } else {
+                  // Remove feature from array
+                  return { ...prevState, features: selectedFeatures.filter((feature) => feature !== value) };
+              }
+          });
+      } else if (name.includes('.')) {
+          const [parentKey, childKey] = name.split('.');
+          setFormData((prevState) => ({
+              ...prevState,
+              [parentKey]: {
+                  ...prevState[parentKey],
+                  [childKey]: value,
+              },
+          }));
+      } else {
+          setFormData((prevState) => ({
+              ...prevState,
+              [name]: value,
+          }));
+      }
   };
 
   const handleKeyPress = (e, fieldName) => {
@@ -218,6 +256,22 @@ export default function AddApartment() {
     }
   };
 
+
+  const handleSuggestionClick = (suggestion) => {
+    handleChange({
+        target: {
+            name: 'districts',
+            value: suggestion.district,
+            type: 'text'
+        }
+       
+    }
+  );
+  setAreas(suggestion.areas);
+  setSuggestions([]);
+     
+};
+
   return (
     <div className="full-screen">
       {isLoading && (
@@ -277,21 +331,7 @@ export default function AddApartment() {
             />
           </div>
         </div>
-      
-        <div className='addressinput-item mt-2'>
-          <label className='text-lg' htmlFor="areas">City</label>
-          <div className="relative">
-            <FaCity className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
-            <input
-              type="text"
-              name="areas"
-              onChange={handleChange}
-              className="addressinput pl-10"
-              required
-            />
-          </div>
-        </div>
-      
+
         <div className='addressinput-item mt-2'>
           <label className='text-lg' htmlFor="districts">District</label>
           <div className="relative">
@@ -299,12 +339,46 @@ export default function AddApartment() {
             <input
               type="text"
               name="districts"
+              value={formData.districts || ''}
               onChange={handleChange}
               className="addressinput pl-10"
               required
             />
           </div>
+          <div className="flex flex-col gap-2">
+            {suggestions.map((suggestion, index) => (
+              <div
+                key={index}
+                type="button"
+                name="districts"
+                className="border border-gray-300 p-2 rounded-lg cursor-pointer"
+                onClick={() => handleSuggestionClick(suggestion)}
+              >
+                {suggestion.district}
+              </div>
+            ))}
+          </div>
         </div>
+      
+        <div className='addressinput-item mt-2'>
+          <label className='text-lg' htmlFor="areas">City</label>
+          <div className="relative">
+            <FaCity className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold" />
+             <select
+              name="areas"
+              onChange={handleChange}
+              className="addressinput pl-10"
+              required
+            >
+              <option value="">Select City</option>
+              {areas.map((area, index) => (
+                <option key={index} value={area}>{area}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      
+      
       </div>
 
       <div className='mt-2'>
@@ -486,6 +560,25 @@ export default function AddApartment() {
             </li>
           ))}
         </ul>
+      </div>
+
+          <div>
+          <label className='text-lg'>Features</label>
+          <div className="relative flex flex-wrap">
+              {features && features.map((feature) => (
+                  <div key={feature._id} className="flex items-center mt-2 mr-4">
+                      <input
+                          type="checkbox"
+                          id={`feature-checkbox-${feature._id}`}
+                          name="features"
+                          value={feature.feature}
+                          onChange={handleChange}
+                          className="mr-2"
+                      />
+                      <label htmlFor={`feature-checkbox-${feature._id}`}>{feature.feature}</label>
+                  </div>
+              ))}
+          </div>
       </div>
 
           <div className='mt-2'>

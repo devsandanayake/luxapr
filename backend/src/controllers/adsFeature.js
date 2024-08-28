@@ -21,9 +21,21 @@ const viewAllAdsFeature = async (req, res) => {
     }
 }
 
+const editFeature = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const feature = req.body.feature;
+        const updatedFeature = await adsFeatureService.editFeature(id, feature);
+        res.status(200).send(updatedFeature);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 
 
 module.exports = {
     createAdsFeature,
-    viewAllAdsFeature
+    viewAllAdsFeature,
+    editFeature
 }

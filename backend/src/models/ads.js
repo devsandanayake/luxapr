@@ -76,6 +76,9 @@ const adsSchema =  new mongoose.Schema({
         type:String,
         required:true,
     },
+    features:{
+        type:[String]
+    },
     auctionStatus:{
          status:{
             type:Boolean,
