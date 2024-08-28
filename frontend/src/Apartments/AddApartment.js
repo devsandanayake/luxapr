@@ -5,7 +5,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { FaHome, FaMapMarkerAlt, FaCity, FaBuilding, FaBed, FaBath, FaLayerGroup, FaRulerCombined, FaDollarSign, FaMoneyBillWave,  FaListAlt, FaStar, FaUsers } from 'react-icons/fa';
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import PopupWindow from './PopupWindow';
-import { suggestLocations } from 'srilanka-location'; 
+import { suggestLocations } from 'location-sl'; 
 
 
 export default function AddApartment() {

@@ -11,7 +11,7 @@ import background from '../Images/bg2.jpg';
 import SriLanka from '../Images/SriLanka.png';
 import { FaArrowRight } from "react-icons/fa";
 import ApartmentCard from '../ApartmentCard/ApartmentCard';
-import { suggestLocations } from 'srilanka-location'; 
+import { suggestLocations } from 'location-sl'; 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 

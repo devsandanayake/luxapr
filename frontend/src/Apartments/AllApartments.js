@@ -4,7 +4,7 @@ import axiosInstance from '../axiosConfig';
 import './AllApartments.css';
 import NewCard from '../ApartmentCard/NewCard';
 import SmallCard from '../ApartmentCard/ApartmentCard';
-import { suggestLocations } from 'srilanka-location';
+import { suggestLocations } from 'location-sl'; 
 
 export default function AllApartments() {
     const location = useLocation();
