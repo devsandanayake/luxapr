@@ -97,8 +97,8 @@ const openORcloseForBidding = async (req, res, next) => {
 const updateAuctionDetails = async (req, res, next) => {
     try {
         const adCode = req.body.adCode;
-        const { startDate, endDate, startPrice, maxRate , BidValue } = req.body;
-        const ad = await adsService.updateAuctionDetails(adCode, startDate, endDate, startPrice, maxRate,BidValue);
+        const { startDate,startTime, endDate,endTime, startPrice, maxRate , BidValue } = req.body;
+        const ad = await adsService.updateAuctionDetails(adCode, startDate,startTime, endDate,endTime, startPrice, maxRate,BidValue);
         res.json({ message: "Auction details updated successfully", ad });
     } catch (err) {
         next(err);
