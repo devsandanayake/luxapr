@@ -25,11 +25,23 @@ const bidAuction = async (req, res, next) => {
 }
 
 
+const viewRegistredAuctions = async (req, res, next) => {
+    try {
+        const user = req.user;
+        const auctions = await auctionRegService.viewRegistredAuctions(user);
+        res.json(auctions);
+    } catch (err) {
+        next(err);
+    }
+}
+
+
 
 
 
 
 module.exports = {
     registerAuction,
-    bidAuction
+    bidAuction,
+    viewRegistredAuctions
 };

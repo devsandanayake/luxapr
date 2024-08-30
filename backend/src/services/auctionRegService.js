@@ -148,9 +148,15 @@ const bidAuction = async (auctionID, username, adCode, bidAmountParam) => {
 };
 
 
+const viewRegistredAuction = async (username) => {
+    return await auctionRegModel.find({ username });
+};
+
+
 module.exports = {
     registerAuction,
     bidAuction,
+    viewRegistredAuction
 };
 
 
