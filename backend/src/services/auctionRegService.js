@@ -2,6 +2,7 @@ const auctionRegModel = require('../models/auctionRegModel');
 const AdsModel = require('../models/ads');
 const emailService = require('./emailService');
 const UserModel = require('../models/user');
+const mongoose = require('mongoose');
 
 //alert the bidder if the bid is lower than the current rate
 
@@ -89,64 +90,76 @@ const registerAuction = async (auctionID, username, adCode) => {
 
 
 };
-
+ 
 
 const bidAuction = async (auctionID, username, adCode, bidAmountParam) => {
-    // Find the advertisement by adCode and ensure the auction is not closed
-    const ad = await AdsModel.findOne({ adCode });
+    const session = await mongoose.startSession();
+    session.startTransaction();
 
-    // If the advertisement doesn't exist, throw an error
-    if (!ad) {
-        throw new Error('Ad not found');
+    try {
+        // Find the advertisement by adCode within the transaction session
+        const ad = await AdsModel.findOne({ adCode }).session(session);
+
+        // If the advertisement doesn't exist, throw an error
+        if (!ad) {
+            throw new Error('Ad not found');
+        }
+
+        const maxRate = Number(ad.auctionStatus.maxRate);
+        const currentRate = Number(ad.auctionStatus.currentRate);
+
+        // If the auction is closed, throw an error
+        if (maxRate < currentRate) {
+            throw new Error('Auction is closed');
+        }
+
+        // Increment the currentRate atomically within the transaction
+        const updatedAd = await AdsModel.findOneAndUpdate(
+            { adCode, 'auctionStatus.maxRate': { $gte: currentRate } },
+            { $inc: { 'auctionStatus.currentRate': bidAmountParam } },
+            { new: true, session }
+        );
+
+        // If the advertisement doesn't exist or the auction is closed, throw an error
+        if (!updatedAd) {
+            throw new Error('Ad not found or auction is closed');
+        }
+
+        // Find the auction registration by auctionID and username within the transaction session
+        const auctionReg = await auctionRegModel.findOne({ auctionID, username }).session(session);
+
+        // If the auction registration doesn't exist, throw an error
+        if (!auctionReg) {
+            throw new Error('Auction registration not found');
+        }
+
+        // Check if the user has completed the payment, if not, throw an error
+        if (!auctionReg.paymentStatus) {
+            throw new Error('Payment not done');
+        }
+
+        // Update the bidAmount array and userOffer fields
+        auctionReg.bidAmount = auctionReg.bidAmount || [];
+        auctionReg.bidAmount.push(bidAmountParam);
+        auctionReg.userOffer = updatedAd.auctionStatus.currentRate;
+
+        // Save the updated auction registration within the transaction
+        await auctionReg.save({ session });
+
+        // Commit the transaction
+        await session.commitTransaction();
+        session.endSession();
+
+        // Notify the bidder
+        return alertBidder(username, auctionID);
+    } catch (error) {
+        // If any error occurs, abort the transaction
+        await session.abortTransaction();
+        session.endSession();
+        throw error;
     }
-
-    // Ensure auctionStatus fields are numbers
-    const maxRate = Number(ad.auctionStatus.maxRate);
-    const currentRate = Number(ad.auctionStatus.currentRate);
-
-    // If the auction is closed, throw an error
-    if (maxRate < currentRate) {
-        throw new Error('Auction is closed');
-    }
-
-    // Increment the currentRate atomically
-    const updatedAd = await AdsModel.findOneAndUpdate(
-        { adCode, 'auctionStatus.maxRate': { $gte: currentRate } },
-        { $inc: { 'auctionStatus.currentRate': bidAmountParam } },
-        { new: true }
-    );
-
-    // If the advertisement doesn't exist or the auction is closed, throw an error
-    if (!updatedAd) {
-        throw new Error('Ad not found or auction is closed');
-    }
-
-    // Find the auction registration by auctionID and username
-    const auctionReg = await auctionRegModel.findOne({ auctionID, username });
-
-    // If the auction registration doesn't exist, throw an error
-    if (!auctionReg) {
-        throw new Error('Auction registration not found');
-    }
-
-    // Payment logic false can't bid
-    if (!auctionReg.paymentStatus) {
-        throw new Error('Payment not done');
-    }
-
-    // Initialize bidAmount array if it doesn't exist, then add the new bid amount
-    auctionReg.bidAmount = auctionReg.bidAmount || [];
-    auctionReg.bidAmount.push(bidAmountParam);
-
-    // Update the user's offer with the new currentRate
-    auctionReg.userOffer = updatedAd.auctionStatus.currentRate;
-
-    // Save the updated auction registration
-    await auctionReg.save();
-
-    // Notify the bidder
-    return alertBidder(username, auctionID);
 };
+
 
 const viewRegistredAuction = async (username,adCode) => {
     return await auctionRegModel.find({ username, adCode });
