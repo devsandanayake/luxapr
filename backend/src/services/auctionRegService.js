@@ -93,14 +93,31 @@ const registerAuction = async (auctionID, username, adCode) => {
 
 const bidAuction = async (auctionID, username, adCode, bidAmountParam) => {
     // Find the advertisement by adCode and ensure the auction is not closed
-    const ad = await AdsModel.findOneAndUpdate(
-        { adCode, 'auctionStatus.maxRate': { $gte: 'auctionStatus.currentRate' } },
+    const ad = await AdsModel.findOne({ adCode });
+
+    // If the advertisement doesn't exist, throw an error
+    if (!ad) {
+        throw new Error('Ad not found');
+    }
+
+    // Ensure auctionStatus fields are numbers
+    const maxRate = Number(ad.auctionStatus.maxRate);
+    const currentRate = Number(ad.auctionStatus.currentRate);
+
+    // If the auction is closed, throw an error
+    if (maxRate < currentRate) {
+        throw new Error('Auction is closed');
+    }
+
+    // Increment the currentRate atomically
+    const updatedAd = await AdsModel.findOneAndUpdate(
+        { adCode, 'auctionStatus.maxRate': { $gte: currentRate } },
         { $inc: { 'auctionStatus.currentRate': bidAmountParam } },
         { new: true }
     );
 
     // If the advertisement doesn't exist or the auction is closed, throw an error
-    if (!ad) {
+    if (!updatedAd) {
         throw new Error('Ad not found or auction is closed');
     }
 
@@ -122,7 +139,7 @@ const bidAuction = async (auctionID, username, adCode, bidAmountParam) => {
     auctionReg.bidAmount.push(bidAmountParam);
 
     // Update the user's offer with the new currentRate
-    auctionReg.userOffer = ad.auctionStatus.currentRate;
+    auctionReg.userOffer = updatedAd.auctionStatus.currentRate;
 
     // Save the updated auction registration
     await auctionReg.save();
