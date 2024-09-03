@@ -62,6 +62,9 @@ export default function AuctionInquiry() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    
+    console.log('Submitting form data:', formData); // Log form data to check what is being sent
+
     try {
       const response = await axiosInstance.post('/api/auction-inquery/addInquery', formData, {
         headers: {
@@ -71,10 +74,12 @@ export default function AuctionInquiry() {
       setIsPopupVisible(true);
     } catch (error) {
       console.error('There was an error creating the rental transaction!', error);
+      setError(error.response?.data?.details || 'An unknown error occurred');
     } finally {
       setIsLoading(false);
     }
-  };
+};
+
 
   return (
     <>

@@ -1,0 +1,174 @@
+/* General Container Styles */
+.xauction-details {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+  background-color: #f7f7f7; /* Light background for contrast */
+  align-items: flex-start;
+}
+
+.title-time{
+  display: flex;
+  width: 100%;
+}
+
+.xapartment-title{
+  font-size: 35px;
+  margin-left: 10px;
+  background-color: #f7f7f7;
+}
+
+/* Image Gallery */
+.xgallery-container {
+  display: flex;
+  width: 60%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.xmain-image {
+  width: 900px; /* Adjust size as needed */
+  height: 500px;
+  margin-bottom: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.xmain-image-display {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the area */
+}
+
+.xthumbnail-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.xthumbnail {
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+  object-fit: cover;
+}
+
+.xthumbnail:hover,
+.xactive-thumbnail {
+  border-color: #ff4c4c; /* Red border for active or hover thumbnails */
+}
+
+/* Auction Details Section */
+.xauction-info-container {
+  width: 40%;
+}
+.xauction-info {
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 20px;
+}
+
+.xcurrent-bid {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff4c4c;
+  margin-bottom: 10px;
+}
+
+.xcurrent-bid span {
+  color: #ff4c4c;
+}
+
+.xtime-left {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.xtime-left h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.xtime-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.xauction-end,
+.xadditional-info {
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #555;
+}
+
+.xbid-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.xbid-input {
+  width: 100px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.xbid-button {
+  background-color: #ff4c4c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 14px;
+}
+
+.xbid-button:hover {
+  background-color: #e63c3c;
+}
+
+/* Additional Information */
+.xadditional-info p {
+  margin: 5px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .xauction-details {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .xauction-info {
+    margin-left: 0;
+    max-width: 100%;
+  }
+
+  .xgallery-container {
+    width: 100%;
+  }
+
+  .xmain-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .xthumbnail-container {
+    justify-content: center;
+  }
+}

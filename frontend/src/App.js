@@ -20,7 +20,8 @@ import VisitInquiry from './VisitInquiry/VisitInquiry';
 import EditProfile from './UserProfile/EditProfile';
 import AuctionApartments from './Auction/AuctionApartments';
 import Charging from './UserProfile/Charging';
-
+import AuctionPartmentView from './Auction/AuctionPartmentView';
+import AuctionDetails from './Auction/AuctionDetails';
 function App() {
   return (
     <BrowserRouter>
@@ -42,6 +43,10 @@ function App() {
           <Route path="/editprofile" element={<EditProfile />} />
           <Route path="/auctionapartments" element={<AuctionApartments />} />
           <Route path="/charging/planes" element={<Charging />} />
+          <Route path="/auctionapartmentview" element={<AuctionPartmentView />} />
+          <Route path="/auctiondetails" element={<AuctionDetails />} />
+
+
         </Routes>
       </div>
       <Footer />
