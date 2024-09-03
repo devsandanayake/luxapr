@@ -7,15 +7,25 @@
   align-items: flex-start;
 }
 
-.title-time{
-  display: flex;
-  width: 100%;
-}
-
 .xapartment-title{
   font-size: 35px;
   margin-left: 10px;
   background-color: #f7f7f7;
+}
+
+.xtime-left {
+  display: flex;
+  justify-content: end;
+  margin-right: 10px;
+  font-size: 1.4rem;
+  background-color: #f7f7f7;
+  color: #ff4c4c;
+  font-weight: bold;
+}
+
+.xtime-values {
+  margin-left: 10px;
+  color: #ff4c4c;
 }
 
 /* Image Gallery */
@@ -85,30 +95,11 @@
   color: #ff4c4c;
 }
 
-.xtime-left {
-  margin-top: 10px;
-  margin-bottom: 15px;
-}
-
-.xtime-left h3 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-}
-
-.xtime-values {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  font-size: 14px;
-  color: #666;
-}
 
 .xauction-end,
 .xadditional-info {
   margin-bottom: 15px;
-  font-size: 14px;
+  font-size: 18px;
   color: #555;
 }
 
@@ -128,11 +119,12 @@
 }
 
 .xbid-button {
-  background-color: #ff4c4c;
+  background-color: #d4a25a;
   color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
+  width: 80px;
   cursor: pointer;
   transition: background-color 0.3s;
   font-size: 14px;

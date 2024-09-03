@@ -75,26 +75,30 @@ export default function AuctionPartmentView() {
         setIsPannellumReady(true);
     }, []);
 
-    useEffect(() => {
-        if (apartmentDetails.auctionStatus && apartmentDetails.auctionStatus.startDate) {
-            const interval = setInterval(() => {
-                const auctionStartDate = new Date(apartmentDetails.auctionStatus.startDate);
-                const currentTime = new Date();
-                const timeDifference = auctionStartDate - currentTime;
+        useEffect(() => {
+      if (apartmentDetails.auctionStatus && apartmentDetails.auctionStatus.startDate) {
+        const interval = setInterval(() => {
+          const auctionStartDate = new Date(apartmentDetails.auctionStatus.startDate);
+          const currentTime = new Date();
+          const timeDifference = auctionStartDate - currentTime;
     
-                if (timeDifference > 0) {
-                    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
-                    const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
-                    const seconds = Math.floor((timeDifference / 1000) % 60);
-                    setCountdown({ days, hours, minutes, seconds });
-                } else {
-                    clearInterval(interval);
-                }
-            }, 1000);
+          console.log('Auction Start Date:', auctionStartDate);
+          console.log('Current Time:', currentTime);
+          console.log('Time Difference:', timeDifference);
     
-            return () => clearInterval(interval);
-        }
+          if (timeDifference > 0) {
+            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+            const seconds = Math.floor((timeDifference / 1000) % 60);
+            setCountdown({ days, hours, minutes, seconds });
+          } else {
+            clearInterval(interval);
+          }
+        }, 1000);
+    
+        return () => clearInterval(interval);
+      }
     }, [apartmentDetails.auctionStatus]);
 
 
@@ -106,7 +110,7 @@ export default function AuctionPartmentView() {
             }
     
             try {
-                const response = await axiosInstance.get('/api/auction/viewRegistredAuctions', {
+                const response = await axiosInstance.get(`/api/auction/viewRegistredAuctions/${adcode}`, {                    
                     headers: {
                         'Authorization': `${token}`, 
                     },

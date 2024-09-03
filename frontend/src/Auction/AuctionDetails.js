@@ -19,36 +19,74 @@ export default function AuctionDetails() {
   const [intervalId, setIntervalId] = useState(null);
   const [bidAmount, setBidAmount] = useState('');
   const [bidFieldDisabled, setBidFieldDisabled] = useState(false);
+  const [registeredAuctions, setRegisteredAuctions] = useState([]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  
-    const fetchApartmentDetails = () => {
-      axiosInstance.get(`/api/ads/viewSpecificAd/${adcode}`)
-        .then((response) => {
-          setApartmentDetails(response.data);
-          if (response.data.images && response.data.images.length > 0) {
-            setSelectedImage(response.data.images[0]);
-          }
-          setIsPannellumReady(true);
-          handleCountdown(response.data.auctionStatus);
-          setBidAmount(response.data.auctionStatus.BidValue); // Set initial bid amount
-        })
-        .catch((error) => {
-          console.error('Error fetching apartment details:', error);
-        });
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    
+      const fetchApartmentDetails = () => {
+        console.log('hello');
+        axiosInstance.get(`/api/ads/viewSpecificAd/${adcode}`)
+          .then((response) => {
+            setApartmentDetails(response.data);
+            handleCountdown(response.data.auctionStatus);
+            setBidAmount(response.data.auctionStatus.BidValue); // Set initial bid amount
+          })
+          .catch((error) => {
+            console.error('Error fetching apartment details:', error);
+          });
+      };
+    
+      const fetchApartmentImages = () => {
+        axiosInstance.get(`/api/ads/viewSpecificAd/${adcode}`)
+          .then((response) => {
+            if (response.data.images && response.data.images.length > 0) {
+              setSelectedImage(response.data.images[0]);
+            }
+            setIsPannellumReady(true);
+          })
+          .catch((error) => {
+            console.error('Error fetching apartment images:', error);
+          });
+      };
+
+      const fetchRegisteredAuctions = async () => {
+        if (!token) {
+            console.error('No token found');
+            return;
+        }
+
+        try {
+            const response = await axiosInstance.get(`/api/auction/viewRegistredAuctions/${adcode}`, {                
+              headers: {
+                    'Authorization': `${token}`, 
+                },
+            });
+            setRegisteredAuctions(response.data);
+            console.log('Registered auctions:', response.data);
+        } catch (error) {
+            console.error('Error fetching registered auctions:', error);
+        }
     };
+    
+      fetchApartmentDetails(); // Initial fetch
+      fetchApartmentImages(); // Fetch images
+      fetchRegisteredAuctions(); // Fetch registered auctions
+
+      const fetchAllData = () => {
+        fetchApartmentDetails();
+        fetchRegisteredAuctions();
+      };
+    
+      const interval = setInterval(fetchAllData,  1000); // Fetch every 60 seconds
+    
+      return () => {
+        // Clear the interval on component unmount
+        clearInterval(interval);
+      };
+    }, [adcode]);
   
-    fetchApartmentDetails(); // Initial fetch
-  
-    const interval = setInterval(fetchApartmentDetails, 1000); // Fetch every 60 seconds
-    setIntervalId(interval);
-  
-    return () => {
-      // Clear the interval on component unmount
-      clearInterval(interval);
-    };
-  }, [adcode]);
+
 
   const handleImageClick = (index) => {
     setSelectedImage(apartmentDetails.images[index]);
@@ -91,6 +129,8 @@ export default function AuctionDetails() {
     const id = setInterval(updateCountdown, 1000); // Update every second
     setIntervalId(id);
   };
+
+
 
   const calculateCountdown = (targetDate) => {
     const now = new Date();
@@ -139,19 +179,44 @@ export default function AuctionDetails() {
 
   const isBidButtonDisabled = auctionStatus !== 'ongoing' || bidFieldDisabled;
 
+
+  const lastBid = registeredAuctions.find(auction => auction.adCode === adcode)?.userOffer || 'No bids yet';
+
   return (
     <>
-    <div className='title-time'>
 
     <div className='xapartment-title'>
       <h1>{apartmentDetails.title}</h1>
     </div>
 
     <div className='xtime-left'>
-      
-    </div>
+    {auctionStatus === 'start' && (
+            <div className="xtime-left">
+              <h3>Starts in:</h3>
+              <div className="xtime-values">
+                <span>{countdown}</span>
+              </div>
+            </div>
+          )}
+
+          {auctionStatus === 'ongoing' && (
+            <div className="xtime-left">
+              <h3>Time left:</h3>
+              <div className="xtime-values">
+                <span>{countdown}</span>
+              </div>
+            </div>
+          )}
+
+          {auctionStatus === 'ended' && (
+            <div className="xauction-end">
+              <p>Auction Not Available</p>
+            </div>
+          )}
 
     </div>
+
+
 
     <div className="xauction-details">
 
@@ -196,46 +261,20 @@ export default function AuctionDetails() {
         <div className="xauction-info">
           <h2 className="xcurrent-bid">Current bid: <span>{apartmentDetails?.auctionStatus?.currentRate}</span></h2>
 
-          {auctionStatus === 'start' && (
-            <div className="xtime-left">
-              <h3>Starts in:</h3>
-              <div className="xtime-values">
-                <span>{countdown}</span>
-              </div>
-            </div>
-          )}
-
-          {auctionStatus === 'ongoing' && (
-            <div className="xtime-left">
-              <h3>Time left:</h3>
-              <div className="xtime-values">
-                <span>{countdown}</span>
-              </div>
-            </div>
-          )}
-
-          {auctionStatus === 'ended' && (
-            <div className="xauction-end">
-              <p>Auction Not Available</p>
-            </div>
-          )}
+          
 
           <div className="xauction-end">
-            <p>Auction ends: {`${apartmentDetails?.auctionStatus?.endDate} ${apartmentDetails?.auctionStatus?.endTime}`}</p>
+            <p>Auction ends: {`${apartmentDetails?.auctionStatus?.endDate} at ${apartmentDetails?.auctionStatus?.endTime}`}</p>
           </div>
 
           <div className="xbid-controls">
             <p>Bid Amount</p>
-            <input 
-              type="number" 
-              min="1000" 
-              step="0.01" 
-              placeholder="1,000.00 £" 
+                     <p 
               className="xbid-input" 
-              value={bidAmount} 
-              onChange={(e) => setBidAmount(e.target.value)} 
-              disabled={bidFieldDisabled}
-            />
+              style={{ display: 'inline-block', padding: '8px', border: '1px solid #ccc', borderRadius: '4px', backgroundColor: '#f9f9f9' }}
+            >
+              {bidAmount}
+            </p>
             <button 
               className="xbid-button" 
               disabled={isBidButtonDisabled} 
@@ -243,6 +282,9 @@ export default function AuctionDetails() {
             >
               Bid
             </button>
+
+
+            Your Last Bid {lastBid}
           </div>
         </div>
       </div>
