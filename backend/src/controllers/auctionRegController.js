@@ -28,7 +28,8 @@ const bidAuction = async (req, res, next) => {
 const viewRegistredAuctions = async (req, res, next) => {
     try {
         const user = req.user;
-        const auctions = await auctionRegService.viewRegistredAuction(user);
+        const adCode = req.params.adCode;
+        const auctions = await auctionRegService.viewRegistredAuction(user, adCode);
         res.json(auctions);
     } catch (err) {
         next(err);

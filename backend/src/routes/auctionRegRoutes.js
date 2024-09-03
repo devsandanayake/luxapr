@@ -6,7 +6,7 @@ const  authenticateUser  = require('../middlewares/authuser');
 router.post('/registerAuction', authenticateUser.authUser, auctionRegController.registerAuction);
 router.post('/bidAuction', authenticateUser.authUser, auctionRegController.bidAuction);
 
-router.get('/viewRegistredAuctions', authenticateUser.authUser, auctionRegController.viewRegistredAuctions);
+router.get('/viewRegistredAuctions/:adCode', authenticateUser.authUser, auctionRegController.viewRegistredAuctions);
 
 
 module.exports = router;
