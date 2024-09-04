@@ -141,8 +141,12 @@ const bidAuction = async (auctionID, username, adCode, bidAmountParam) => {
         // Update the bidAmount array and userOffer fields
         auctionReg.bidAmount = auctionReg.bidAmount || [];
         auctionReg.bidAmount.push(bidAmountParam);
-        auctionReg.userOffer = updatedAd.auctionStatus.currentRate;
-
+       
+         // Update the user's offer with the new currentRate and timestamp
+         auctionReg.userOffer.push({
+             rate: updatedAd.auctionStatus.currentRate,
+             timestamp: new Date().toISOString()
+            });
         // Save the updated auction registration within the transaction
         await auctionReg.save({ session });
 
@@ -165,6 +169,18 @@ const viewRegistredAuction = async (username,adCode) => {
     return await auctionRegModel.find({ username, adCode });
 };
 
+const viewAllRegUsers = async (auctionID) => {
+    return await auctionRegModel.find({ auctionID });
+};
+
+const viewOtherUserOffers = async (auctionID) => {
+    return await auctionRegModel.find(
+        { auctionID },
+        { userOffer: 1, _id: 0 }  
+    );
+}
+
+
 
 
 
@@ -172,7 +188,9 @@ const viewRegistredAuction = async (username,adCode) => {
 module.exports = {
     registerAuction,
     bidAuction,
-    viewRegistredAuction
+    viewRegistredAuction,
+    viewAllRegUsers,
+    viewOtherUserOffers
 };
 
 

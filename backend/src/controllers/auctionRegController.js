@@ -37,6 +37,26 @@ const viewRegistredAuctions = async (req, res, next) => {
 }
 
 
+const viewAllRegUsers = async (req, res, next) => {
+    try {
+        const auctionID = req.params.auctionID;
+        const users = await auctionRegService.viewAllRegUsers(auctionID);
+        res.json(users);
+    } catch (err) {
+        next(err);
+    }
+}
+
+const viewOtherUserOffers = async (req, res, next) => {
+    try {
+        const auctionID = req.params.auctionID;
+        const offers = await auctionRegService.viewOtherUserOffers(auctionID);
+        res.json(offers);
+    } catch (err) {
+        next(err);
+    }
+}
+
 
 
 
@@ -44,5 +64,7 @@ const viewRegistredAuctions = async (req, res, next) => {
 module.exports = {
     registerAuction,
     bidAuction,
-    viewRegistredAuctions
+    viewRegistredAuctions,
+    viewAllRegUsers,
+    viewOtherUserOffers
 };

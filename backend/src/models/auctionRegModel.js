@@ -24,9 +24,16 @@ const auctionRegSchema = new mongoose.Schema({
     bidAmount:{
         type: [Number]
     },
-    userOffer:{
-        type:Number
-    }
+    userOffer: [{
+        rate: {
+            type: Number,
+            required: true
+        },
+        timestamp: {
+            type: Date,
+            required: true
+        }
+    }]
 
 });
 
