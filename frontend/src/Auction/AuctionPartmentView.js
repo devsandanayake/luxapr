@@ -23,7 +23,6 @@ export default function AuctionPartmentView() {
     const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : {};
     const userName = decodedToken.firstName || '';
 
-
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const adcode = searchParams.get('adcode');
@@ -43,6 +42,7 @@ export default function AuctionPartmentView() {
         endDate: ''
     });
     const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    const [countdownMessage, setCountdownMessage] = useState('');
 
     const navigate = useNavigate();
 
@@ -75,44 +75,56 @@ export default function AuctionPartmentView() {
         setIsPannellumReady(true);
     }, []);
 
-        useEffect(() => {
-      if (apartmentDetails.auctionStatus && apartmentDetails.auctionStatus.startDate) {
-        const interval = setInterval(() => {
-          const auctionStartDate = new Date(apartmentDetails.auctionStatus.startDate);
-          const currentTime = new Date();
-          const timeDifference = auctionStartDate - currentTime;
-    
-          console.log('Auction Start Date:', auctionStartDate);
-          console.log('Current Time:', currentTime);
-          console.log('Time Difference:', timeDifference);
-    
-          if (timeDifference > 0) {
+    useEffect(() => {
+        if (apartmentDetails.auctionStatus && apartmentDetails.auctionStatus.startDate && apartmentDetails.auctionStatus.endDate) {
+            const interval = setInterval(() => {
+                const auctionStartDate = new Date(apartmentDetails.auctionStatus.startDate);
+                const auctionEndDate = new Date(apartmentDetails.auctionStatus.endDate);
+                const currentTime = new Date();
+
+                if (currentTime < auctionStartDate) {
+                    // Auction hasn't started yet, countdown to start
+                    const timeDifference = auctionStartDate - currentTime;
+                    updateCountdown(timeDifference, 'Bidding opens in');
+                } else if (currentTime >= auctionStartDate && currentTime < auctionEndDate) {
+                    // Auction is ongoing, countdown to end
+                    const timeDifference = auctionEndDate - currentTime;
+                    updateCountdown(timeDifference, 'Bidding ends in');
+                } else {
+                    // Auction has ended
+                    setCountdownMessage('Not Available');
+                    clearInterval(interval);
+                }
+            }, 1000);
+
+            return () => clearInterval(interval);
+        }
+    }, [apartmentDetails.auctionStatus]);
+
+    const updateCountdown = (timeDifference, message) => {
+        if (timeDifference > 0) {
             const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
             const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
             const seconds = Math.floor((timeDifference / 1000) % 60);
             setCountdown({ days, hours, minutes, seconds });
-          } else {
-            clearInterval(interval);
-          }
-        }, 1000);
-    
-        return () => clearInterval(interval);
-      }
-    }, [apartmentDetails.auctionStatus]);
+            setCountdownMessage(message);
+        } else {
+            setCountdownMessage('Not Available');
+        }
+    };
 
-
-        useEffect(() => {
+    useEffect(() => {
         const fetchRegisteredAuctions = async () => {
             if (!token) {
                 console.error('No token found');
                 return;
             }
-    
+
             try {
-                const response = await axiosInstance.get(`/api/auction/viewRegistredAuctions/${adcode}`, {                    
+                const response = await axiosInstance.get(`/api/auction/viewRegistredAuctions/${adcode}`, {
                     headers: {
-                        'Authorization': `${token}`, 
+                        'Authorization': `${token}`,
                     },
                 });
                 setRegisteredAuctions(response.data);
@@ -121,11 +133,9 @@ export default function AuctionPartmentView() {
                 console.error('Error fetching registered auctions:', error);
             }
         };
-    
+
         fetchRegisteredAuctions(); // Initial fetch
     }, [token]);
-    
-
 
     const handleImageClick = (index) => {
         setSelectedImage(apartmentDetails.images[index]);
@@ -158,26 +168,21 @@ export default function AuctionPartmentView() {
     const handleRegister = () => {
         const auctionID = apartmentDetails.auctionStatus?.auctionID;
         const adcode = apartmentDetails.adCode;
-    
+
         if (isLoggedIn()) {
-            // Check if the current adCode matches any of the registered auctions' adCode
             const isAlreadyRegistered = registeredAuctions.some(auction => auction.adCode === adcode);
-    
+
             if (isAlreadyRegistered) {
-                // If already registered, navigate to the auction details page
                 navigate(`/auctiondetails?auctionID=${auctionID}&adcode=${adcode}`);
             } else {
-                // If not registered, navigate to the auction registration page
                 navigate(`/auctionregistration?auctionID=${auctionID}&adcode=${adcode}`);
             }
         } else {
-            // If not logged in, redirect to the login page with state
             navigate('/login', { state: { from: location, auctionID, adcode } });
         }
     };
-    
 
-      const handlebookvisit = () => {
+    const handlebookvisit = () => {
         const auctionID = apartmentDetails.auctionStatus?.auctionID;
         if (isLoggedIn()) {
             navigate(`/auctioninquiry?adcode=${apartmentDetails.adCode}&auctionID=${auctionID}`);
@@ -186,46 +191,43 @@ export default function AuctionPartmentView() {
         }
     };
 
-
-
-     const capitalizeFirstLetter = (string) => {
+    const capitalizeFirstLetter = (string) => {
         if (!string) return '';
         return string.charAt(0).toUpperCase() + string.slice(1);
     };
 
-      const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-      const handleSeeMore = () => {
+    const handleSeeMore = () => {
         setIsPopupOpen(true);
-      };
-    
-      const closePopup = () => {
+    };
+
+    const closePopup = () => {
         setIsPopupOpen(false);
-      };
+    };
 
     return (
         <>
             <div className='fullScreen'>
+                <div className='countdown-breadcrumb'>
+                    <div>
+                        <Breadcrumb />
+                    </div>
 
+                    <div className='countdown-timer'>
+                        <h2>
+                            {countdownMessage}
+                            {countdownMessage !== 'Not Available' && (
+                                <span className='countdown-timer-span'>
+                                    {' '}
+                                    {`${countdown.days}d ${countdown.hours}h ${countdown.minutes}m ${countdown.seconds}s`}
+                                </span>
+                     )}
+                        </h2>
+                    </div>
 
-        <div className='flex flex-row'>
-        <div>
-                    <Breadcrumb />
                 </div>
-
-                <div className='countdown-timer'>
-                    <h2 className='text-2xl font-bold'>
-                        Bidding opens in
-                        <span className='text-red-600'>
-                            {' '}
-                            {`${countdown.days}d ${countdown.hours}h ${countdown.minutes}m ${countdown.seconds}s`}
-                        </span>
-                    </h2>
-                </div>
-
-        </div>
                 
-
 
                 <div className='apartment-description'>
                         </div>
@@ -417,9 +419,16 @@ export default function AuctionPartmentView() {
                         <hr />
 
                         <div className="starting-bid">
-                            <p>Starting bid</p>
+                            <p>Starting Bid</p>
                             <h3>{apartmentDetails.currency} &nbsp;{apartmentDetails.auctionStatus?.startPrice}</h3>
                         </div>
+
+                        {apartmentDetails.auctionStatus?.currentRate && (
+                          <div className="starting-bid">
+                            <p>Current Rate</p>
+                            <h3>{apartmentDetails.currency} &nbsp;{apartmentDetails.auctionStatus.currentRate}</h3>
+                          </div>
+                        )}
 
 
                         <button className="bid-button" 

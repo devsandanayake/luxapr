@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
 import './AuctionApartments.css';
 import background from '../Images/ap1.jpg';
+import background1 from '../Images/ap2.jpg';
+import background2 from '../Images/ap3.jpg';
 import AuctionCard from '../AuctionCard/AuctionCard';
+import { FaArrowRight } from 'react-icons/fa';
 
 export default function AuctionApartments() {
   const [apartments, setApartments] = useState([]);
@@ -41,16 +44,26 @@ export default function AuctionApartments() {
         </div>
         
         {/* Image Section */}
-        <div className="auction-image">
-          <img src={background} alt="Auction House" className="auction-img" />
+        <div className="auction-images">
+          <img src={background} alt="Auction House 1" className="auction-img" />
+          <img src={background1} alt="Auction House 2" className="small-img" />
         </div>
       </div>
 
       {/* Auction Apartments Section */}
+      <div className='zauction-apartments'>
+        <h1 className='auction-apartments-title'>Our Latest Auction Apartments</h1>
+      </div>
+
+
       <div className="auction-list">
         {apartments.map((apartment, index) => (
           <AuctionCard key={index} apartment={{ element: apartment }} />
         ))}
+      </div>
+
+        <div className='w-full flex items-center justify-center mb-10'>
+        <button className='all-apartments-button'> All Apartments <FaArrowRight className="arrow" /></button>
       </div>
     </>
   );

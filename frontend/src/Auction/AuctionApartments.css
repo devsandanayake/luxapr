@@ -10,7 +10,6 @@
   .auction-content {
     text-align: center;
     width: 60%;
-
   }
   
   .auction-title {
@@ -65,43 +64,133 @@
     color: #444;
   }
   
-  .auction-image {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .auction-images {
     width: 40%;
+    padding: 10px;
   }
-  
+
   .auction-img {
     width: 500px; /* Adjust image size */
     height: auto;
     border-radius: 8px; /* Optional rounded corners */
+    margin-left: 40px;
   }
-   .auction-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      padding: 20px;
-  }
-  
-  @media (max-width: 768px) {
-    .auction-container {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .auction-content, .auction-image {
-      max-width: 100%;
-      text-align: center;
-    }
-  
-    .search-input {
-      width: 100%;
-    }
-  
-    .search-button {
-      width: 100%;
-    }
+
+  .small-img{
+    width: 500px; /* Adjust image size */
+    height: auto;
+    border-radius: 8px; /* Optional rounded corners */
+    margin-left: auto;
+    margin-top: 10px;
   }
   
+  .auction-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+  }
+
+  .zauction-apartments {
+    font-size: 1.8rem;
+    margin-left: 20px;
+  }
+  
+  @media (max-width: 1536px) and (max-height: 864px){
+        .auction-img {
+          width: 400px;
+        }
+        .small-img{
+          width: 400px;
+        }
+        
+  }
+
+  @media (max-width: 1440px) and (max-height: 900px){
+    .auction-img {
+      width: 400px;
+    }
+    .small-img{
+      width: 400px;
+    }
+}
+
+@media (max-width: 1336px) and (max-height: 768px){
+  .auction-img {
+    width: 350px;
+  }
+  .small-img{
+    width: 350px;
+  }
+  .auction-list {
+    padding: 10px;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 1200px) and (max-height: 800px){
+  .auction-img {
+    width: 350px;
+  }
+  .small-img{
+    width: 350px;
+  }
+  .auction-images {
+    padding: 5px;
+  }
+  .auction-list {
+    padding: 10px;
+    gap: 20px;
+  }
+}
+  
+
+@media (max-width: 1024px) and (max-height: 1366px){
+  .auction-images {
+    display: none;
+  }
+  .auction-container {
+    height: calc(100vh - 60px);
+  }
+  
+  .auction-content {
+    text-align: center;
+    width: 100%;
+  }
+}
+
+@media (max-width: 834) and (max-height: 1194px){
+  .auction-container {
+    height: calc(100vh - 60px);
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+    padding: 40px;
+    background-color: #ff0000; /* Background color */
+  }
+
+  .auction-content {
+    text-align: left;
+  }
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 428) and (max-height: 926px){
+  .auction-title {
+    font-size: 10px;
+    font-weight: bold;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+  }
+  .zauction-apartments {
+    font-size: 1rem;
+    margin-left: 20px;
+  }
+}
